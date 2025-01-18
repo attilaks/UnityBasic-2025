@@ -8,9 +8,9 @@ public class ValuesLogger : MonoBehaviour
     
     private void Start()
     {
-        var minInt = 1;
-        var maxInt = 10;
-        var comparableInt = 6;
+        const int minInt = 1;
+        const int maxInt = 10;
+        const int comparableInt = 6;
         
         var integer = Random.Range(minInt, maxInt);
         var floating = Random.Range(0f, 1f);
