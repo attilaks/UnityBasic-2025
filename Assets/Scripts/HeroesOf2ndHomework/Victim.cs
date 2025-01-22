@@ -1,4 +1,5 @@
 using GlobalConstants;
+using Tools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,42 +10,26 @@ namespace HeroesOf2ndHomework
         private const float MaxHealth = 100f;
         private const string ResurrectButton = InputConstants.F;
         private const string ResurrectActionName = "Resurrect";
-
-        private float _health;
-        private float Health
-        {
-            get => _health;
-            set
-            {
-                if (_health > value)
-                {
-                    Debug.LogError($"Aaargh... I'm injured! My Health is {Health}");
-                }
-                _health = value;
-                if (_health <= 0f)
-                {
-                    Die();
-                }
-            }
-        }
-
+        
+        private readonly HealthManager _healthManager = new (MaxHealth);
         private InputAction _resurrect;
-        private bool _isDead;
 
         private void Awake()
         {
             _resurrect = new InputAction(ResurrectActionName, InputActionType.Button);
             _resurrect.AddBinding($"{InputConstants.KeyBoard}/{ResurrectButton}");
-            
             _resurrect.performed += OnResurrectPerformed;
-            
             _resurrect.Enable();
+            
+            _healthManager.DeathHasComeEvent += Die;
         }
-    
+
         private void OnDestroy()
         {
             _resurrect.performed -= OnResurrectPerformed;
             _resurrect.Disable();
+            
+            _healthManager.DeathHasComeEvent -= Die;
         }
         
         private void OnResurrectPerformed(InputAction.CallbackContext context)
@@ -55,34 +40,33 @@ namespace HeroesOf2ndHomework
         private void Resurrect()
         {
             gameObject.SetActive(true);
-            Health = MaxHealth;
-            _isDead = false;
+            _healthManager.Health = MaxHealth;
             Debug.Log("I'm alive! Again! Thank you, God!");
         }
 
         public void ApplyDamage(float damage)
         {
-            if (_isDead)
+            if (_healthManager.IsDead)
             {
                 Debug.LogWarning($"Resurrect me by pressing '{ResurrectButton}'");
                 return;
             }
         
-            Health -= damage;
+            _healthManager.Health -= damage;
         }
         
         public void ApplyAutoDamage(float damage)
         {
             
-            if (_isDead)
+            if (_healthManager.IsDead)
             {
                 Debug.LogWarning($"Resurrect me by pressing '{ResurrectButton}'");
                 return;
             }
             
-            while (!_isDead)
+            while (!_healthManager.IsDead)
             {
-                Health -= damage;
+                _healthManager.Health -= damage;
             }
         }
 
@@ -90,7 +74,6 @@ namespace HeroesOf2ndHomework
         {
             Debug.LogError("I'm dying...");
             gameObject.SetActive(false);
-            _isDead = true;
             Debug.LogWarning($"Press \"{ResurrectButton}\" to pay respect... And to resurrect me!");
         }
     }

@@ -1,6 +1,7 @@
+using HeroesOf2ndHomework;
 using UnityEngine;
 
-namespace HeroesOf2ndHomework
+namespace Tools
 {
     public class ScriptCoordinator : MonoBehaviour
     {
