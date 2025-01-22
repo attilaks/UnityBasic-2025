@@ -12,8 +12,22 @@ namespace HeroesOf2ndHomework
         {
             valuesLogger.LoggerJobIsFinishedEvent += OnLoggerJobIsFinished;
             damageDealer.DamageIsBeingDoneEvent += OnDamageIsBeingDone;
+            damageDealer.AutoDamageIsBeingDoneEvent += OnAutoDamageIsBeingDone;
+            
             damageDealer.gameObject.SetActive(false);
             valuesLogger.gameObject.SetActive(true);
+        }
+        
+        private void OnDestroy()
+        {
+            valuesLogger.LoggerJobIsFinishedEvent -= OnLoggerJobIsFinished;
+            damageDealer.DamageIsBeingDoneEvent -= OnDamageIsBeingDone;
+            damageDealer.AutoDamageIsBeingDoneEvent -= OnAutoDamageIsBeingDone;
+        }
+
+        private void OnAutoDamageIsBeingDone(float damageDone)
+        {
+            victim.ApplyAutoDamage(damageDone);
         }
 
         private void OnDamageIsBeingDone(float damageDone)
@@ -25,12 +39,6 @@ namespace HeroesOf2ndHomework
         {
             valuesLogger.gameObject.SetActive(false);
             damageDealer.gameObject.SetActive(true);
-        }
-
-        private void OnDestroy()
-        {
-            valuesLogger.LoggerJobIsFinishedEvent -= OnLoggerJobIsFinished;
-            damageDealer.DamageIsBeingDoneEvent -= OnDamageIsBeingDone;
         }
     }
 }

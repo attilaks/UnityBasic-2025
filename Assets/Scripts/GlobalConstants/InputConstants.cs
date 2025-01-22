@@ -10,9 +10,10 @@
 		
 		#region KeyboardKeys
 		
-		public const string SpaceKey = "space";
-		public const string FKey = "f";
-		
+		public const string Space = "space";
+		public const string F = "f";
+		public const string A = "a";
+
 		#endregion
 	}
 }
