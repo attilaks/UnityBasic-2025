@@ -41,6 +41,7 @@ namespace HeroesOf2ndHomework
         {
             Debug.LogError("I will do some damage now!");
             Debug.LogWarning($"Press {DamageButtonName} to deal damage!");
+            Debug.LogWarning($"Press {AutoDamageButtonName} to deal auto damage!");
         }
         
         private void OnDestroy()

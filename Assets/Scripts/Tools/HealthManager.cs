@@ -29,8 +29,8 @@ namespace Tools
 					}
 					else
 					{
-						Debug.LogError($"Aaargh... I'm injured! My Health is {Health}");
 						_health = value;
+						Debug.LogError($"Aaargh... I'm injured! My Health is {Health}");
 					}
 				}
 				else
