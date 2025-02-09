@@ -2,135 +2,144 @@ using System;
 using GlobalConstants;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 namespace Tools
 {
     public class MovementManager : MonoBehaviour
     {
-        [SerializeField] private float movementSpeed = 5f;
-        [SerializeField] private float rotationSpeed = 5f;
+        [SerializeField] private float movementSpeed = 2f;
+        [SerializeField] private float rotationSpeed = 2f;
         
-        private readonly InputAction _moveForwardByTransform = new("MoveForwardByTransform", InputActionType.Button, 
+        private readonly InputAction _moveForwardByTransform = new("MoveForwardByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num8}");
-        private readonly InputAction _moveLeftByTransform = new("MoveLeftByTransform", InputActionType.Button, 
+        private readonly InputAction _moveLeftByTransform = new("MoveLeftByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num4}");
-        private readonly InputAction _moveRightByTransform = new("MoveRightByTransform", InputActionType.Button, 
+        private readonly InputAction _moveRightByTransform = new("MoveRightByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num6}");
-        private readonly InputAction _moveBackwardByTransform = new("MoveBackwardByTransform", InputActionType.Button, 
+        private readonly InputAction _moveBackByTransform = new("MoveBackwardByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num5}");
 
-        private readonly InputAction _rotateLeftByTransform = new("RotateLeftByTransform", InputActionType.Button, 
+        private readonly InputAction _rotateLeftByTransform = new("RotateLeftByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num7}");
-        private readonly InputAction _rotateRightByTransform = new("RotateRightByTransform", InputActionType.Button, 
+        private readonly InputAction _rotateRightByTransform = new("RotateRightByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num9}");
         
-        private readonly InputAction _moveForwardByPhysics = new("MoveForwardByPhysics", InputActionType.Button, 
+        private readonly InputAction _moveForwardByPhysics = new("MoveForwardByPhysics", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.W}");
-        private readonly InputAction _moveLeftByPhysics = new("MoveLeftByPhysics", InputActionType.Button, 
+        private readonly InputAction _moveLeftByPhysics = new("MoveLeftByPhysics", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.A}");
-        private readonly InputAction _moveRightByPhysics = new("MoveRightByPhysics", InputActionType.Button, 
+        private readonly InputAction _moveRightByPhysics = new("MoveRightByPhysics", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.D}");
-        private readonly InputAction _moveBackwardByPhysics = new("MoveBackwardByPhysics", InputActionType.Button,
+        private readonly InputAction _moveBackByPhysics = new("MoveBackwardByPhysics", InputActionType.Value,
             $"{InputConstants.KeyBoard}/{InputConstants.S}");
         
-        private readonly InputAction _rotateLeftByPhysics = new("RotateLeftByPhysics", InputActionType.Button, 
+        private readonly InputAction _rotateLeftByPhysics = new("RotateLeftByPhysics", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Q}");
-        private readonly InputAction _rotateRightByPhysics = new("RotateRightByPhysics", InputActionType.Button, 
+        private readonly InputAction _rotateRightByPhysics = new("RotateRightByPhysics", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.E}");
 
-        private void Awake()
+        #region Monobehaviour methods
+
+        private void OnEnable()
         {
-            _moveForwardByTransform.performed += OnMoveForwardByTransform;
             _moveForwardByTransform.Enable();
-            _moveLeftByTransform.performed += OnMoveLeftByTransform;
             _moveLeftByTransform.Enable();
-            _moveRightByTransform.performed += OnMoveRightByTransform;
             _moveRightByTransform.Enable();
-            _moveBackwardByTransform.performed += OnMoveBackwardByTransform;
-            _moveBackwardByTransform.Enable();
+            _moveBackByTransform.Enable();
             
-            _rotateLeftByTransform.performed += OnRotateLeftByTransform;
             _rotateLeftByTransform.Enable();
-            _rotateRightByTransform.performed += OnRotateRightByTransform;
             _rotateRightByTransform.Enable();
             
-            _moveForwardByPhysics.performed += OnMoveForwardByPhysics;
             _moveForwardByPhysics.Enable();
-            _moveLeftByPhysics.performed += OnMoveLeftByPhysics;
             _moveLeftByPhysics.Enable();
-            _moveRightByPhysics.performed += OnMoveRightByPhysics;
             _moveRightByPhysics.Enable();
-            _moveBackwardByPhysics.performed += OnMoveBackwardByPhysics;
-            _moveBackwardByPhysics.Enable();
+            _moveBackByPhysics.Enable();
             
-            _rotateLeftByPhysics.performed += OnRotateLeftByPhysics;
             _rotateLeftByPhysics.Enable();
-            _rotateRightByPhysics.performed += OnRotateRightByPhysics;
             _rotateRightByPhysics.Enable();
         }
 
-        private void OnMoveForwardByTransform(InputAction.CallbackContext context)
+        private void OnDisable()
         {
-            float z = transform.position.z;
-            var delta = movementSpeed * Time.deltaTime;
-            var newZ = z + delta;
-            var position = transform.position;
-            transform.position = new Vector3(position.x, position.y, newZ);
+            _moveForwardByTransform.Disable();
+            _moveLeftByTransform.Disable();
+            _moveRightByTransform.Disable();
+            _moveBackByTransform.Disable();
+            
+            _rotateLeftByTransform.Disable();
+            _rotateRightByTransform.Disable();
+            
+            _moveForwardByPhysics.Disable();
+            _moveLeftByPhysics.Disable();
+            _moveRightByPhysics.Disable();
+            _moveBackByPhysics.Disable();
+            
+            _rotateLeftByPhysics.Disable();
+            _rotateRightByPhysics.Disable();
         }
 
-        private void OnMoveLeftByTransform(InputAction.CallbackContext context)
+        #endregion
+
+        private void Update()
         {
-            throw new NotImplementedException();
+            if (_moveForwardByTransform.IsPressed())
+            {
+                MoveForward();
+            }
+            if (_moveLeftByTransform.IsPressed())
+            {
+                MoveLeft();
+            }
+            if (_moveRightByTransform.IsPressed())
+            {
+                MoveRight();
+            }
+            if (_moveBackByTransform.IsPressed())
+            {
+                MoveBack();
+            }
+
+            if (_rotateLeftByTransform.IsPressed())
+            {
+                RotateLeft();
+            }
+            if (_rotateRightByTransform.IsPressed())
+            {
+                RotateRight();
+            }
         }
 
-        private void OnMoveRightByTransform(InputAction.CallbackContext context)
+        private void MoveForward()
         {
-            throw new NotImplementedException();
+            transform.Translate(Vector3.forward * (movementSpeed * Time.deltaTime));
         }
-
-        private void OnMoveBackwardByTransform(InputAction.CallbackContext context)
+        
+        private void MoveLeft()
         {
-            throw new NotImplementedException();
+            transform.Translate(Vector3.left * (movementSpeed * Time.deltaTime));
         }
-
-        private void OnRotateLeftByTransform(InputAction.CallbackContext context)
+        
+        private void MoveRight()
         {
-            throw new NotImplementedException();
+            transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
         }
-
-        private void OnRotateRightByTransform(InputAction.CallbackContext context)
+        
+        private void MoveBack()
         {
-            throw new NotImplementedException();
+            transform.Translate(Vector3.back * (movementSpeed * Time.deltaTime));
         }
-
-        private void OnMoveForwardByPhysics(InputAction.CallbackContext context)
+        
+        private void RotateLeft()
         {
-            throw new NotImplementedException();
+            var targetAngle = -90 * rotationSpeed * Time.deltaTime;
+            transform.Rotate(0, targetAngle, 0);
         }
-
-        private void OnMoveLeftByPhysics(InputAction.CallbackContext context)
+        
+        private void RotateRight()
         {
-            throw new NotImplementedException();
-        }
-
-        private void OnMoveRightByPhysics(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnMoveBackwardByPhysics(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnRotateLeftByPhysics(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnRotateRightByPhysics(InputAction.CallbackContext context)
-        {
-            throw new NotImplementedException();
+            var targetAngle = 90 * rotationSpeed * Time.deltaTime;
+            transform.Rotate(0, targetAngle, 0);
         }
     }
 }
