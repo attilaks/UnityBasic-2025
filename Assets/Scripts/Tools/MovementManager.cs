@@ -1,15 +1,19 @@
 using System;
 using GlobalConstants;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
 namespace Tools
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class MovementManager : MonoBehaviour
     {
         [SerializeField] private float movementSpeed = 2f;
         [SerializeField] private float rotationSpeed = 2f;
+        
+        private Rigidbody _rigidbody;
         
         private readonly InputAction _moveForwardByTransform = new("MoveForwardByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num8}");
@@ -40,6 +44,11 @@ namespace Tools
             $"{InputConstants.KeyBoard}/{InputConstants.E}");
 
         #region Monobehaviour methods
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
 
         private void OnEnable()
         {
@@ -85,61 +94,127 @@ namespace Tools
         {
             if (_moveForwardByTransform.IsPressed())
             {
-                MoveForward();
+                MoveForwardByTransform();
             }
             if (_moveLeftByTransform.IsPressed())
             {
-                MoveLeft();
+                MoveLeftByTransform();
             }
             if (_moveRightByTransform.IsPressed())
             {
-                MoveRight();
+                MoveRightByTransform();
             }
             if (_moveBackByTransform.IsPressed())
             {
-                MoveBack();
+                MoveBackByTransform();
             }
 
             if (_rotateLeftByTransform.IsPressed())
             {
-                RotateLeft();
+                RotateLeftByTransform();
             }
             if (_rotateRightByTransform.IsPressed())
             {
-                RotateRight();
+                RotateRightByTransform();
+            }
+            
+            if (_moveForwardByPhysics.IsPressed())
+            {
+                MoveForwardByPhysics();
+            }
+            if (_moveLeftByPhysics.IsPressed())
+            {
+                MoveLeftByPhysics();
+            }
+            if (_moveRightByPhysics.IsPressed())
+            {
+                MoveRightByPhysics();
+            }
+            if (_moveBackByPhysics.IsPressed())
+            {
+                MoveBackByPhysics();
+            }
+            
+            if (_rotateLeftByPhysics.IsPressed())
+            {
+                RotateLeftByPhysics();
+            }
+            if (_rotateRightByPhysics.IsPressed())
+            {
+                RotateRightByPhysics();
             }
         }
 
-        private void MoveForward()
+        #region ByTransform
+
+        private void MoveForwardByTransform()
         {
             transform.Translate(Vector3.forward * (movementSpeed * Time.deltaTime));
         }
         
-        private void MoveLeft()
+        private void MoveLeftByTransform()
         {
             transform.Translate(Vector3.left * (movementSpeed * Time.deltaTime));
         }
         
-        private void MoveRight()
+        private void MoveRightByTransform()
         {
             transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
         }
         
-        private void MoveBack()
+        private void MoveBackByTransform()
         {
             transform.Translate(Vector3.back * (movementSpeed * Time.deltaTime));
         }
         
-        private void RotateLeft()
+        private void RotateLeftByTransform()
         {
             var targetAngle = -90 * rotationSpeed * Time.deltaTime;
             transform.Rotate(0, targetAngle, 0);
         }
         
-        private void RotateRight()
+        private void RotateRightByTransform()
         {
             var targetAngle = 90 * rotationSpeed * Time.deltaTime;
             transform.Rotate(0, targetAngle, 0);
         }
+        
+        #endregion
+
+        #region ByPhysics
+
+        private void MoveForwardByPhysics()
+        {
+            _rigidbody.AddForce(Vector3.forward * (movementSpeed * Time.deltaTime), ForceMode.Impulse);
+        }
+
+        private void MoveLeftByPhysics()
+        {
+            _rigidbody.AddForce(Vector3.left * (movementSpeed * Time.deltaTime));
+        }
+
+        private void MoveRightByPhysics()
+        {
+            _rigidbody.AddForce(Vector3.right * (movementSpeed * Time.deltaTime));
+        }
+
+        private void MoveBackByPhysics()
+        {
+            _rigidbody.AddForce(Vector3.back * (movementSpeed * Time.deltaTime));
+        }
+
+        private void RotateLeftByPhysics()
+        {
+            var targetAngle = -90 * rotationSpeed * Time.deltaTime;
+            _rigidbody.MoveRotation(Quaternion.Euler(0, targetAngle, 0));
+        }
+
+        private void RotateRightByPhysics()
+        {
+            var targetAngle = 90 * rotationSpeed * Time.deltaTime;
+            _rigidbody.MoveRotation(Quaternion.Euler(0, targetAngle, 0));
+        }
+
+        #endregion
     }
 }
