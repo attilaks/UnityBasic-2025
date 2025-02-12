@@ -185,34 +185,32 @@ namespace Tools
 
         private void MoveForwardByPhysics()
         {
-            _rigidbody.AddForce(Vector3.forward * (movementSpeed * Time.deltaTime), ForceMode.Impulse);
+            _rigidbody.AddForce(Vector3.forward);
         }
 
         private void MoveLeftByPhysics()
         {
-            _rigidbody.AddForce(Vector3.left * (movementSpeed * Time.deltaTime));
+            _rigidbody.AddForce(Vector3.left);
         }
 
         private void MoveRightByPhysics()
         {
-            _rigidbody.AddForce(Vector3.right * (movementSpeed * Time.deltaTime));
+            _rigidbody.AddForce(Vector3.right);
         }
 
         private void MoveBackByPhysics()
         {
-            _rigidbody.AddForce(Vector3.back * (movementSpeed * Time.deltaTime));
+            _rigidbody.AddForce(Vector3.back);
         }
 
         private void RotateLeftByPhysics()
         {
-            var targetAngle = -90 * rotationSpeed * Time.deltaTime;
-            _rigidbody.MoveRotation(Quaternion.Euler(0, targetAngle, 0));
+            _rigidbody.AddTorque(-Vector3.up * (rotationSpeed * Time.fixedDeltaTime), ForceMode.VelocityChange);
         }
 
         private void RotateRightByPhysics()
         {
-            var targetAngle = 90 * rotationSpeed * Time.deltaTime;
-            _rigidbody.MoveRotation(Quaternion.Euler(0, targetAngle, 0));
+            _rigidbody.AddTorque(Vector3.up * (rotationSpeed * Time.fixedDeltaTime), ForceMode.VelocityChange);
         }
 
         #endregion

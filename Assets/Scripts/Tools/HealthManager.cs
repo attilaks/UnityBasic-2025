@@ -13,6 +13,8 @@ namespace Tools
 		public event Action DeathHasComeEvent = delegate { };
 		public bool IsDead { get; private set; }
 
+		public uint FirstAidKitCollected { get; private set; }
+
 		private float _health;
 		public float Health
 		{
@@ -39,6 +41,11 @@ namespace Tools
 					IsDead = false;
 				}
 			}
+		}
+
+		public void GetFirstAidKit()
+		{
+			++FirstAidKitCollected;
 		}
 	}
 }

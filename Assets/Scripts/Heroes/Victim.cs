@@ -4,7 +4,7 @@ using Tools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace HeroesOf2ndHomework
+namespace Heroes
 {
     public class Victim : MonoBehaviour
     {

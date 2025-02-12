@@ -1,9 +1,9 @@
 using System;
+using GlobalConstants;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using GlobalConstants;
 
-namespace HeroesOf2ndHomework
+namespace Heroes
 {
     public class DamageDealer : MonoBehaviour
     {
