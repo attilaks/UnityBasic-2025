@@ -1,10 +1,8 @@
 using System;
 using System.Linq;
 using GlobalConstants;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 
 namespace Tools
 {
@@ -25,7 +23,6 @@ namespace Tools
         private static readonly int Speed = Animator.StringToHash(AnimatorSpeed);
         private static readonly int DirectionX = Animator.StringToHash(AnimatorDirectionX);
         private static readonly int DirectionY = Animator.StringToHash(AnimatorDirectionY);
-        private static readonly int WalkBack = Animator.StringToHash("WalkBack");
 
         private readonly InputAction _moveForwardByTransform = new("MoveForwardByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.W}");
