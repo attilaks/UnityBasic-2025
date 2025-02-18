@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using GlobalConstants;
 using Unity.Mathematics;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.InputSystem.Interactions;
 
 namespace Tools
 {
+    [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Rigidbody))]
     public class MovementManager : MonoBehaviour
     {
@@ -14,7 +16,17 @@ namespace Tools
         [SerializeField] private float rotationSpeed = 2f;
         
         private Rigidbody _rigidbody;
+        private Animator _animator;
         
+        private const string AnimatorSpeed = "Speed";
+        private const string AnimatorDirectionX = "DirectionX";
+        private const string AnimatorDirectionY = "DirectionY";
+        
+        private static readonly int Speed = Animator.StringToHash(AnimatorSpeed);
+        private static readonly int DirectionX = Animator.StringToHash(AnimatorDirectionX);
+        private static readonly int DirectionY = Animator.StringToHash(AnimatorDirectionY);
+        private static readonly int WalkBack = Animator.StringToHash("WalkBack");
+
         private readonly InputAction _moveForwardByTransform = new("MoveForwardByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num8}");
         private readonly InputAction _moveLeftByTransform = new("MoveLeftByTransform", InputActionType.Value, 
@@ -45,9 +57,108 @@ namespace Tools
 
         #region Monobehaviour methods
 
-        private void Awake()
+        protected void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            _animator = GetComponent<Animator>();
+            
+            var animatorParameterNames = _animator.parameters.Select(x => x.name).ToArray();
+            if (!animatorParameterNames.Contains(AnimatorSpeed))
+            {
+                throw new Exception($"Animator parameter {AnimatorSpeed} not found");
+            }
+
+            if (!animatorParameterNames.Contains(AnimatorDirectionX))
+            {
+                throw new Exception($"Animator parameter {AnimatorDirectionX} not found");
+            }
+
+            if (!animatorParameterNames.Contains(AnimatorDirectionY))
+            {
+                throw new Exception($"Animator parameter {AnimatorDirectionY} not found");
+            }
+        }
+        
+        private void Update()
+        {
+            var directionX = 0f;
+            var directionY = 0f;
+            var speed = 0f;
+            
+            if (_moveForwardByTransform.IsPressed())
+            {
+                MoveForwardByTransform();
+                speed = 1;
+                directionY += 1;
+            }
+            if (_moveLeftByTransform.IsPressed())
+            {
+                MoveLeftByTransform();
+                speed = 1;
+                directionX -= 1;
+            }
+            if (_moveRightByTransform.IsPressed())
+            {
+                MoveRightByTransform();
+                speed = 1;
+                directionX += 1;
+            }
+            if (_moveBackByTransform.IsPressed())
+            {
+                MoveBackByTransform();
+                speed = 1;
+                directionY -= 1;
+            }
+
+            if (_rotateLeftByTransform.IsPressed())
+            {
+                RotateLeftByTransform();
+            }
+            if (_rotateRightByTransform.IsPressed())
+            {
+                RotateRightByTransform();
+            }
+            
+            if (_moveForwardByPhysics.IsPressed())
+            {
+                MoveForwardByPhysics();
+                speed = 1;
+                directionY += 1;
+            }
+            if (_moveLeftByPhysics.IsPressed())
+            {
+                MoveLeftByPhysics();
+                speed = 1;
+                directionX -= 1;
+            }
+            if (_moveRightByPhysics.IsPressed())
+            {
+                MoveRightByPhysics();
+                speed = 1;
+                directionX += 1;
+            }
+            if (_moveBackByPhysics.IsPressed())
+            {
+                MoveBackByPhysics();
+                speed = 1;
+                directionY -= 1;
+            }
+            
+            if (_rotateLeftByPhysics.IsPressed())
+            {
+                RotateLeftByPhysics();
+            }
+            if (_rotateRightByPhysics.IsPressed())
+            {
+                RotateRightByPhysics();
+            }
+            
+            if (directionX == 0f && directionY == 0f)
+                speed = 0;
+            
+            _animator.SetFloat(Speed, speed);
+            _animator.SetFloat(DirectionX, directionX);
+            _animator.SetFloat(DirectionY, directionY);
         }
 
         private void OnEnable()
@@ -89,61 +200,6 @@ namespace Tools
         }
 
         #endregion
-
-        private void Update()
-        {
-            if (_moveForwardByTransform.IsPressed())
-            {
-                MoveForwardByTransform();
-            }
-            if (_moveLeftByTransform.IsPressed())
-            {
-                MoveLeftByTransform();
-            }
-            if (_moveRightByTransform.IsPressed())
-            {
-                MoveRightByTransform();
-            }
-            if (_moveBackByTransform.IsPressed())
-            {
-                MoveBackByTransform();
-            }
-
-            if (_rotateLeftByTransform.IsPressed())
-            {
-                RotateLeftByTransform();
-            }
-            if (_rotateRightByTransform.IsPressed())
-            {
-                RotateRightByTransform();
-            }
-            
-            if (_moveForwardByPhysics.IsPressed())
-            {
-                MoveForwardByPhysics();
-            }
-            if (_moveLeftByPhysics.IsPressed())
-            {
-                MoveLeftByPhysics();
-            }
-            if (_moveRightByPhysics.IsPressed())
-            {
-                MoveRightByPhysics();
-            }
-            if (_moveBackByPhysics.IsPressed())
-            {
-                MoveBackByPhysics();
-            }
-            
-            if (_rotateLeftByPhysics.IsPressed())
-            {
-                RotateLeftByPhysics();
-            }
-            if (_rotateRightByPhysics.IsPressed())
-            {
-                RotateRightByPhysics();
-            }
-        }
 
         #region ByTransform
 
