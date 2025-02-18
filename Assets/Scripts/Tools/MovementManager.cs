@@ -28,13 +28,13 @@ namespace Tools
         private static readonly int WalkBack = Animator.StringToHash("WalkBack");
 
         private readonly InputAction _moveForwardByTransform = new("MoveForwardByTransform", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.Num8}");
+            $"{InputConstants.KeyBoard}/{InputConstants.W}");
         private readonly InputAction _moveLeftByTransform = new("MoveLeftByTransform", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.Num4}");
+            $"{InputConstants.KeyBoard}/{InputConstants.A}");
         private readonly InputAction _moveRightByTransform = new("MoveRightByTransform", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.Num6}");
+            $"{InputConstants.KeyBoard}/{InputConstants.D}");
         private readonly InputAction _moveBackByTransform = new("MoveBackwardByTransform", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.Num5}");
+            $"{InputConstants.KeyBoard}/{InputConstants.S}");
 
         private readonly InputAction _rotateLeftByTransform = new("RotateLeftByTransform", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num7}");
@@ -42,13 +42,13 @@ namespace Tools
             $"{InputConstants.KeyBoard}/{InputConstants.Num9}");
         
         private readonly InputAction _moveForwardByPhysics = new("MoveForwardByPhysics", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.W}");
+            $"{InputConstants.KeyBoard}/{InputConstants.Num8}");
         private readonly InputAction _moveLeftByPhysics = new("MoveLeftByPhysics", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.A}");
+            $"{InputConstants.KeyBoard}/{InputConstants.Num4}");
         private readonly InputAction _moveRightByPhysics = new("MoveRightByPhysics", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.D}");
+            $"{InputConstants.KeyBoard}/{InputConstants.Num6}");
         private readonly InputAction _moveBackByPhysics = new("MoveBackwardByPhysics", InputActionType.Value,
-            $"{InputConstants.KeyBoard}/{InputConstants.S}");
+            $"{InputConstants.KeyBoard}/{InputConstants.Num5}");
         
         private readonly InputAction _rotateLeftByPhysics = new("RotateLeftByPhysics", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Q}");
