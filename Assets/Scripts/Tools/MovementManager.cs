@@ -34,9 +34,9 @@ namespace Tools
             $"{InputConstants.KeyBoard}/{InputConstants.S}");
 
         private readonly InputAction _rotateLeftByTransform = new("RotateLeftByTransform", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.Num7}");
+            $"{InputConstants.KeyBoard}/{InputConstants.Q}");
         private readonly InputAction _rotateRightByTransform = new("RotateRightByTransform", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.Num9}");
+            $"{InputConstants.KeyBoard}/{InputConstants.E}");
         
         private readonly InputAction _moveForwardByPhysics = new("MoveForwardByPhysics", InputActionType.Value, 
             $"{InputConstants.KeyBoard}/{InputConstants.Num8}");
@@ -48,9 +48,9 @@ namespace Tools
             $"{InputConstants.KeyBoard}/{InputConstants.Num5}");
         
         private readonly InputAction _rotateLeftByPhysics = new("RotateLeftByPhysics", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.Q}");
+            $"{InputConstants.KeyBoard}/{InputConstants.Num7}");
         private readonly InputAction _rotateRightByPhysics = new("RotateRightByPhysics", InputActionType.Value, 
-            $"{InputConstants.KeyBoard}/{InputConstants.E}");
+            $"{InputConstants.KeyBoard}/{InputConstants.Num9}");
 
         #region Monobehaviour methods
 
