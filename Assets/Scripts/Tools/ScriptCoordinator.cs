@@ -1,4 +1,4 @@
-using HeroesOf2ndHomework;
+using Heroes;
 using UnityEngine;
 
 namespace Tools
