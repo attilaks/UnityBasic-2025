@@ -26,11 +26,7 @@ namespace Tools
 			var mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
 			var mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-			if (mouseX != 0)
-			{
-				var x = 7;
-			}
-			_playerBody.Rotate(Vector3.up * mouseX);
+			_playerBody.Rotate(Vector3.up * (mouseX * Time.deltaTime * mouseSensitivity));
 			
 			_xRotation -= mouseY;
 			_yRotation += mouseX;
