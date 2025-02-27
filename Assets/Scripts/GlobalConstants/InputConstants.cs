@@ -5,6 +5,7 @@
 		#region Controllers
 		
 		public const string KeyBoard = "<Keyboard>";
+		public const string Mouse = "<Mouse>";
 		
 		#endregion
 		
@@ -30,6 +31,12 @@
 		public const string Num7 = "numpad7";
 		public const string Num8 = "numpad8";
 		public const string Num9 = "numpad9";
+
+		#endregion
+
+		#region MouseKeys
+
+		public const string LeftButton = "leftButton";		
 
 		#endregion
 	}

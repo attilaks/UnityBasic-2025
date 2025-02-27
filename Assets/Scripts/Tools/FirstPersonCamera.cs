@@ -1,20 +1,14 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tools
 {
 	public class FirstPersonCamera : MonoBehaviour
 	{
 		[SerializeField] private float mouseSensitivity = 200f;
+		[SerializeField] private Transform playerTransform;
 		
-		[SerializeField] private Transform _playerBody;
 		private float _xRotation;
 		private float _yRotation;
-
-		private void Awake()
-		{
-			// _playerBody = gameObject.GetComponentInParent<Transform>();
-		}
 
 		private void Start()
 		{
@@ -25,14 +19,12 @@ namespace Tools
 		{
 			var mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
 			var mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-			_playerBody.Rotate(Vector3.up * (mouseX * Time.deltaTime * mouseSensitivity));
 			
-			_xRotation -= mouseY;
+			_xRotation = Mathf.Clamp(_xRotation - mouseY, -90f, 90f);
 			_yRotation += mouseX;
-
+			
+			playerTransform.localRotation = Quaternion.Euler(0f, _yRotation, 0f);
 			transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
-			// _playerBody.Rotate(0, targetAngle, 0);
 		}
 	}
 }
