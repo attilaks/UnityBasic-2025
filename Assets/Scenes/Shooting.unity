@@ -174,7 +174,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
@@ -866,6 +866,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 57e8684067641e348922de785a39ca50, type: 2}
+    - target: {fileID: 6655423054117717548, guid: 9a1e65593910a844ab505c0805cec67b,
+        type: 3}
+      propertyPath: bulletForce
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6655423054117717548, guid: 9a1e65593910a844ab505c0805cec67b,
         type: 3}
       propertyPath: bulletPrefab
