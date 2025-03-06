@@ -11,7 +11,7 @@ namespace Tools.Weapons
         private void OnCollisionEnter(Collision collision)
         {
             ContactPoint contact = collision.contacts[0];
-            Vector3 hitPosition = contact.point;
+            Vector3 hitPosition = contact.point + contact.normal * 0.001f;
             Quaternion hitRotation = Quaternion.LookRotation(contact.normal);
             
             if (decalPrefab != null)
