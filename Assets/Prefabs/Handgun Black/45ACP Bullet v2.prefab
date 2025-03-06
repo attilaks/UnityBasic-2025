@@ -94,6 +94,8 @@ GameObject:
   - component: {fileID: 6276273315755926378}
   - component: {fileID: 1016476100416541505}
   - component: {fileID: 1763762399041928216}
+  - component: {fileID: -1698827284600727070}
+  - component: {fileID: 4184721422398665394}
   m_Layer: 0
   m_Name: 45ACP Bullet v2
   m_TagString: Untagged
@@ -109,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266833005650248464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3825045, y: 1.2983952, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -144,7 +146,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!96 &1763762399041928216
 TrailRenderer:
   serializedVersion: 3
@@ -258,6 +260,43 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-1698827284600727070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266833005650248464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d01ee3e1b56e8498a283433f9cc88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decalPrefab: {fileID: 53591620138530189, guid: 4e4f711317d19ae49b93f9ce4de93ff8,
+    type: 3}
+--- !u!136 &4184721422398665394
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266833005650248464}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.005
+  m_Height: 0.03
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.013}
 --- !u!1 &5838767848198372577
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,8 +389,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9023241985690347185}
-  - component: {fileID: 1328268615385418942}
-  - component: {fileID: 3203724431730307550}
   m_Layer: 0
   m_Name: UCP45 Bullet Head
   m_TagString: Untagged
@@ -367,7 +404,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6525113122037734552}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.3283e-10, y: -0.000000001397, z: 0.018767}
+  m_LocalPosition: {x: 0, y: 0, z: 0.018767}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -375,43 +412,6 @@ Transform:
   m_Father: {fileID: 6276273315755926378}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1328268615385418942
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6525113122037734552}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.004790176
-  m_Height: 0.014504685
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.0003263331, z: 0.0015378338}
---- !u!114 &3203724431730307550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6525113122037734552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d01ee3e1b56e8498a283433f9cc88d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  decalPrefab: {fileID: 53591620138530189, guid: 4e4f711317d19ae49b93f9ce4de93ff8,
-    type: 3}
 --- !u!1 &8673452476635034203
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +421,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7944940801293970063}
-  - component: {fileID: 6232152329424599863}
   m_Layer: 0
   m_Name: 45ACP Bullet_Casing
   m_TagString: Untagged
@@ -445,26 +444,3 @@ Transform:
   m_Father: {fileID: 6276273315755926378}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &6232152329424599863
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8673452476635034203}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.004933426
-  m_Height: 0.01931317
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.00036994275, z: 0.009656585}

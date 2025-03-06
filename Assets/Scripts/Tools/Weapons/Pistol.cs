@@ -23,7 +23,7 @@ namespace Tools.Weapons
 		[Tooltip("Specify time to destroy the casing object")] [SerializeField] private float destroyTimer = 2f;
 		[Tooltip("Casing Ejection Speed")] [SerializeField] private float ejectPower = 150f;
 		
-		[SerializeField] private float fireRate;
+		[SerializeField] private float fireRate = 0.14f;
 		[SerializeField] private float bulletForce;
 		
 		private float _nextFireTime;

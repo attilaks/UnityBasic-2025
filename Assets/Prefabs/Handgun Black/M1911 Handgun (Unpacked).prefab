@@ -342,8 +342,8 @@ MonoBehaviour:
   firePoint: {fileID: 2416474013166605518}
   destroyTimer: 2
   ejectPower: 150
-  fireRate: 0.5
-  bulletForce: 20
+  fireRate: 0.14
+  bulletForce: 150
 --- !u!95 &921283718364843414
 Animator:
   serializedVersion: 5

@@ -5,22 +5,24 @@ namespace Tools.Weapons
     public class Bullet : MonoBehaviour
     {
         [SerializeField] private GameObject decalPrefab;
+        
+        private GameObject decal;
 
         private void OnCollisionEnter(Collision collision)
         {
             ContactPoint contact = collision.contacts[0];
             Vector3 hitPosition = contact.point;
             Quaternion hitRotation = Quaternion.LookRotation(contact.normal);
-
-            // Создаем декаль в точке попадания
+            
             if (decalPrefab != null)
             {
-                GameObject decal = Instantiate(decalPrefab, hitPosition, hitRotation);
-                decal.transform.parent = collision.transform; // Привязываем декаль к объекту
+                GameObject bulletHoleDecal = Instantiate(decalPrefab, hitPosition, hitRotation);
+                bulletHoleDecal.transform.parent = collision.transform;
+                Destroy(bulletHoleDecal, 10f);
             }
-
-            // Уничтожаем пулю после попадания
-            Destroy(gameObject);
+            
+            var ricochetChance = Random.Range(0, 2) == 1;
+            Destroy(gameObject, ricochetChance ? 2f : 0f);
         }
     }
 }
