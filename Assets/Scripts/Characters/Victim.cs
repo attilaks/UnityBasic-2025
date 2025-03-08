@@ -1,10 +1,11 @@
 using Enums;
 using GlobalConstants;
 using Tools;
+using Tools.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Heroes
+namespace Characters
 {
     public class Victim : MonoBehaviour
     {

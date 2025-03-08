@@ -2,7 +2,7 @@
 using Enums;
 using UnityEngine;
 
-namespace Tools
+namespace Tools.Managers
 {
 	public class AppearanceManager : MonoBehaviour
 	{

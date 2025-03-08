@@ -1,7 +1,8 @@
 ﻿using Tools;
+using Tools.Managers;
 using UnityEngine;
 
-namespace Heroes
+namespace Characters
 {
 	public class Player : MonoBehaviour
 	{

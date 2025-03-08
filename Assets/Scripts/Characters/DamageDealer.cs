@@ -3,7 +3,7 @@ using GlobalConstants;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Heroes
+namespace Characters
 {
     public class DamageDealer : MonoBehaviour
     {
