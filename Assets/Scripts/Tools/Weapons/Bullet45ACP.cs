@@ -2,11 +2,12 @@ using UnityEngine;
 
 namespace Tools.Weapons
 {
-    public class Bullet : MonoBehaviour
+    public class Bullet45Acp : MonoBehaviour
     {
         [SerializeField] private GameObject decalPrefab;
+        [SerializeField] private float standardDamage = 10.0f;
         
-        private GameObject decal;
+        public float StandardDamage => standardDamage;
 
         private void OnCollisionEnter(Collision collision)
         {

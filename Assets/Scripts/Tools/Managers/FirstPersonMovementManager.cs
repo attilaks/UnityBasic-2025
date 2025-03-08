@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Tools
+namespace Tools.Managers
 {
 	public class FirstPersonMovementManager : MonoBehaviour
 	{

@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 namespace Tools.Weapons
 {
 	[RequireComponent(typeof(Animator))]
-	public class Pistol : MonoBehaviour
+	public class Colt1911 : MonoBehaviour
 	{
 		[Header("Prefab references")]
 		[SerializeField] private GameObject bulletPrefab;
