@@ -10,21 +10,29 @@ namespace Tools.Weapons
 	[RequireComponent(typeof(Animator))]
 	public class Pistol : MonoBehaviour
 	{
-		[Header("Prefab References")]
+		[Header("Prefab references")]
 		[SerializeField] private GameObject bulletPrefab;
 		[SerializeField] private GameObject casingPrefab;
 		[SerializeField] private GameObject muzzleFlashPrefab;
 		
-		[Header("Location References")]
+		[Header("Camera references")]
+		[SerializeField] private Camera firstPersonCamera;
+		
+		[Header("Location references")]
 		[SerializeField] private Transform casingExitLocation;
 		[SerializeField] private Transform firePoint;
 		
 		[Header("Settings")]
-		[Tooltip("Specify time to destroy the casing object")] [SerializeField] private float destroyTimer = 2f;
-		[Tooltip("Casing Ejection Speed")] [SerializeField] private float ejectPower = 150f;
-		
+		[Tooltip("Specify time to destroy the casing object")] 
+		[SerializeField] private float destroyTimer = 2f;
+		[Tooltip("Casing Ejection Speed")] 
+		[SerializeField] private float ejectPower = 150f;
+		[Tooltip("How fast the weapon can shoot")]
 		[SerializeField] private float fireRate = 0.14f;
-		[SerializeField] private float bulletForce;
+		[Tooltip("How far the weapon can shoot")] 
+		[SerializeField] private float fireRange = 100f;
+		[Tooltip("Force with which bullets fly out of weapon")]
+		[SerializeField] private float bulletForce = 150;
 		
 		private float _nextFireTime;
 		private Animator _animator;
@@ -35,6 +43,8 @@ namespace Tools.Weapons
 		private readonly InputAction _shoot = new("Shoot", InputActionType.Button, 
 			$"{InputConstants.Mouse}/{InputConstants.LeftButton}");
 
+		#region Monobehaviour methods
+
 		private void Awake()
 		{
 			_animator = gameObject.GetComponent<Animator>();
@@ -44,7 +54,6 @@ namespace Tools.Weapons
 			{
 				throw new Exception($"Animator parameter {AnimatorFire} not found");
 			}
-			
 		}
 
 		private void OnEnable()
@@ -58,6 +67,8 @@ namespace Tools.Weapons
 			_shoot.performed -= OnShootPerformed;
 			_shoot.Disable();
 		}
+
+		#endregion
 		
 		private void OnShootPerformed(InputAction.CallbackContext context)
 		{
@@ -79,6 +90,8 @@ namespace Tools.Weapons
 			if (!bulletPrefab)
 			{ return; }
 			
+			SetFirePointDirection();
+			
 			var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 			var rb = bullet.GetComponent<Rigidbody>();
 			rb.AddForce(firePoint.forward * bulletForce, ForceMode.Impulse);
@@ -88,21 +101,37 @@ namespace Tools.Weapons
 
 		private void CasingRelease()
 		{
-			//Cancels function if ejection slot hasn't been set or there's no casing
 			if (!casingExitLocation || !casingPrefab)
-			{ return; }
-			
-			//Create the casing
-			GameObject tempCasing;
-			tempCasing = Instantiate(casingPrefab, casingExitLocation.position, casingExitLocation.rotation);
+			{
+				return;
+			}
+
+			var tempCasing = Instantiate(casingPrefab, casingExitLocation.position, casingExitLocation.rotation);
 			var tempCasingRigidBody = tempCasing.GetComponent<Rigidbody>();
-			//Add force on casing to push it out
-			tempCasingRigidBody.AddExplosionForce(Random.Range(ejectPower * 0.7f, ejectPower), (casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f), 1f);
-			//Add torque to make casing spin in random direction
+			tempCasingRigidBody.AddExplosionForce(Random.Range(ejectPower * 0.7f, ejectPower), 
+				(casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f), 1f);
 			tempCasingRigidBody.AddTorque(new Vector3(0, Random.Range(100f, 500f), Random.Range(100f, 1000f)), ForceMode.Impulse);
 			
-			//Destroy casing after X seconds
 			Destroy(tempCasing, destroyTimer);
+		}
+
+		private void SetFirePointDirection()
+		{
+			Vector3 screenCenter = new Vector3((float)Screen.width / 2, (float)Screen.height / 2, 0);
+			Ray ray = firstPersonCamera.ScreenPointToRay(screenCenter);
+
+			// Если луч пересекает какой-либо объект
+			if (Physics.Raycast(ray, out var hit, fireRange))
+			{
+				// Направляем объект на точку пересечения
+				firePoint.transform.LookAt(hit.point);
+			}
+			else
+			{
+				// Если луч не пересекает объект, направляем объект на точку вдали
+				Vector3 targetPosition = ray.GetPoint(fireRange);
+				firePoint.transform.LookAt(targetPosition);
+			}
 		}
 	}
 }

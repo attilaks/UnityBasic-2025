@@ -338,11 +338,13 @@ MonoBehaviour:
     type: 3}
   muzzleFlashPrefab: {fileID: 1782395880954752, guid: 3dd9cf2e209c504448f1c4c6835675cf,
     type: 3}
+  firstPersonCamera: {fileID: 0}
   casingExitLocation: {fileID: 6543064702018434080}
   firePoint: {fileID: 2416474013166605518}
   destroyTimer: 2
   ejectPower: 150
   fireRate: 0.14
+  fireRange: 100
   bulletForce: 150
 --- !u!95 &921283718364843414
 Animator:
