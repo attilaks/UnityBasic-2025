@@ -29,7 +29,7 @@ namespace Tools.Spawners
 			);
 			
 			_currentEnemyCube = Instantiate(enemyCubePrefab, randomPosition, Quaternion.identity);
-			
+			_currentEnemyCube.OnDeath += SpawnEnemyCube;
 		}
 	}
 }
