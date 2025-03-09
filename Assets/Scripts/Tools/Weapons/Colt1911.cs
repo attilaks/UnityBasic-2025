@@ -23,8 +23,6 @@ namespace Tools.Weapons
 		[SerializeField] private Transform firePoint;
 		
 		[Header("Settings")]
-		[Tooltip("Specify time to destroy the casing object")] 
-		[SerializeField] private float destroyTimer = 2f;
 		[Tooltip("Casing Ejection Speed")] 
 		[SerializeField] private float ejectPower = 150f;
 		[Tooltip("How fast the weapon can shoot")]
@@ -36,7 +34,9 @@ namespace Tools.Weapons
 		
 		private float _nextFireTime;
 		private Animator _animator;
-		
+
+		private const float DestroyTimer = 2f;
+
 		private const string AnimatorFire = "Fire";
 		private static readonly int Fire = Animator.StringToHash(AnimatorFire);
 		
@@ -84,7 +84,7 @@ namespace Tools.Weapons
 			if (muzzleFlashPrefab)
 			{
 				var tempFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
-				Destroy(tempFlash, destroyTimer);
+				Destroy(tempFlash, DestroyTimer);
 			}
 			
 			if (!bulletPrefab)
@@ -112,7 +112,7 @@ namespace Tools.Weapons
 				(casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f), 1f);
 			tempCasingRigidBody.AddTorque(new Vector3(0, Random.Range(100f, 500f), Random.Range(100f, 1000f)), ForceMode.Impulse);
 			
-			Destroy(tempCasing, destroyTimer);
+			Destroy(tempCasing, DestroyTimer);
 		}
 
 		private void SetFirePointDirection()
