@@ -7,22 +7,20 @@ namespace Tools.Weapons
     {
         [SerializeField] private GameObject decalPrefab;
         [SerializeField] private float standardDamage = 10.0f;
-        
-        public float StandardDamage => standardDamage;
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.TryGetComponent<EnemyHealthManager>(out var healthManager))
+            if (other.gameObject.TryGetComponent<HealthManager>(out var healthManager))
             {
-                healthManager.Health -= standardDamage;
+                healthManager.TakeDamage(standardDamage);
             }
-            
-            ContactPoint contact = other.contacts[0];
-            Vector3 hitPosition = contact.point + contact.normal * 0.001f;
-            Quaternion hitRotation = Quaternion.LookRotation(contact.normal);
             
             if (decalPrefab != null)
             {
+                ContactPoint contact = other.contacts[0];
+                Vector3 hitPosition = contact.point + contact.normal * 0.001f;
+                Quaternion hitRotation = Quaternion.LookRotation(contact.normal);
+                
                 GameObject bulletHoleDecal = Instantiate(decalPrefab, hitPosition, hitRotation);
                 bulletHoleDecal.transform.parent = other.transform;
                 Destroy(bulletHoleDecal, 10f);

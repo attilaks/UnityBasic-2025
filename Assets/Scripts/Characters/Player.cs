@@ -6,12 +6,12 @@ namespace Characters
 {
 	public class Player : MonoBehaviour
 	{
-		private readonly HealthManager _healthManager = new (100f);
+		private readonly HealthManagerV0 _healthManagerV0 = new (100f);
 
 		public void PickUpFirstAidKit()
 		{
-			_healthManager.GetFirstAidKit();
-			Debug.LogError($"Я взял аптечку! Теперь у меня их {_healthManager.FirstAidKitCollected} :)");
+			_healthManagerV0.GetFirstAidKit();
+			Debug.LogError($"Я взял аптечку! Теперь у меня их {_healthManagerV0.FirstAidKitCollected} :)");
 		}
 	}
 }

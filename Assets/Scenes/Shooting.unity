@@ -1457,6 +1457,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: (P) Assault_Rifle_01
       objectReference: {fileID: 0}
+    - target: {fileID: 7316538885775564673, guid: 2f525c44831a2a1439953044ef9b12a8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7981014016842286395, guid: 2f525c44831a2a1439953044ef9b12a8,
         type: 3}
       propertyPath: m_RootOrder
@@ -1771,7 +1776,7 @@ PrefabInstance:
     - target: {fileID: 2698192612088560669, guid: 9a1e65593910a844ab505c0805cec67b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3528601461508310308, guid: 9a1e65593910a844ab505c0805cec67b,
         type: 3}
