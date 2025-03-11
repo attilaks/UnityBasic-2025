@@ -1,8 +1,9 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Tools.Managers
 {
-	public class EnemyHealthManager
+	public class EnemyHealthManager //: Component
 	{
 		public EnemyHealthManager(float health)
 		{

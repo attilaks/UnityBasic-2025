@@ -24,18 +24,18 @@ namespace Characters
 			_healthManager.DeathHasComeEvent += CubeIsDestroyed;
 		}
 
-		private void OnCollisionEnter(Collision other)
-		{
-			if (_healthManager.IsDead)
-			{
-				return;
-			}
-			
-			if (other.gameObject.TryGetComponent<Bullet45Acp>(out var bullet))
-			{
-				_healthManager.Health -= bullet.StandardDamage;
-			}
-		}
+		// private void OnCollisionEnter(Collision other)
+		// {
+		// 	if (_healthManager.IsDead)
+		// 	{
+		// 		return;
+		// 	}
+		// 	
+		// 	if (other.gameObject.TryGetComponent<Bullet45Acp>(out var bullet))
+		// 	{
+		// 		_healthManager.Health -= bullet.StandardDamage;
+		// 	}
+		// }
 		
 		private void OnDestroy()
 		{

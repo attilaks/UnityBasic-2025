@@ -1,3 +1,4 @@
+using Tools.Managers;
 using UnityEngine;
 
 namespace Tools.Weapons
@@ -9,16 +10,21 @@ namespace Tools.Weapons
         
         public float StandardDamage => standardDamage;
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnCollisionEnter(Collision other)
         {
-            ContactPoint contact = collision.contacts[0];
+            if (other.gameObject.TryGetComponent<EnemyHealthManager>(out var healthManager))
+            {
+                healthManager.Health -= standardDamage;
+            }
+            
+            ContactPoint contact = other.contacts[0];
             Vector3 hitPosition = contact.point + contact.normal * 0.001f;
             Quaternion hitRotation = Quaternion.LookRotation(contact.normal);
             
             if (decalPrefab != null)
             {
                 GameObject bulletHoleDecal = Instantiate(decalPrefab, hitPosition, hitRotation);
-                bulletHoleDecal.transform.parent = collision.transform;
+                bulletHoleDecal.transform.parent = other.transform;
                 Destroy(bulletHoleDecal, 10f);
             }
             
