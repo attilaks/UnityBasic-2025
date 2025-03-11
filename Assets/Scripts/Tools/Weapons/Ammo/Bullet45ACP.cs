@@ -1,27 +1,27 @@
+using ScriptableObjects.AssetMenus;
 using Tools.Managers;
 using UnityEngine;
 
-namespace Tools.Weapons
+namespace Tools.Weapons.Ammo
 {
     public class Bullet45Acp : MonoBehaviour
     {
-        [SerializeField] private GameObject decalPrefab;
-        [SerializeField] private float standardDamage = 10.0f;
+        [SerializeField] private AmmoData ammoData;
 
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.TryGetComponent<HealthManager>(out var healthManager))
             {
-                healthManager.TakeDamage(standardDamage);
+                healthManager.TakeDamage(ammoData.StandardDamage);
             }
             
-            if (decalPrefab != null)
+            if (ammoData.DecalPrefab != null)
             {
                 ContactPoint contact = other.contacts[0];
                 Vector3 hitPosition = contact.point + contact.normal * 0.001f;
                 Quaternion hitRotation = Quaternion.LookRotation(contact.normal);
                 
-                GameObject bulletHoleDecal = Instantiate(decalPrefab, hitPosition, hitRotation);
+                GameObject bulletHoleDecal = Instantiate(ammoData.DecalPrefab, hitPosition, hitRotation);
                 bulletHoleDecal.transform.parent = other.transform;
                 Destroy(bulletHoleDecal, 10f);
             }

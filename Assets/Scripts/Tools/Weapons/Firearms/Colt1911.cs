@@ -1,36 +1,22 @@
 ﻿using System;
 using System.Linq;
 using GlobalConstants;
+using ScriptableObjects.AssetMenus;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
-namespace Tools.Weapons
+namespace Tools.Weapons.Firearms
 {
 	[RequireComponent(typeof(Animator))]
 	public class Colt1911 : MonoBehaviour
 	{
-		[Header("Prefab references")]
-		[SerializeField] private GameObject bulletPrefab;
-		[SerializeField] private GameObject casingPrefab;
-		[SerializeField] private GameObject muzzleFlashPrefab;
-		
-		[Header("Camera references")]
 		[SerializeField] private Camera firstPersonCamera;
+		[SerializeField] private WeaponData weaponData;
 		
 		[Header("Location references")]
 		[SerializeField] private Transform casingExitLocation;
 		[SerializeField] private Transform firePoint;
-		
-		[Header("Settings")]
-		[Tooltip("Casing Ejection Speed")] 
-		[SerializeField] private float ejectPower = 150f;
-		[Tooltip("How fast the weapon can shoot")]
-		[SerializeField] private float fireRate = 0.14f;
-		[Tooltip("How far the weapon can shoot")] 
-		[SerializeField] private float fireRange = 100f;
-		[Tooltip("Force with which bullets fly out of weapon")]
-		[SerializeField] private float bulletForce = 150;
 		
 		private float _nextFireTime;
 		private Animator _animator;
@@ -74,42 +60,42 @@ namespace Tools.Weapons
 		{
 			if (Time.time >= _nextFireTime)
 			{
+				_nextFireTime = Time.time + weaponData.FireRate;
 				_animator.SetTrigger(Fire);
-				_nextFireTime = Time.time + fireRate;
 			}
 		}
 
 		private void Shoot()
 		{
-			if (muzzleFlashPrefab)
+			if (weaponData.MuzzleFlashPrefab)
 			{
-				var tempFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
+				var tempFlash = Instantiate(weaponData.MuzzleFlashPrefab, firePoint.position, firePoint.rotation);
 				Destroy(tempFlash, DestroyTimer);
 			}
+
+			if (weaponData.BulletPrefab)
+			{
+				SetFirePointDirection();
 			
-			if (!bulletPrefab)
-			{ return; }
+				var bullet = Instantiate(weaponData.BulletPrefab, firePoint.position, firePoint.rotation);
+				var rb = bullet.GetComponent<Rigidbody>();
+				rb.AddForce(firePoint.forward * weaponData.BulletForce, ForceMode.Impulse);
 			
-			SetFirePointDirection();
-			
-			var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-			var rb = bullet.GetComponent<Rigidbody>();
-			rb.AddForce(firePoint.forward * bulletForce, ForceMode.Impulse);
-			
-			Destroy(bullet, 2f);
+				Destroy(bullet, 2f);
+			}
 		}
 
 		private void CasingRelease()
 		{
-			if (!casingExitLocation || !casingPrefab)
+			if (!casingExitLocation || !weaponData.CasingPrefab)
 			{
 				return;
 			}
 
-			var tempCasing = Instantiate(casingPrefab, casingExitLocation.position, casingExitLocation.rotation);
+			var tempCasing = Instantiate(weaponData.CasingPrefab, casingExitLocation.position, casingExitLocation.rotation);
 			var tempCasingRigidBody = tempCasing.GetComponent<Rigidbody>();
-			tempCasingRigidBody.AddExplosionForce(Random.Range(ejectPower * 0.7f, ejectPower), 
-				(casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f), 1f);
+			tempCasingRigidBody.AddExplosionForce(Random.Range(weaponData.EjectPower * 0.7f, weaponData.EjectPower), 
+				casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f, 1f);
 			tempCasingRigidBody.AddTorque(new Vector3(0, Random.Range(100f, 500f), Random.Range(100f, 1000f)), ForceMode.Impulse);
 			
 			Destroy(tempCasing, DestroyTimer);
@@ -121,7 +107,7 @@ namespace Tools.Weapons
 			Ray ray = firstPersonCamera.ScreenPointToRay(screenCenter);
 
 			// Если луч пересекает какой-либо объект
-			if (Physics.Raycast(ray, out var hit, fireRange))
+			if (Physics.Raycast(ray, out var hit, weaponData.FireRange))
 			{
 				// Направляем объект на точку пересечения
 				firePoint.transform.LookAt(hit.point);
@@ -129,7 +115,7 @@ namespace Tools.Weapons
 			else
 			{
 				// Если луч не пересекает объект, направляем объект на точку вдали
-				Vector3 targetPosition = ray.GetPoint(fireRange);
+				Vector3 targetPosition = ray.GetPoint(weaponData.FireRange);
 				firePoint.transform.LookAt(targetPosition);
 			}
 		}

@@ -272,8 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d01ee3e1b56e8498a283433f9cc88d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decalPrefab: {fileID: 53591620138530189, guid: 4e4f711317d19ae49b93f9ce4de93ff8,
-    type: 3}
+  ammoData: {fileID: 11400000, guid: dc725f67b4f35f14f88cf3dfb7d00281, type: 2}
 --- !u!136 &4184721422398665394
 CapsuleCollider:
   m_ObjectHideFlags: 0
