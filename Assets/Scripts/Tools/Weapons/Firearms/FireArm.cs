@@ -2,6 +2,7 @@
 using ScriptableObjects.AssetMenus;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Tools.Weapons.Firearms
 {
@@ -17,23 +18,48 @@ namespace Tools.Weapons.Firearms
 		private const float DestroyTimer = 2f;
         
 		protected float NextFireTime;
+		protected byte CurrentAmmoCount;
 		
 		protected readonly InputAction ShootAction = new("Shoot", InputActionType.Button, 
 			$"{InputConstants.Mouse}/{InputConstants.LeftButton}");
-		
+
+		private readonly InputAction _reloadAction = new("Reload", InputActionType.Button, 
+			$"{InputConstants.KeyBoard}/{InputConstants.R}");
+
+		protected void Awake()
+		{
+			CurrentAmmoCount = weaponData.ClipCapacity;
+		}
+
 		protected void OnEnable()
 		{
+			_reloadAction.performed += OnReloadActionPerformed;
+			
 			ShootAction.Enable();
+			_reloadAction.Enable();
 		}
 		
 		protected void OnDisable()
 		{
+			_reloadAction.performed -= OnReloadActionPerformed;
+			
 			ShootAction.Disable();
+			_reloadAction.Disable();
+		}
+
+		private void OnReloadActionPerformed(InputAction.CallbackContext obj)
+		{
+			Reload();
+		}
+
+		private void Reload()
+		{
+			CurrentAmmoCount = weaponData.ClipCapacity;
 		}
 
 		protected void Shoot()
 		{
-			if (Time.time >= NextFireTime)
+			if (Time.time >= NextFireTime && CurrentAmmoCount > 0)
 			{
 				NextFireTime = Time.time + weaponData.FireRate;
 				PullTheTrigger();
@@ -58,6 +84,8 @@ namespace Tools.Weapons.Firearms
 			
 				Destroy(bulletRb.gameObject, 2f);
 			}
+			
+			--CurrentAmmoCount;
 		}
 
 		protected void SetMuzzleFlash()

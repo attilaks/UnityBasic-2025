@@ -15,8 +15,9 @@ namespace Tools.Weapons.Firearms
 
 		#region Monobehaviour methods
 
-		private void Awake()
+		private new void Awake()
 		{
+			base.Awake();
 			_animator = gameObject.GetComponent<Animator>();
 			
 			var animatorParameterNames = _animator.parameters.Select(x => x.name).ToArray();
@@ -47,7 +48,7 @@ namespace Tools.Weapons.Firearms
 
 		private new void Shoot()
 		{
-			if (Time.time >= NextFireTime)
+			if (Time.time >= NextFireTime && CurrentAmmoCount > 0)
 			{
 				NextFireTime = Time.time + weaponData.FireRate;
 				_animator.SetTrigger(Fire);

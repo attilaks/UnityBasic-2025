@@ -28,6 +28,7 @@ namespace ScriptableObjects.AssetMenus
 		[Tooltip("Force with which bullets fly out of weapon")] 
 		[SerializeField] private float bulletForce = 150;
 		[SerializeField] private float bulletSpread = 5f;
+		[SerializeField] private byte clipCapacity = 7;
 		
 		public Rigidbody BulletPrefab => bulletPrefab;
 		public Rigidbody CasingPrefab => casingPrefab;
@@ -38,5 +39,6 @@ namespace ScriptableObjects.AssetMenus
 		public float FireRange => fireRange;
 		public float BulletForce => bulletForce;
 		public float BulletSpread => bulletSpread;
+		public byte ClipCapacity => clipCapacity;
 	}
 }

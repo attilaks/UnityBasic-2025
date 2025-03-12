@@ -27,7 +27,7 @@ namespace Tools.Weapons.Firearms
 		
 		private new void Shoot()
 		{
-			if (Time.time >= NextFireTime)
+			if (Time.time >= NextFireTime && CurrentAmmoCount > 0)
 			{
 				NextFireTime = Time.time + weaponData.FireRate;
 				PullTheTrigger();
@@ -42,9 +42,10 @@ namespace Tools.Weapons.Firearms
 			if (weaponData.BulletPrefab)
 			{
 				SetFirePointDirection();
-
 				StartCoroutine(SpreadBullets());
 			}
+			
+			--CurrentAmmoCount;
 		}
 
 		private IEnumerator SpreadBullets()
