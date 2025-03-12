@@ -16,9 +16,29 @@ namespace Tools.Weapons.Firearms
 		[SerializeField] protected Transform firePoint;
 
 		private const float DestroyTimer = 2f;
+		private byte _currentAmmoCount;
         
 		protected float NextFireTime;
-		protected byte CurrentAmmoCount;
+
+		protected byte CurrentAmmoCount
+		{
+			get => _currentAmmoCount;
+			set
+			{
+				if (value <= 0)
+				{
+					_currentAmmoCount = 0;
+				}
+				else if (value >= weaponData.ClipCapacity)
+				{
+					_currentAmmoCount = weaponData.ClipCapacity;
+				}
+				else
+				{
+					_currentAmmoCount = value;
+				}
+			}
+		}
 		
 		protected readonly InputAction ShootAction = new("Shoot", InputActionType.Button, 
 			$"{InputConstants.Mouse}/{InputConstants.LeftButton}");

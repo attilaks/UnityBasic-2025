@@ -22,7 +22,7 @@ namespace Tools.Weapons
 			fireArms[0].SetActive(true);
 			scrollAction.Enable();
 		}
-		
+
 		private void OnDestroy()
 		{
 			scrollAction.Disable();
