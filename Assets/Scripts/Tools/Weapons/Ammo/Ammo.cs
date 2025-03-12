@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tools.Weapons.Ammo
 {
-	public class BulletAk74 : MonoBehaviour
+	public class Ammo : MonoBehaviour
 	{
 		[SerializeField] private AmmoData ammoData;
 		

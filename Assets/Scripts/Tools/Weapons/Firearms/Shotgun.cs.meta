@@ -1,3 +1,15 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: bd87ed1495334bd29f239e0822186c80
-timeCreated: 1741729621
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - firstPersonCamera: {instanceID: 0}
+  - weaponData: {fileID: 11400000, guid: b38a85e2ff2a6a14583991ffb2680dc1, type: 2}
+  - casingExitLocation: {instanceID: 0}
+  - firePoint: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

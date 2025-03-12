@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9077938f03b4d1db6a5f136cc8492af, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2763985607813628645, guid: 4a41f55a7260e4f4a89ccd62717dd1af,
+  bulletPrefab: {fileID: 1677095160095398856, guid: 4a41f55a7260e4f4a89ccd62717dd1af,
     type: 3}
-  casingPrefab: {fileID: 3489922258393200078, guid: 4d409630e9aa0d74cb9e7359305b15c6,
+  casingPrefab: {fileID: 411560320337208471, guid: 4d409630e9aa0d74cb9e7359305b15c6,
     type: 3}
   muzzleFlashPrefab: {fileID: 1782395880954752, guid: 3dd9cf2e209c504448f1c4c6835675cf,
     type: 3}
-  ejectPower: 150
+  ejectPower: 250
   fireRate: 1
   fireRange: 100
   bulletForce: 150
+  bulletSpread: 5
+  clipCapacity: 8

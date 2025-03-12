@@ -19,6 +19,8 @@
 		public const string D = "d";
 		public const string Q = "q";
 		public const string E = "e";
+		public const string R = "r";
+		
 		
 		public const string LeftArrow = "leftArrow";
 		public const string RightArrow = "rightArrow";

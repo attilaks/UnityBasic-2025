@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1016476100416541505}
   - component: {fileID: 1763762399041928216}
   - component: {fileID: 4184721422398665394}
-  - component: {fileID: -6363605264207911219}
+  - component: {fileID: 9195770626186505662}
   m_Layer: 0
   m_Name: Ak-74 Bullet
   m_TagString: Untagged
@@ -283,7 +283,7 @@ CapsuleCollider:
   m_Height: 0.03
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0.013}
---- !u!114 &-6363605264207911219
+--- !u!114 &9195770626186505662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1266833005650248464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5c8fd9b6f1f4f8aa993b93c76ae78a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 2439de8813994c49862d0e84cfecd7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ammoData: {fileID: 11400000, guid: 20c120fb5e9bfa646807af58e0971b15, type: 2}

@@ -94,8 +94,8 @@ GameObject:
   - component: {fileID: 6276273315755926378}
   - component: {fileID: 1016476100416541505}
   - component: {fileID: 1763762399041928216}
-  - component: {fileID: -1698827284600727070}
   - component: {fileID: 4184721422398665394}
+  - component: {fileID: -6686313446281342608}
   m_Layer: 0
   m_Name: 45ACP Bullet v2
   m_TagString: Untagged
@@ -260,19 +260,6 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &-1698827284600727070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266833005650248464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d01ee3e1b56e8498a283433f9cc88d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoData: {fileID: 11400000, guid: dc725f67b4f35f14f88cf3dfb7d00281, type: 2}
 --- !u!136 &4184721422398665394
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -296,6 +283,19 @@ CapsuleCollider:
   m_Height: 0.03
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0.013}
+--- !u!114 &-6686313446281342608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266833005650248464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2439de8813994c49862d0e84cfecd7b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoData: {fileID: 11400000, guid: dc725f67b4f35f14f88cf3dfb7d00281, type: 2}
 --- !u!1 &5838767848198372577
 GameObject:
   m_ObjectHideFlags: 0
