@@ -27,6 +27,7 @@ namespace ScriptableObjects.AssetMenus
 		[FormerlySerializedAs("BulletForce")]
 		[Tooltip("Force with which bullets fly out of weapon")] 
 		[SerializeField] private float bulletForce = 150;
+		[SerializeField] private float bulletSpread = 5f;
 		
 		public GameObject BulletPrefab => bulletPrefab;
 		public GameObject CasingPrefab => casingPrefab;
@@ -36,5 +37,6 @@ namespace ScriptableObjects.AssetMenus
 		public float FireRate => fireRate;
 		public float FireRange => fireRange;
 		public float BulletForce => bulletForce;
+		public float BulletSpread => bulletSpread;
 	}
 }

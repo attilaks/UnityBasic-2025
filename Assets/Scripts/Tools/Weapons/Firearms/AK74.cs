@@ -59,7 +59,11 @@ namespace Tools.Weapons.Firearms
 			
                 var bullet = Instantiate(weaponData.BulletPrefab, firePoint.position, firePoint.rotation);
                 var rb = bullet.GetComponent<Rigidbody>();
-                rb.AddForce(firePoint.forward * weaponData.BulletForce, ForceMode.Impulse);
+                var direction = Quaternion.Euler(
+                    Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread),
+                    Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread),
+                    0) * firePoint.forward;
+                rb.AddForce(direction * weaponData.BulletForce, ForceMode.Impulse);
 			
                 Destroy(bullet, 2f);
             }

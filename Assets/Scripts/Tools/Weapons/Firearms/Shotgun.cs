@@ -1,47 +1,28 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections;
 using GlobalConstants;
 using ScriptableObjects.AssetMenus;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 namespace Tools.Weapons.Firearms
 {
-	[RequireComponent(typeof(Animator))]
-	public class Colt1911 : MonoBehaviour
+	public class Shotgun : MonoBehaviour
 	{
 		[SerializeField] private Camera firstPersonCamera;
 		[SerializeField] private WeaponData weaponData;
-		
+        
 		[Header("Location references")]
 		[SerializeField] private Transform casingExitLocation;
 		[SerializeField] private Transform firePoint;
-		
+        
 		private float _nextFireTime;
-		private Animator _animator;
-
-		private const float DestroyTimer = 2f;
-
-		private const string AnimatorFire = "Fire";
-		private static readonly int Fire = Animator.StringToHash(AnimatorFire);
 		
+		private const byte BlastCount = 6;
+		private const float DestroyTimer = 2f;
+        
 		private readonly InputAction _shoot = new("Shoot", InputActionType.Button, 
 			$"{InputConstants.Mouse}/{InputConstants.LeftButton}");
-
-		#region Monobehaviour methods
-
-		private void Awake()
-		{
-			_animator = gameObject.GetComponent<Animator>();
-			
-			var animatorParameterNames = _animator.parameters.Select(x => x.name).ToArray();
-			if (!animatorParameterNames.Contains(AnimatorFire))
-			{
-				throw new Exception($"Animator parameter {AnimatorFire} not found");
-			}
-		}
-
+		
 		private void OnEnable()
 		{
 			_shoot.performed += OnShootPerformed;
@@ -53,15 +34,14 @@ namespace Tools.Weapons.Firearms
 			_shoot.performed -= OnShootPerformed;
 			_shoot.Disable();
 		}
-
-		#endregion
 		
 		private void OnShootPerformed(InputAction.CallbackContext context)
 		{
 			if (Time.time >= _nextFireTime)
 			{
 				_nextFireTime = Time.time + weaponData.FireRate;
-				_animator.SetTrigger(Fire);
+				Shoot();
+				CasingRelease();
 			}
 		}
 
@@ -76,16 +56,48 @@ namespace Tools.Weapons.Firearms
 			if (weaponData.BulletPrefab)
 			{
 				SetFirePointDirection();
-			
+
+				StartCoroutine(SpreadBullets());
+
+				// for (var i = 0; i < BlastCount; i++)
+				// {
+				// 	var spreadX = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
+				// 	var spreadY = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
+				// 	var direction = Quaternion.Euler(spreadX, spreadY, 0) * firePoint.forward;
+				// 	
+				// 	var bullet = Instantiate(weaponData.BulletPrefab, firePoint.position, firePoint.rotation);
+				// 	var rb = bullet.GetComponent<Rigidbody>();
+				// 	rb.AddForce(direction * weaponData.BulletForce, ForceMode.Impulse);
+				//
+				// 	Destroy(bullet, 2f);
+				// }
+
+				// var spreadX = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
+				// var spreadY = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
+				// var direction = Quaternion.Euler(spreadX, spreadY, 0) * firePoint.forward;
+				// 	
+				// var bullet = Instantiate(weaponData.BulletPrefab, firePoint.position, firePoint.rotation);
+				// var rb = bullet.GetComponent<Rigidbody>();
+				// rb.AddForce(direction * weaponData.BulletForce, ForceMode.Impulse);
+				//
+				// Destroy(bullet, 2f);
+			}
+		}
+
+		private IEnumerator SpreadBullets()
+		{
+			for (var blastsLeft = BlastCount; blastsLeft > 0; --blastsLeft)
+			{
+				var spreadX = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
+				var spreadY = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
+				var direction = Quaternion.Euler(spreadX, spreadY, 0) * firePoint.forward;
+					
 				var bullet = Instantiate(weaponData.BulletPrefab, firePoint.position, firePoint.rotation);
 				var rb = bullet.GetComponent<Rigidbody>();
-				var direction = Quaternion.Euler(
-					Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread),
-					Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread),
-					0) * firePoint.forward;
 				rb.AddForce(direction * weaponData.BulletForce, ForceMode.Impulse);
-			
+
 				Destroy(bullet, 2f);
+				yield return new WaitForSeconds(0.015f);
 			}
 		}
 

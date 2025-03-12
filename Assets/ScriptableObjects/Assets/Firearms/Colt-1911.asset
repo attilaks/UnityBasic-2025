@@ -22,3 +22,4 @@ MonoBehaviour:
   fireRate: 0.14
   fireRange: 100
   bulletForce: 150
+  bulletSpread: 1
