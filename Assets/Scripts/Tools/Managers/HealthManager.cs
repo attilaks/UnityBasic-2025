@@ -3,49 +3,46 @@ using UnityEngine;
 
 namespace Tools.Managers
 {
-	public class HealthManager
+	public class HealthManager : MonoBehaviour
 	{
-		public HealthManager(float health)
-		{
-			Health = health;
-		}
+		[SerializeField] private float maxHealth = 50f;
 		
 		public event Action DeathHasComeEvent = delegate { };
-		public bool IsDead { get; private set; }
-
-		public uint FirstAidKitCollected { get; private set; }
-
+		private bool IsDead { get; set; }
+		
 		private float _health;
-		public float Health
+
+		private void Awake()
+		{
+			_health = maxHealth;
+		}
+
+		private float Health
 		{
 			get => _health;
 			set
 			{
-				if (_health > value)
+				if (IsDead)
 				{
-					if (value <= 0f)
-					{
-						_health = 0f;
-						IsDead = true;
-						DeathHasComeEvent.Invoke();
-					}
-					else
-					{
-						_health = value;
-						Debug.LogError($"Aaargh... I'm injured! My Health is {Health}");
-					}
+					return;
+				}
+				
+				if (value <= 0f)
+				{
+					_health = 0f;
+					IsDead = true;
+					DeathHasComeEvent.Invoke();
 				}
 				else
 				{
 					_health = value;
-					IsDead = false;
 				}
 			}
 		}
 
-		public void GetFirstAidKit()
+		public void TakeDamage(float damage)
 		{
-			++FirstAidKitCollected;
+			Health -= damage;
 		}
 	}
 }
