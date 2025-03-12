@@ -23,3 +23,4 @@ MonoBehaviour:
   fireRange: 100
   bulletForce: 150
   bulletSpread: 5
+  clipCapacity: 8
