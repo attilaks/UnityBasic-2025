@@ -10,8 +10,8 @@ namespace ScriptableObjects.AssetMenus
 	{
 		[Header("Prefab references")]
 		[Tooltip("Prefab of the bullet, rocket, etc.")]
-		[SerializeField] private GameObject bulletPrefab;
-		[SerializeField] private GameObject casingPrefab;
+		[SerializeField] private Rigidbody bulletPrefab;
+		[SerializeField] private Rigidbody casingPrefab;
 		[SerializeField] private GameObject muzzleFlashPrefab;
 
 		[FormerlySerializedAs("EjectPower")]
@@ -29,8 +29,8 @@ namespace ScriptableObjects.AssetMenus
 		[SerializeField] private float bulletForce = 150;
 		[SerializeField] private float bulletSpread = 5f;
 		
-		public GameObject BulletPrefab => bulletPrefab;
-		public GameObject CasingPrefab => casingPrefab;
+		public Rigidbody BulletPrefab => bulletPrefab;
+		public Rigidbody CasingPrefab => casingPrefab;
 		public GameObject MuzzleFlashPrefab => muzzleFlashPrefab;
 
 		public float EjectPower => ejectPower;

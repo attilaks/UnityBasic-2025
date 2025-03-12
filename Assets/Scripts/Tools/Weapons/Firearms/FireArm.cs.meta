@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: bd87ed1495334bd29f239e0822186c80
+guid: df038da7d4f640358dedfab13fba98a2
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
   - firstPersonCamera: {instanceID: 0}
-  - weaponData: {fileID: 11400000, guid: b38a85e2ff2a6a14583991ffb2680dc1, type: 2}
+  - weaponData: {fileID: 11400000, guid: 3e36ae5b2e0d32e488fac38da054e2ec, type: 2}
   - casingExitLocation: {instanceID: 0}
   - firePoint: {instanceID: 0}
   executionOrder: 0
