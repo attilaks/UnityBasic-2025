@@ -58,29 +58,6 @@ namespace Tools.Weapons.Firearms
 				SetFirePointDirection();
 
 				StartCoroutine(SpreadBullets());
-
-				// for (var i = 0; i < BlastCount; i++)
-				// {
-				// 	var spreadX = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
-				// 	var spreadY = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
-				// 	var direction = Quaternion.Euler(spreadX, spreadY, 0) * firePoint.forward;
-				// 	
-				// 	var bullet = Instantiate(weaponData.BulletPrefab, firePoint.position, firePoint.rotation);
-				// 	var rb = bullet.GetComponent<Rigidbody>();
-				// 	rb.AddForce(direction * weaponData.BulletForce, ForceMode.Impulse);
-				//
-				// 	Destroy(bullet, 2f);
-				// }
-
-				// var spreadX = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
-				// var spreadY = Random.Range(-weaponData.BulletSpread, weaponData.BulletSpread);
-				// var direction = Quaternion.Euler(spreadX, spreadY, 0) * firePoint.forward;
-				// 	
-				// var bullet = Instantiate(weaponData.BulletPrefab, firePoint.position, firePoint.rotation);
-				// var rb = bullet.GetComponent<Rigidbody>();
-				// rb.AddForce(direction * weaponData.BulletForce, ForceMode.Impulse);
-				//
-				// Destroy(bullet, 2f);
 			}
 		}
 
