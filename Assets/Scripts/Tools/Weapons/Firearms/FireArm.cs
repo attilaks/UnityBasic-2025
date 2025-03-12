@@ -102,5 +102,10 @@ namespace Tools.Weapons.Firearms
 				firePoint.transform.LookAt(targetPosition);
 			}
 		}
+
+		public void SetActive(bool active)
+		{
+			gameObject.SetActive(active);
+		}
 	}
 }

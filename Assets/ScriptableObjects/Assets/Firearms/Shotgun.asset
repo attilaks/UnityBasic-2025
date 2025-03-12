@@ -18,7 +18,7 @@ MonoBehaviour:
     type: 3}
   muzzleFlashPrefab: {fileID: 1782395880954752, guid: 3dd9cf2e209c504448f1c4c6835675cf,
     type: 3}
-  ejectPower: 150
+  ejectPower: 250
   fireRate: 1
   fireRange: 100
   bulletForce: 150
