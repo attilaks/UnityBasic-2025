@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Tools
+namespace Tools.Managers
 {
 	public class HealthManager
 	{

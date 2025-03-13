@@ -4,7 +4,7 @@ using GlobalConstants;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Tools
+namespace Tools.Managers
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Rigidbody))]

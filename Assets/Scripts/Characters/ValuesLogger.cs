@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Heroes
+namespace Characters
 {
     public class ValuesLogger : MonoBehaviour
     {
