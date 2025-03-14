@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Tools.Weapons.Firearms
 {
+	[RequireComponent(typeof(AudioSource))]
 	public abstract class FireArm : MonoBehaviour
 	{
 		[SerializeField] protected Camera firstPersonCamera;
@@ -14,6 +15,12 @@ namespace Tools.Weapons.Firearms
 		[Header("Location references")]
 		[SerializeField] protected Transform casingExitLocation;
 		[SerializeField] protected Transform firePoint;
+		
+		[Header("Audio references")]
+		[SerializeField] private AudioClip shootSound;
+		[SerializeField] private AudioClip reloadSound;
+		
+		private AudioSource _audioSource;
 
 		private const float DestroyTimer = 2f;
 		private byte _currentAmmoCount;
@@ -49,6 +56,7 @@ namespace Tools.Weapons.Firearms
 		protected void Awake()
 		{
 			CurrentAmmoCount = weaponData.ClipCapacity;
+			_audioSource = GetComponent<AudioSource>();
 		}
 
 		protected void OnEnable()
@@ -90,6 +98,7 @@ namespace Tools.Weapons.Firearms
 		protected void PullTheTrigger()
 		{
 			SetMuzzleFlash();
+			// PlaySound(shootSound);
 
 			if (weaponData.BulletPrefab)
 			{
@@ -106,6 +115,14 @@ namespace Tools.Weapons.Firearms
 			}
 			
 			--CurrentAmmoCount;
+		}
+
+		private void PlaySound(AudioClip audioClip)
+		{
+			if (audioClip)
+			{
+				_audioSource.PlayOneShot(audioClip);
+			}
 		}
 
 		protected void SetMuzzleFlash()

@@ -11,7 +11,7 @@ namespace Tools.Managers
 		[SerializeField] private float movementSpeed = 2f;
 		[SerializeField] private float rotationSpeed = 2f;
 		
-		[Header("Audio settings")]
+		[Header("Audio references")]
 		[SerializeField] private AudioClip[] footstepClips;
 		
 		private readonly InputAction _moveForward = new("MoveForward", InputActionType.Value, 
@@ -31,7 +31,7 @@ namespace Tools.Managers
 		private readonly InputAction _rotateRight = new("RotateRight", InputActionType.Value, 
 			$"{InputConstants.KeyBoard}/{InputConstants.E}");
 		
-		private AudioSource _footStepsAudioSource;
+		private AudioSource _audioSource;
 		private float _walkSoundSpeed;
 		private float _runSoundSpeed;
 		private bool _isRunning;
@@ -41,8 +41,8 @@ namespace Tools.Managers
 
 		private void Awake()
 		{
-			_footStepsAudioSource = GetComponent<AudioSource>();
-			_walkSoundSpeed = _footStepsAudioSource.pitch;
+			_audioSource = GetComponent<AudioSource>();
+			_walkSoundSpeed = _audioSource.pitch;
 			_runSoundSpeed = _walkSoundSpeed * 2f;
 		}
 
@@ -120,13 +120,13 @@ namespace Tools.Managers
 
 		private void PlayFootSteps()
 		{
-			if (_footStepsAudioSource.isPlaying) return;
+			if (_audioSource.isPlaying) return;
 			
-			_footStepsAudioSource.clip = footstepClips[_currentStepIndex];
+			_audioSource.clip = footstepClips[_currentStepIndex];
 			_currentStepIndex = (_currentStepIndex + 1) % footstepClips.Length;
-			_footStepsAudioSource.pitch = _isRunning ? _runSoundSpeed : _walkSoundSpeed;
+			_audioSource.pitch = _isRunning ? _runSoundSpeed : _walkSoundSpeed;
 			
-			_footStepsAudioSource.Play();
+			_audioSource.Play();
 		}
 	}
 }
