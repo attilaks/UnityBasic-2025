@@ -33,7 +33,6 @@ namespace Tools.Weapons.Firearms
 			get => _currentAmmoCount;
 			set
 			{
-				Debug.Log($"Current ammo count is trying to be set to {value}");
 				if (value <= 0)
 				{
 					_currentAmmoCount = 0;
