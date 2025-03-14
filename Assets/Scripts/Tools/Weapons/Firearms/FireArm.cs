@@ -98,7 +98,7 @@ namespace Tools.Weapons.Firearms
 		protected void PullTheTrigger()
 		{
 			SetMuzzleFlash();
-			// PlaySound(shootSound);
+			PlaySound(shootSound);
 
 			if (weaponData.BulletPrefab)
 			{
