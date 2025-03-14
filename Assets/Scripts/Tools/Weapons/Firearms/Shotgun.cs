@@ -7,37 +7,11 @@ namespace Tools.Weapons.Firearms
 	public sealed class Shotgun : FireArm
 	{
 		private const byte BlastCount = 6;
-		
-		private new void OnEnable()
-		{
-			ShootAction.performed += OnShootActionPerformed;
-			base.OnEnable();
-		}
 
-		private new void OnDisable()
-		{
-			ShootAction.performed -= OnShootActionPerformed;
-			base.OnDisable();
-		}
-		
-		private void OnShootActionPerformed(InputAction.CallbackContext context)
-		{
-			Shoot();
-		}
-		
-		private new void Shoot()
-		{
-			if (Time.time >= NextFireTime && CurrentAmmoCount > 0)
-			{
-				NextFireTime = Time.time + weaponData.FireRate;
-				PullTheTrigger();
-				CasingRelease();
-			}
-		}
-
-		private new void PullTheTrigger()
+		protected override void PullTheTrigger()
 		{
 			SetMuzzleFlash();
+			PlaySound(weaponData.ShootSound);
 
 			if (weaponData.BulletPrefab)
 			{

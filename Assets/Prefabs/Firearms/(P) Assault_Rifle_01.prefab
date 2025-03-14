@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 7981014016842286395}
   - component: {fileID: 6443976395239672478}
   - component: {fileID: 9117938948303470164}
-  - component: {fileID: 2969233706009846342}
+  - component: {fileID: 6960213219873320941}
   - component: {fileID: 3889005584714921214}
   m_Layer: 0
   m_Name: (P) Assault_Rifle_01
@@ -457,7 +457,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2969233706009846342
+--- !u!114 &6960213219873320941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -466,15 +466,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7316538885775564673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55687ce8d114d9a4a906b2feee896946, type: 3}
+  m_Script: {fileID: 11500000, guid: df038da7d4f640358dedfab13fba98a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstPersonCamera: {fileID: 0}
   weaponData: {fileID: 11400000, guid: 79616f1f8eb283945acc3150cda10c53, type: 2}
   casingExitLocation: {fileID: 1189008496809200506}
   firePoint: {fileID: 8285654395147520430}
-  shootSound: {fileID: 0}
-  reloadSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 58846dccad896b041801583b596e4f85, type: 3}
+  reloadSound: {fileID: 8300000, guid: 26e6a99185740884e9096a2e0cea5d7c, type: 3}
 --- !u!82 &3889005584714921214
 AudioSource:
   m_ObjectHideFlags: 0

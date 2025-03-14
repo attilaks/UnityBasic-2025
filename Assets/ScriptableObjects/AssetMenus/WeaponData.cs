@@ -13,22 +13,24 @@ namespace ScriptableObjects.AssetMenus
 		[SerializeField] private Rigidbody bulletPrefab;
 		[SerializeField] private Rigidbody casingPrefab;
 		[SerializeField] private GameObject muzzleFlashPrefab;
-
-		[FormerlySerializedAs("EjectPower")]
+		
 		[Header("Settings")] 
 		[Tooltip("Casing Ejection Speed")] 
 		[SerializeField] private float ejectPower = 150f;
-		[FormerlySerializedAs("FireRate")]
 		[Tooltip("How fast the weapon can shoot")] 
 		[SerializeField] private float fireRate = 0.14f;
-		[FormerlySerializedAs("FireRange")]
 		[Tooltip("How far the weapon can shoot")] 
 		[SerializeField] private float fireRange = 100f;
-		[FormerlySerializedAs("BulletForce")]
 		[Tooltip("Force with which bullets fly out of weapon")] 
 		[SerializeField] private float bulletForce = 150;
 		[SerializeField] private float bulletSpread = 5f;
 		[SerializeField] private byte clipCapacity = 7;
+		[SerializeField] private bool isAutomatic;
+		
+		[Header("Audio")]
+		[SerializeField] private AudioClip shootSound;
+		[SerializeField] private AudioClip reloadSound;
+		[SerializeField] private AudioClip emptyClipSound;
 		
 		public Rigidbody BulletPrefab => bulletPrefab;
 		public Rigidbody CasingPrefab => casingPrefab;
@@ -40,5 +42,10 @@ namespace ScriptableObjects.AssetMenus
 		public float BulletForce => bulletForce;
 		public float BulletSpread => bulletSpread;
 		public byte ClipCapacity => clipCapacity;
+		public bool IsAutomatic => isAutomatic;
+
+		public AudioClip ShootSound => shootSound;
+		public AudioClip ReloadSound => reloadSound;
+		public AudioClip EmptyClipSound => emptyClipSound;
 	}
 }

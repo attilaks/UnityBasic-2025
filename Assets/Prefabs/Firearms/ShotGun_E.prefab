@@ -585,8 +585,8 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: b38a85e2ff2a6a14583991ffb2680dc1, type: 2}
   casingExitLocation: {fileID: 2665717540530946163}
   firePoint: {fileID: 6838844065129209273}
-  shootSound: {fileID: 0}
-  reloadSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: e7f9a0ca8a7f63049bc875996ed35912, type: 3}
+  reloadSound: {fileID: 8300000, guid: 7c19be64267af854181e6994e09436e2, type: 3}
 --- !u!82 &7686822933196961054
 AudioSource:
   m_ObjectHideFlags: 0
