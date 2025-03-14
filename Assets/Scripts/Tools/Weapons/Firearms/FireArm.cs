@@ -1,4 +1,6 @@
-﻿using GlobalConstants;
+﻿using System;
+using System.Linq;
+using GlobalConstants;
 using ScriptableObjects.AssetMenus;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,19 +8,25 @@ using Random = UnityEngine.Random;
 
 namespace Tools.Weapons.Firearms
 {
-	public abstract class FireArm : MonoBehaviour
+	[RequireComponent(typeof(AudioSource))]
+	public class FireArm : MonoBehaviour
 	{
-		[SerializeField] protected Camera firstPersonCamera;
 		[SerializeField] protected WeaponData weaponData;
         
 		[Header("Location references")]
-		[SerializeField] protected Transform casingExitLocation;
+		[SerializeField] private Transform casingExitLocation;
 		[SerializeField] protected Transform firePoint;
+		
+		private AudioSource _audioSource;
+		private Camera _firstPersonCamera;
+		private Animator _animator;
+		
+		private const string AnimatorFire = "Fire";
+		private static readonly int Fire = Animator.StringToHash(AnimatorFire);
 
 		private const float DestroyTimer = 2f;
 		private byte _currentAmmoCount;
-        
-		protected float NextFireTime;
+		private float _nextFireTime;
 
 		protected byte CurrentAmmoCount
 		{
@@ -40,7 +48,7 @@ namespace Tools.Weapons.Firearms
 			}
 		}
 		
-		protected readonly InputAction ShootAction = new("Shoot", InputActionType.Button, 
+		private readonly InputAction _shootAction = new("Shoot", InputActionType.Button, 
 			$"{InputConstants.Mouse}/{InputConstants.LeftButton}");
 
 		private readonly InputAction _reloadAction = new("Reload", InputActionType.Button, 
@@ -49,22 +57,56 @@ namespace Tools.Weapons.Firearms
 		protected void Awake()
 		{
 			CurrentAmmoCount = weaponData.ClipCapacity;
+			_audioSource = GetComponent<AudioSource>();
+			_firstPersonCamera = Camera.main;
+
+			if (gameObject.TryGetComponent<Animator>(out var animator))
+			{
+				_animator = animator;
+				var animatorParameterNames = _animator.parameters.Select(x => x.name).ToArray();
+				if (!animatorParameterNames.Contains(AnimatorFire))
+				{
+					throw new Exception($"Animator parameter {AnimatorFire} not found");
+				}
+			}
+
+			if (weaponData.ShootSound == null)
+				throw new Exception("Shoot sound could not be found");
+			if (weaponData.ReloadSound == null)
+				throw new Exception("Reload sound could not be found");
+		}
+
+		private void Update()
+		{
+			if (weaponData.IsAutomatic && _shootAction.IsPressed())
+			{
+				Shoot();
+			}
 		}
 
 		protected void OnEnable()
 		{
-			_reloadAction.performed += OnReloadActionPerformed;
+			_reloadAction.started += OnReloadActionPerformed;
+			_shootAction.performed += OnShootActionPerformed;
 			
-			ShootAction.Enable();
+			_shootAction.Enable();
 			_reloadAction.Enable();
+			_audioSource.enabled = true;
 		}
 		
 		protected void OnDisable()
 		{
-			_reloadAction.performed -= OnReloadActionPerformed;
+			_reloadAction.started -= OnReloadActionPerformed;
+			_shootAction.performed -= OnShootActionPerformed;
 			
-			ShootAction.Disable();
+			_shootAction.Disable();
 			_reloadAction.Disable();
+			_audioSource.enabled = false;
+		}
+		
+		private void OnShootActionPerformed(InputAction.CallbackContext context)
+		{
+			Shoot();
 		}
 
 		private void OnReloadActionPerformed(InputAction.CallbackContext obj)
@@ -74,22 +116,43 @@ namespace Tools.Weapons.Firearms
 
 		private void Reload()
 		{
+			PlaySound(weaponData.ReloadSound);
 			CurrentAmmoCount = weaponData.ClipCapacity;
 		}
 
-		protected void Shoot()
+		private void Shoot()
 		{
-			if (Time.time >= NextFireTime && CurrentAmmoCount > 0)
+			if (_audioSource.isPlaying && _audioSource.clip == weaponData.ReloadSound)
 			{
-				NextFireTime = Time.time + weaponData.FireRate;
-				PullTheTrigger();
-				CasingRelease();
+				return;
+			}
+			
+			if (Time.time >= _nextFireTime)
+			{
+				if (CurrentAmmoCount > 0)
+				{
+					_nextFireTime = Time.time + weaponData.FireRate;
+					if (_animator)
+					{
+						_animator.SetTrigger(Fire);
+					}
+					else
+					{
+						PullTheTrigger();
+						CasingRelease();
+					}
+				}
+				else
+				{
+					PlaySound(weaponData.EmptyClipSound);
+				}
 			}
 		}
 		
-		protected void PullTheTrigger()
+		protected virtual void PullTheTrigger()
 		{
 			SetMuzzleFlash();
+			PlaySound(weaponData.ShootSound);
 
 			if (weaponData.BulletPrefab)
 			{
@@ -108,6 +171,17 @@ namespace Tools.Weapons.Firearms
 			--CurrentAmmoCount;
 		}
 
+		protected void PlaySound(AudioClip audioClip)
+		{
+			if (_audioSource.isPlaying)
+			{
+				_audioSource.Stop();
+			}
+			
+			_audioSource.clip = audioClip;
+			_audioSource.Play();
+		}
+
 		protected void SetMuzzleFlash()
 		{
 			if (weaponData.MuzzleFlashPrefab)
@@ -117,7 +191,7 @@ namespace Tools.Weapons.Firearms
 			}
 		}
 		
-		protected void CasingRelease()
+		private void CasingRelease()
 		{
 			if (!casingExitLocation || !weaponData.CasingPrefab)
 			{
@@ -135,7 +209,7 @@ namespace Tools.Weapons.Firearms
 		protected void SetFirePointDirection()
 		{
 			Vector3 screenCenter = new Vector3((float)Screen.width / 2, (float)Screen.height / 2, 0);
-			Ray ray = firstPersonCamera.ScreenPointToRay(screenCenter);
+			Ray ray = _firstPersonCamera.ScreenPointToRay(screenCenter);
 
 			// Если луч пересекает какой-либо объект
 			if (Physics.Raycast(ray, out var hit, weaponData.FireRange))
@@ -149,11 +223,6 @@ namespace Tools.Weapons.Firearms
 				Vector3 targetPosition = ray.GetPoint(weaponData.FireRange);
 				firePoint.transform.LookAt(targetPosition);
 			}
-		}
-
-		public void SetActive(bool active)
-		{
-			gameObject.SetActive(active);
 		}
 	}
 }

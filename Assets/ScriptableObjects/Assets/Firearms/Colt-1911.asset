@@ -19,7 +19,12 @@ MonoBehaviour:
   muzzleFlashPrefab: {fileID: 1782395880954752, guid: 3dd9cf2e209c504448f1c4c6835675cf,
     type: 3}
   ejectPower: 150
-  fireRate: 0.14
+  fireRate: 0.24
   fireRange: 100
   bulletForce: 150
   bulletSpread: 1
+  clipCapacity: 7
+  isAutomatic: 0
+  shootSound: {fileID: 8300000, guid: 3159c94476a165c47871bcef24ad3ba9, type: 3}
+  reloadSound: {fileID: 8300000, guid: 8acb8ec08211d064db0a6f445dc36c58, type: 3}
+  emptyClipSound: {fileID: 8300000, guid: 8216f3ab2dff8d94295e4c4245d75f2a, type: 3}
