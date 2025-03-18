@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ScriptableObjects.AssetMenus;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace Breakout3D
 		[SerializeField] private GameObject brickPrefab;
 		[Range(1, 10)] [SerializeField] private byte rowCount;
 		[Range(4, 20)] [SerializeField] private byte columnCount;
+		
+		public event Action OnBricksRecreated = delegate { }; 
 
 		private List<GameObject> _bricks;
 
@@ -22,7 +25,8 @@ namespace Breakout3D
 		
 		private void CreateBricks()
 		{
-			const float interval = 1f / 10;
+			const float brickActualSizeProportion = 0.9f;
+			
 			var relativeBrickSizeX = 1f / columnCount;
 			var relativeBrickSizeY = 1f / rowCount;
 			
@@ -39,11 +43,29 @@ namespace Breakout3D
 					brick.transform.localPosition = brickPosition;
 					
 					var color = rowColorData.GetColor(row);
-					brick.GetComponent<Brick>().SetColor(color);
+					var brickComponent = brick.GetComponent<Brick>();
+					brickComponent.SetColor(color);
+					brickComponent.OnHitByBall += OnBrickHitByWall;
 
-					var scale = new Vector3(relativeBrickSizeX * (1f - interval), relativeBrickSizeY * (1f - interval), 1f);
+					var scale = new Vector3(relativeBrickSizeX * brickActualSizeProportion, relativeBrickSizeY * brickActualSizeProportion, 1f);
 					brick.transform.localScale = Vector3.Scale(brick.transform.localScale, scale);
+					
+					_bricks.Add(brick);
 				}
+			}
+			
+			OnBricksRecreated.Invoke();
+		}
+
+		private void OnBrickHitByWall(Brick brickComponent)
+		{
+			brickComponent.OnHitByBall -= OnBrickHitByWall;
+			_bricks.Remove(brickComponent.gameObject);
+			Destroy(brickComponent.gameObject, 0.1f);
+
+			if (_bricks.Count == 0)
+			{
+				CreateBricks();
 			}
 		}
 	}

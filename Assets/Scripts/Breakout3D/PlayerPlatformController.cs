@@ -19,6 +19,7 @@ namespace Breakout3D
         [SerializeField] private Transform leftWall;
         [SerializeField] private Transform rightWall;
         [SerializeField] private BottomWall bottomWall;
+        [SerializeField] private BricksController bricksController;
         
         [Header("Settings")]
         [SerializeField] private float movementSpeed = 3f;
@@ -40,19 +41,22 @@ namespace Breakout3D
 
             jumpAction.performed += OnJumpActionPerformed;
             bottomWall.OnBallHitBottomWall += OnBallHitBottomWallPerformed;
+            bricksController.OnBricksRecreated += OnBricksRecreatedPerformed;
+        }
+
+        private void OnBricksRecreatedPerformed()
+        {
+            SpawnBall();
         }
 
         private void OnBallHitBottomWallPerformed()
         {
-            Destroy(_ballRigidbody.gameObject);
-            _ballRigidbody = SpawnBall();
+            SpawnBall();
         }
 
 
         private void Start()
         {
-            _ballRigidbody = SpawnBall();
-            
             var platformLength = platform.GetComponent<BoxCollider>().size.x * platform.localScale.x;
             var leftWallLength = leftWall.GetComponent<BoxCollider>().size.x * leftWall.localScale.x;
             _minXPosition = leftWall.position.x + leftWallLength / 2 + platformLength / 2;
@@ -85,6 +89,7 @@ namespace Breakout3D
         {
             jumpAction.performed -= OnJumpActionPerformed;
             bottomWall.OnBallHitBottomWall -= OnBallHitBottomWallPerformed;
+            bricksController.OnBricksRecreated -= OnBricksRecreatedPerformed;
             
             moveLeftAction.Disable();
             moveRightAction.Disable();
@@ -96,18 +101,21 @@ namespace Breakout3D
             PushBall();
         }
         
-        private Rigidbody SpawnBall()
+        private void SpawnBall()
         {
+            if (_ballRigidbody)
+            {
+                Destroy(_ballRigidbody.gameObject);
+            }
+            
             var ball = Instantiate(ballPrefab, ballSpawnPoint.position, ballSpawnPoint.rotation);
-            var ballRigidbody = ball.gameObject.TryGetComponent<Rigidbody>(out var rb) ? 
+            _ballRigidbody = ball.gameObject.TryGetComponent<Rigidbody>(out var rb) ? 
                 rb : ball.gameObject.AddComponent<Rigidbody>();
             
-            ballRigidbody.mass = ballMass;
-            ballRigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
-            ballRigidbody.drag = 0f;
-            ballRigidbody.transform.parent = transform;
-            
-            return ballRigidbody;
+            _ballRigidbody.mass = ballMass;
+            _ballRigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+            _ballRigidbody.drag = 0f;
+            _ballRigidbody.transform.parent = transform;
         }
 
         private void PushBall()

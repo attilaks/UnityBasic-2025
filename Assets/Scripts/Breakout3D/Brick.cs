@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Breakout3D
 {
 	public class Brick : MonoBehaviour
 	{
 		[SerializeField] private MeshRenderer meshRenderer;
+		
+		public event Action<Brick> OnHitByBall = delegate { }; 
 
 		public void SetColor(Color color)
 		{
@@ -15,7 +19,7 @@ namespace Breakout3D
 		{
 			if (other.gameObject.TryGetComponent<Ball>(out var ball))
 			{
-				Destroy(gameObject, 0.1f);
+				OnHitByBall.Invoke(this);
 			}
 		}
 	}
