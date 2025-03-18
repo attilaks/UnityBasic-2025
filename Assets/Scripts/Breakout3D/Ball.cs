@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+namespace Breakout3D
 {
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(AudioSource))]
+    [RequireComponent(typeof(Collider))]
+    public class Ball : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip ballHitsWallClip;
+        [SerializeField] private AudioClip ballHitsBrickClip;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.TryGetComponent<Brick>(out _))
+            {
+                audioSource.PlayOneShot(ballHitsBrickClip);
+            }
+            else
+            {
+                audioSource.PlayOneShot(ballHitsWallClip);
+            }
+        }
     }
 }

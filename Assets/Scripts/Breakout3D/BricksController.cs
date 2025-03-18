@@ -59,6 +59,8 @@ namespace Breakout3D
 
 		private void OnBrickHitByWall(Brick brickComponent)
 		{
+			if (brickComponent.Threshold > 0) return;
+			
 			brickComponent.OnHitByBall -= OnBrickHitByWall;
 			_bricks.Remove(brickComponent.gameObject);
 			Destroy(brickComponent.gameObject, 0.1f);
