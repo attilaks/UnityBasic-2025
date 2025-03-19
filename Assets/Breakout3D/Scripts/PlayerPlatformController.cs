@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
-namespace Breakout3D
+namespace Breakout3D.Scripts
 {
     public class PlayerPlatformController : MonoBehaviour
     {

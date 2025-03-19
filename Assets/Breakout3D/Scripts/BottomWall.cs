@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Breakout3D
+namespace Breakout3D.Scripts
 {
 	[RequireComponent(typeof(AudioSource))]
 	[RequireComponent(typeof(BoxCollider))]

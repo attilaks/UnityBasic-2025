@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ScriptableObjects.AssetMenus;
+using Breakout3D.ScriptableObjects.AssetMenus;
 using UnityEngine;
 
-namespace Breakout3D
+namespace Breakout3D.Scripts
 {
 	public class BricksController : MonoBehaviour
 	{

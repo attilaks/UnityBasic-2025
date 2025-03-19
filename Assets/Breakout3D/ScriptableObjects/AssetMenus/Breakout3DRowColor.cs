@@ -1,8 +1,7 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using UnityEngine;
 
-namespace ScriptableObjects.AssetMenus
+namespace Breakout3D.ScriptableObjects.AssetMenus
 {
 	[Serializable]
 	[CreateAssetMenu(menuName = "ScriptableObjects/Breakout3D", fileName = "NewRowColorData")]
