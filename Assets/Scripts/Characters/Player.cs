@@ -1,5 +1,4 @@
-﻿using Tools;
-using Tools.Managers;
+﻿using Tools.Managers;
 using UnityEngine;
 
 namespace Characters
