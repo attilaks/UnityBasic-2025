@@ -46,6 +46,8 @@ namespace Breakout3D.Scripts
 		[Header("Settings")]
 		[SerializeField] private float animationDuration = 1f;
 		
+		public static bool IsGameInputBlocked { get; private set; } = false;
+		
 		private void Awake()
 		{
 			gameObject.SetActive(false);
@@ -81,12 +83,12 @@ namespace Breakout3D.Scripts
 			titleText.color = SetColorTransparency(titleText.color);
 			
 			cupsContainer.gameObject.SetActive(false);
-			cupsContainer.localScale *= 5;
+			cupsContainer.localScale *= 10;
 			cupsContainerImage.color = SetColorTransparency(cupsContainerImage.color, 1);
 			cupsContainerText.color = SetColorTransparency(cupsContainerText.color, 1);
 			
 			coinsContainer.gameObject.SetActive(false);
-			coinsContainer.localScale *= 5;
+			coinsContainer.localScale *= 10;
 			coinsContainerImage.color = SetColorTransparency(coinsContainerImage.color, 1);
 			coinsContainerText.color = SetColorTransparency(coinsContainerText.color, 1);
 			
@@ -128,6 +130,8 @@ namespace Breakout3D.Scripts
 		
 		private void PlayOnEnableSequence()
 		{
+			IsGameInputBlocked = true;
+			
 			DOTween.Sequence()
 				.OnStart(SetEnableSequenceStartPosition)
 				
@@ -189,6 +193,8 @@ namespace Breakout3D.Scripts
 				.Join(advButtonGradientImage.DOFade(0f, animationDuration))
 				.OnComplete(() => gameObject.SetActive(false))
 				.Play();
+			
+			IsGameInputBlocked = false;
 		}
 	}
 }

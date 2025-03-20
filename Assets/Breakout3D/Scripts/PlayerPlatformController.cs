@@ -66,22 +66,25 @@ namespace Breakout3D.Scripts
 
         private void Update()
         {
-            var direction = 0f;
-            if (moveLeftAction.IsPressed())
+            if (!WinUI.IsGameInputBlocked)
             {
-                direction += Vector3.left.x;
-            }
+                var direction = 0f;
+                if (moveLeftAction.IsPressed())
+                {
+                    direction += Vector3.left.x;
+                }
 
-            if (moveRightAction.IsPressed())
-            {
-                direction += Vector3.right.x;
-            }
+                if (moveRightAction.IsPressed())
+                {
+                    direction += Vector3.right.x;
+                }
 
-            if (direction != 0f)
-            {
-                var deltaX = direction * movementSpeed * Time.deltaTime;
-                var newX = Math.Clamp(deltaX + transform.position.x, _minXPosition, _maxXPosition) ;
-                transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+                if (direction != 0f)
+                {
+                    var deltaX = direction * movementSpeed * Time.deltaTime;
+                    var newX = Math.Clamp(deltaX + transform.position.x, _minXPosition, _maxXPosition) ;
+                    transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+                }
             }
         }
 
@@ -98,6 +101,7 @@ namespace Breakout3D.Scripts
         
         private void OnJumpActionPerformed(InputAction.CallbackContext obj)
         {
+            if (WinUI.IsGameInputBlocked) return;
             PushBall();
         }
         
