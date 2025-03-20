@@ -1,12 +1,15 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Breakout3D.Scripts
 {
 	public class WinUI : MonoBehaviour
 	{
 		[SerializeField] private BricksController bricksController;
+		
+		[SerializeField] private Image backgroundImage;
 		[SerializeField] private TextMeshProUGUI coinsText;
 		[SerializeField] private Button collectButton;
 		[SerializeField] private Button advertisementButton;
@@ -16,7 +19,9 @@ namespace Breakout3D.Scripts
 			bricksController.OnAllBricksDestroyed += OnAllBricksDestroyed;
 			collectButton.onClick.AddListener(OnCollectButtonClicked);
 			advertisementButton.onClick.AddListener(OnAdvertisementButtonClicked);
-			gameObject.SetActive(false);
+			gameObject.SetActive(true); // todo заменить на false
+			
+			backgroundImage.DOFade(0, 3f);
 		}
 
 		private void OnDestroy()
