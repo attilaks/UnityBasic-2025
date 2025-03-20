@@ -1,16 +1,17 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Breakout3D.Scripts
 {
 	public class Brick : MonoBehaviour
 	{
 		[SerializeField] private MeshRenderer meshRenderer;
-		[SerializeField] private byte threshold = 1;
+		[SerializeField] private byte hitPoints = 1;
 		
 		public event Action<Brick> OnHitByBall = delegate { }; 
 		
-		public byte Threshold => threshold;
+		public byte HitPoints => hitPoints;
 
 		public void SetColor(Color color)
 		{
@@ -21,7 +22,7 @@ namespace Breakout3D.Scripts
 		{
 			if (other.gameObject.TryGetComponent<Ball>(out var ball))
 			{
-				--threshold;
+				--hitPoints;
 				OnHitByBall.Invoke(this);
 			}
 		}

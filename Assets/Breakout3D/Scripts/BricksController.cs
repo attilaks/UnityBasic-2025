@@ -12,9 +12,11 @@ namespace Breakout3D.Scripts
 		[Range(1, 10)] [SerializeField] private byte rowCount;
 		[Range(4, 20)] [SerializeField] private byte columnCount;
 		
-		public event Action OnBricksRecreated = delegate { }; 
+		public event Action OnBricksCreated = delegate { };
+		public event Action<ushort> OnAllBricksDestroyed = delegate { };
 
 		private List<GameObject> _bricks;
+		private ushort _bricksDestroyedCount;
 
 		private void Awake()
 		{
@@ -54,19 +56,21 @@ namespace Breakout3D.Scripts
 				}
 			}
 			
-			OnBricksRecreated.Invoke();
+			OnBricksCreated.Invoke();
 		}
 
 		private void OnBrickHitByWall(Brick brickComponent)
 		{
-			if (brickComponent.Threshold > 0) return;
+			if (brickComponent.HitPoints > 0) return;
 			
 			brickComponent.OnHitByBall -= OnBrickHitByWall;
 			_bricks.Remove(brickComponent.gameObject);
 			Destroy(brickComponent.gameObject, 0.1f);
+			++_bricksDestroyedCount;
 
 			if (_bricks.Count == 0)
 			{
+				OnAllBricksDestroyed.Invoke(_bricksDestroyedCount);
 				CreateBricks();
 			}
 		}

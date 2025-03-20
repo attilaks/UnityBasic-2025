@@ -41,10 +41,10 @@ namespace Breakout3D.Scripts
 
             jumpAction.performed += OnJumpActionPerformed;
             bottomWall.OnBallHitBottomWall += OnBallHitBottomWallPerformed;
-            bricksController.OnBricksRecreated += OnBricksRecreatedPerformed;
+            bricksController.OnBricksCreated += OnBricksCreatedPerformed;
         }
 
-        private void OnBricksRecreatedPerformed()
+        private void OnBricksCreatedPerformed()
         {
             SpawnBall();
         }
@@ -89,7 +89,7 @@ namespace Breakout3D.Scripts
         {
             jumpAction.performed -= OnJumpActionPerformed;
             bottomWall.OnBallHitBottomWall -= OnBallHitBottomWallPerformed;
-            bricksController.OnBricksRecreated -= OnBricksRecreatedPerformed;
+            bricksController.OnBricksCreated -= OnBricksCreatedPerformed;
             
             moveLeftAction.Disable();
             moveRightAction.Disable();
