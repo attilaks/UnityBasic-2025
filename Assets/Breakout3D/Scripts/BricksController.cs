@@ -30,7 +30,7 @@ namespace Breakout3D.Scripts
 			const float brickActualSizeProportion = 0.9f;
 			
 			var relativeBrickSizeX = 1f / columnCount;
-			var relativeBrickSizeY = 1f / rowCount;
+			var relativeBrickSizeY = Math.Clamp(1f / rowCount, 0f, 0.5f);
 			
 			var startPosition = new Vector3(relativeBrickSizeX / 2 - 0.5f, relativeBrickSizeY / 2 + 0.5f, 0f);
 			
