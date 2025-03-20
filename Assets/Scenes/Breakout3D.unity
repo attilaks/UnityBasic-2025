@@ -1106,6 +1106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 437068940}
   - component: {fileID: 437068941}
+  - component: {fileID: 437068942}
   m_Layer: 5
   m_Name: CollectButton
   m_TagString: Untagged
@@ -1181,6 +1182,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!222 &437068942
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437068939}
+  m_CullTransparentMesh: 1
 --- !u!1 &572120950
 GameObject:
   m_ObjectHideFlags: 0
@@ -3826,10 +3835,10 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2033962973}
-  - {fileID: 437068940}
-  - {fileID: 667229069}
   - {fileID: 233762842}
   - {fileID: 809002208}
+  - {fileID: 437068940}
+  - {fileID: 667229069}
   m_Father: {fileID: 2125560090}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3890,9 +3899,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bricksController: {fileID: 1098820097}
   backgroundImage: {fileID: 1835853471}
+  titleImage: {fileID: 2033962974}
+  collectButtonFrontImage: {fileID: 89252479}
+  collectButtonBottomImage: {fileID: 614102611}
+  collectButtonTopImage: {fileID: 611902893}
+  collectButtonShadowImage: {fileID: 272985846}
+  collectButtonGradientImage: {fileID: 1133527933}
+  advButtonFrontImage: {fileID: 139488911}
+  advButtonBottomImage: {fileID: 1680574957}
+  advButtonTopImage: {fileID: 937065828}
+  advButtonShadowImage: {fileID: 753548444}
+  advButtonGradientImage: {fileID: 269156438}
+  cupsContainerImage: {fileID: 1008272719}
+  coinsContainerImage: {fileID: 413482101}
   coinsText: {fileID: 937838449}
+  titleText: {fileID: 104792878}
+  collectButtonText: {fileID: 2068643381}
+  advButtonText1: {fileID: 1294192692}
+  advButtonText2: {fileID: 1183786836}
+  cupsContainerText: {fileID: 960618551}
+  coinsContainerText: {fileID: 937838449}
+  cupsContainer: {fileID: 233762842}
+  coinsContainer: {fileID: 809002208}
   collectButton: {fileID: 437068941}
   advertisementButton: {fileID: 667229070}
+  animationDuration: 1
 --- !u!1 &2033962972
 GameObject:
   m_ObjectHideFlags: 0

@@ -72,6 +72,7 @@ namespace Breakout3D.Scripts
 			{
 				OnAllBricksDestroyed.Invoke(_bricksDestroyedCount);
 				CreateBricks();
+				_bricksDestroyedCount = 0;
 			}
 		}
 	}
