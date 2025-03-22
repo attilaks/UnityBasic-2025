@@ -109,6 +109,7 @@ namespace Tools.Weapons.Firearms
 		
 		private void Update()
 		{
+			if (Time.timeScale == 0) return;
 			if (weaponData.IsAutomatic && _shootAction.IsPressed())
 			{
 				Shoot();
@@ -117,11 +118,13 @@ namespace Tools.Weapons.Firearms
 		
 		private void OnShootActionPerformed(InputAction.CallbackContext context)
 		{
+			if (Time.timeScale == 0) return;
 			Shoot();
 		}
 
 		private void OnReloadActionPerformed(InputAction.CallbackContext obj)
 		{
+			if (Time.timeScale == 0) return;
 			Reload();
 		}
 

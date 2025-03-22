@@ -54,6 +54,8 @@ namespace Tools.Weapons
 
 		private void Update()
 		{
+			if (Time.timeScale == 0) return;
+			
 			Vector2 scrollValue = scrollAction.ReadValue<Vector2>();
 
 			switch (scrollValue.y)
