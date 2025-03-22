@@ -23,7 +23,7 @@ namespace UI
 		[SerializeField] private Scrollbar soundVolumeScrollbar;
 		[SerializeField] private Button exitButton;
 		
-		private void Start()
+		private void Awake()
 		{
 			weaponController.WeaponIsSwitched += OnWeaponIsSwitched;
 			weaponController.CurrentWeaponAmmoCountChanged += OnCurrentWeaponAmmoCountChanged;

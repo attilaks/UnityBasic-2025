@@ -34,7 +34,7 @@ namespace Tools.Weapons
 			}
 		}
 
-		private void Start()
+		private void Awake()
 		{
 			scrollAction.Enable();
 			
