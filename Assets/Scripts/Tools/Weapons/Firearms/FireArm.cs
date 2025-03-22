@@ -27,12 +27,15 @@ namespace Tools.Weapons.Firearms
 		private const float DestroyTimer = 2f;
 		private byte _currentAmmoCount;
 		private float _nextFireTime;
+		
+		public event Action<byte> AmmoCountChanged = delegate { };
 
-		protected byte CurrentAmmoCount
+		public byte CurrentAmmoCount
 		{
 			get => _currentAmmoCount;
-			set
+			protected set
 			{
+				var oldValue = _currentAmmoCount;
 				if (value <= 0)
 				{
 					_currentAmmoCount = 0;
@@ -45,8 +48,16 @@ namespace Tools.Weapons.Firearms
 				{
 					_currentAmmoCount = value;
 				}
+
+				if (oldValue != _currentAmmoCount)
+				{
+					AmmoCountChanged.Invoke(_currentAmmoCount);
+				}
 			}
 		}
+
+		public ushort AmmoLeft => weaponData.ClipCapacity;
+		public Sprite AmmoUiSprite => weaponData.AmmoUiSprite;
 		
 		private readonly InputAction _shootAction = new("Shoot", InputActionType.Button, 
 			$"{InputConstants.Mouse}/{InputConstants.LeftButton}");
@@ -76,15 +87,7 @@ namespace Tools.Weapons.Firearms
 				throw new Exception("Reload sound could not be found");
 		}
 
-		private void Update()
-		{
-			if (weaponData.IsAutomatic && _shootAction.IsPressed())
-			{
-				Shoot();
-			}
-		}
-
-		protected void OnEnable()
+		private void OnEnable()
 		{
 			_reloadAction.started += OnReloadActionPerformed;
 			_shootAction.performed += OnShootActionPerformed;
@@ -94,7 +97,7 @@ namespace Tools.Weapons.Firearms
 			_audioSource.enabled = true;
 		}
 		
-		protected void OnDisable()
+		private void OnDisable()
 		{
 			_reloadAction.started -= OnReloadActionPerformed;
 			_shootAction.performed -= OnShootActionPerformed;
@@ -104,13 +107,24 @@ namespace Tools.Weapons.Firearms
 			_audioSource.enabled = false;
 		}
 		
+		private void Update()
+		{
+			if (Time.timeScale == 0) return;
+			if (weaponData.IsAutomatic && _shootAction.IsPressed())
+			{
+				Shoot();
+			}
+		}
+		
 		private void OnShootActionPerformed(InputAction.CallbackContext context)
 		{
+			if (Time.timeScale == 0) return;
 			Shoot();
 		}
 
 		private void OnReloadActionPerformed(InputAction.CallbackContext obj)
 		{
+			if (Time.timeScale == 0) return;
 			Reload();
 		}
 

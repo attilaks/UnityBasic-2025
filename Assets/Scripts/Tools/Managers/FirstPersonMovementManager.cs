@@ -48,6 +48,8 @@ namespace Tools.Managers
 
 		private void Update()
 		{
+			if (Time.timeScale == 0) return;
+			
 			_isRunning = _run.IsPressed();
 			
 			if (_moveForward.IsPressed())

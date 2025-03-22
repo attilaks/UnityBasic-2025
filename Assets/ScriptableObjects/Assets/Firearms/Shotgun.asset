@@ -28,3 +28,4 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: e7f9a0ca8a7f63049bc875996ed35912, type: 3}
   reloadSound: {fileID: 8300000, guid: 7c19be64267af854181e6994e09436e2, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 8216f3ab2dff8d94295e4c4245d75f2a, type: 3}
+  ammoUiSprite: {fileID: 21300000, guid: 4984726a3bd756343ad3df47afd591c4, type: 3}
