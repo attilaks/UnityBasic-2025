@@ -19,7 +19,7 @@ namespace UI
 		[SerializeField] private TextMeshProUGUI healthText;
 		
 		[Header("Settings references")]
-		[SerializeField] private Scrollbar soundVolumeScrollbar;
+		[SerializeField] private Scrollbar soundVolumeSlider;
 		[SerializeField] private Button exitButton;
 		[SerializeField] private GameObject settingsMenu;
 		
@@ -29,12 +29,16 @@ namespace UI
 		{
 			weaponController.WeaponIsSwitched += OnWeaponIsSwitched;
 			weaponController.CurrentWeaponAmmoCountChanged += OnCurrentWeaponAmmoCountChanged;
+			
+			exitButton.onClick.AddListener(OnExitButtonClicked);
 		}
 
 		private void OnDestroy()
 		{
 			weaponController.WeaponIsSwitched -= OnWeaponIsSwitched;
 			weaponController.CurrentWeaponAmmoCountChanged -= OnCurrentWeaponAmmoCountChanged;
+			
+			exitButton.onClick.RemoveListener(OnExitButtonClicked);
 		}
 
 		private void Update()
@@ -63,16 +67,16 @@ namespace UI
 
 		private void PauseGame()
 		{
-			Time.timeScale = 0f; // Останавливаем время в игре
-			Cursor.lockState = CursorLockMode.None; // Разблокируем курсор
-			Cursor.visible = true; // Делаем курсор видимым
+			Time.timeScale = 0f; 
+			Cursor.lockState = CursorLockMode.None; 
+			Cursor.visible = true;
 		}
 
 		private void ResumeGame()
 		{
-			Time.timeScale = 1f; // Возобновляем время в игре
-			Cursor.lockState = CursorLockMode.Locked; // Блокируем курсор
-			Cursor.visible = false; // Скрываем курсор
+			Time.timeScale = 1f; 
+			Cursor.lockState = CursorLockMode.Locked; 
+			Cursor.visible = false;
 		}
 
 		private void OnWeaponIsSwitched(ushort currentAmmoCount, ushort clipCapacity, Sprite ammo)
@@ -85,6 +89,15 @@ namespace UI
 		private void OnCurrentWeaponAmmoCountChanged(ushort currentAmmoCount)
 		{
 			ammoCountText.text = currentAmmoCount.ToString();
+		}
+		
+		private void OnExitButtonClicked()
+		{
+			Application.Quit();
+			
+			#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+			#endif
 		}
 	}
 }
