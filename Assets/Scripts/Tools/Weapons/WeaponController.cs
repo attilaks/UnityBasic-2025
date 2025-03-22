@@ -8,20 +8,37 @@ namespace Tools.Weapons
 {
 	public class WeaponController : MonoBehaviour
 	{
-		[SerializeField] private List<FireArm> fireArms = new(1);
+		[SerializeField] private List<FireArm> fireArms;
 		[SerializeField] private InputAction scrollAction;
 
 		private int _currentWeaponIndex;
 		private FireArm _currentFireArm;
+
+		private FireArm CurrentFireArm
+		{
+			get => _currentFireArm;
+			set
+			{
+				_currentFireArm?.gameObject.SetActive(false);
+				_currentFireArm = value;
+				_currentFireArm.gameObject.SetActive(true);
+				WeaponIsSwitched.Invoke(_currentFireArm.CurrentAmmoCount, _currentFireArm.AmmoLeft, _currentFireArm.AmmoUiSprite);
+			}
+		}
 		
 		public event Action<ushort, ushort, Sprite> WeaponIsSwitched = delegate { };
 
-		private void Awake()
+		private void Start()
 		{
 			scrollAction.Enable();
 			
 			if (fireArms is not {Count: > 0}) return;
-			_currentFireArm = Instantiate(fireArms[0], transform);
+			CurrentFireArm = fireArms[0];
+
+			for (int i = 1; i < fireArms.Count; i++)
+			{
+				fireArms[i].gameObject.SetActive(false);
+			}
 		}
 
 		private void OnDestroy()
@@ -36,34 +53,20 @@ namespace Tools.Weapons
 			switch (scrollValue.y)
 			{
 				case > 0:
-					SwitchWeapon(true);
+					SwitchWeapon(_currentWeaponIndex + 1);
 					break;
 				case < 0:
-					SwitchWeapon(false);
+					SwitchWeapon(_currentWeaponIndex - 1);
 					break;
 			}
 		}
 
-		private void SwitchWeapon(bool next)
+		private void SwitchWeapon(int newIndex)
 		{
 			if (fireArms is not {Count: > 0}) return;
-			
-			var newIndex = next ? _currentWeaponIndex + 1 : _currentWeaponIndex - 1;
-
-			if (newIndex < 0)
-			{
-				newIndex = fireArms.Count - 1;
-			}
-			else if (newIndex >= fireArms.Count)
-			{
-				newIndex = 0;
-			}
-			
-			Destroy(_currentFireArm);
-			_currentFireArm = Instantiate(fireArms[newIndex], transform);
-			
-			_currentWeaponIndex = newIndex;
-			WeaponIsSwitched.Invoke(_currentFireArm.CurrentAmmoCount, _currentFireArm.AmmoLeft, _currentFireArm.AmmoUiSprite);
+		
+			_currentWeaponIndex = newIndex < 0 ? fireArms.Count - 1 : newIndex >= fireArms.Count ? 0 : newIndex;
+			CurrentFireArm = fireArms[_currentWeaponIndex];
 		}
 	}
 }

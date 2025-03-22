@@ -79,15 +79,7 @@ namespace Tools.Weapons.Firearms
 				throw new Exception("Reload sound could not be found");
 		}
 
-		private void Update()
-		{
-			if (weaponData.IsAutomatic && _shootAction.IsPressed())
-			{
-				Shoot();
-			}
-		}
-
-		protected void OnEnable()
+		private void OnEnable()
 		{
 			_reloadAction.started += OnReloadActionPerformed;
 			_shootAction.performed += OnShootActionPerformed;
@@ -97,7 +89,7 @@ namespace Tools.Weapons.Firearms
 			_audioSource.enabled = true;
 		}
 		
-		protected void OnDisable()
+		private void OnDisable()
 		{
 			_reloadAction.started -= OnReloadActionPerformed;
 			_shootAction.performed -= OnShootActionPerformed;
@@ -105,6 +97,14 @@ namespace Tools.Weapons.Firearms
 			_shootAction.Disable();
 			_reloadAction.Disable();
 			_audioSource.enabled = false;
+		}
+		
+		private void Update()
+		{
+			if (weaponData.IsAutomatic && _shootAction.IsPressed())
+			{
+				Shoot();
+			}
 		}
 		
 		private void OnShootActionPerformed(InputAction.CallbackContext context)
