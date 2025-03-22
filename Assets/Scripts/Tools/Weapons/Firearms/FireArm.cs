@@ -28,10 +28,10 @@ namespace Tools.Weapons.Firearms
 		private byte _currentAmmoCount;
 		private float _nextFireTime;
 
-		protected byte CurrentAmmoCount
+		public byte CurrentAmmoCount
 		{
 			get => _currentAmmoCount;
-			set
+			protected set
 			{
 				if (value <= 0)
 				{
@@ -47,6 +47,9 @@ namespace Tools.Weapons.Firearms
 				}
 			}
 		}
+
+		public ushort AmmoLeft => weaponData.ClipCapacity;
+		public Sprite AmmoUiSprite => weaponData.AmmoUiSprite;
 		
 		private readonly InputAction _shootAction = new("Shoot", InputActionType.Button, 
 			$"{InputConstants.Mouse}/{InputConstants.LeftButton}");

@@ -8,11 +8,13 @@ namespace Tools.Weapons
 {
 	public class WeaponController : MonoBehaviour
 	{
-		[SerializeField] private List<GameObject> fireArms = new(1);
+		[SerializeField] private List<FireArm> fireArms = new(1);
 		[SerializeField] private InputAction scrollAction;
 
 		private int _currentWeaponIndex;
-		private GameObject _currentFireArm;
+		private FireArm _currentFireArm;
+		
+		public event Action<ushort, ushort, Sprite> WeaponIsSwitched = delegate { };
 
 		private void Awake()
 		{
@@ -61,6 +63,7 @@ namespace Tools.Weapons
 			_currentFireArm = Instantiate(fireArms[newIndex], transform);
 			
 			_currentWeaponIndex = newIndex;
+			WeaponIsSwitched.Invoke(_currentFireArm.CurrentAmmoCount, _currentFireArm.AmmoLeft, _currentFireArm.AmmoUiSprite);
 		}
 	}
 }
