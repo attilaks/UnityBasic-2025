@@ -13,20 +13,26 @@ namespace Tools.Weapons
 
 		private int _currentWeaponIndex;
 		private FireArm _currentFireArm;
+		
+		public event Action<ushort, ushort, Sprite> WeaponIsSwitched = delegate { };
+		public event Action<ushort> CurrentWeaponAmmoCountChanged = delegate { };
 
 		private FireArm CurrentFireArm
 		{
-			get => _currentFireArm;
 			set
 			{
-				_currentFireArm?.gameObject.SetActive(false);
+				if (_currentFireArm)
+				{
+					_currentFireArm.AmmoCountChanged -= OnCurrentWeaponAmmoCountChanged;
+					_currentFireArm.gameObject.SetActive(false);
+				}
+				
 				_currentFireArm = value;
+				_currentFireArm.AmmoCountChanged += OnCurrentWeaponAmmoCountChanged;
 				_currentFireArm.gameObject.SetActive(true);
 				WeaponIsSwitched.Invoke(_currentFireArm.CurrentAmmoCount, _currentFireArm.AmmoLeft, _currentFireArm.AmmoUiSprite);
 			}
 		}
-		
-		public event Action<ushort, ushort, Sprite> WeaponIsSwitched = delegate { };
 
 		private void Start()
 		{
@@ -67,6 +73,11 @@ namespace Tools.Weapons
 		
 			_currentWeaponIndex = newIndex < 0 ? fireArms.Count - 1 : newIndex >= fireArms.Count ? 0 : newIndex;
 			CurrentFireArm = fireArms[_currentWeaponIndex];
+		}
+		
+		private void OnCurrentWeaponAmmoCountChanged(byte ammoCount)
+		{
+			CurrentWeaponAmmoCountChanged.Invoke(ammoCount);
 		}
 	}
 }

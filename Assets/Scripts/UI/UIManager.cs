@@ -26,13 +26,13 @@ namespace UI
 		private void Start()
 		{
 			weaponController.WeaponIsSwitched += OnWeaponIsSwitched;
-			// weaponController.CurrentWeaponAmmoCountChanged += OnCurrentWeaponAmmoCountChanged;
+			weaponController.CurrentWeaponAmmoCountChanged += OnCurrentWeaponAmmoCountChanged;
 		}
 
 		private void OnDestroy()
 		{
 			weaponController.WeaponIsSwitched -= OnWeaponIsSwitched;
-			// weaponController.CurrentWeaponAmmoCountChanged -= OnCurrentWeaponAmmoCountChanged;
+			weaponController.CurrentWeaponAmmoCountChanged -= OnCurrentWeaponAmmoCountChanged;
 		}
 
 		private void OnWeaponIsSwitched(ushort currentAmmoCount, ushort clipCapacity, Sprite ammo)

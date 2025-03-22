@@ -27,12 +27,15 @@ namespace Tools.Weapons.Firearms
 		private const float DestroyTimer = 2f;
 		private byte _currentAmmoCount;
 		private float _nextFireTime;
+		
+		public event Action<byte> AmmoCountChanged = delegate { };
 
 		public byte CurrentAmmoCount
 		{
 			get => _currentAmmoCount;
 			protected set
 			{
+				var oldValue = _currentAmmoCount;
 				if (value <= 0)
 				{
 					_currentAmmoCount = 0;
@@ -44,6 +47,11 @@ namespace Tools.Weapons.Firearms
 				else
 				{
 					_currentAmmoCount = value;
+				}
+
+				if (oldValue != _currentAmmoCount)
+				{
+					AmmoCountChanged.Invoke(_currentAmmoCount);
 				}
 			}
 		}
