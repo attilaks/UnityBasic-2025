@@ -1,40 +1,25 @@
 ﻿using System;
 using System.Collections;
 using Tools.Managers;
-using Tools.Weapons;
 using UnityEngine;
 
 namespace Characters
 {
 	[RequireComponent(typeof(BoxCollider))]
 	[RequireComponent(typeof(Renderer))]
+	[RequireComponent(typeof(HealthManager))]
 	public class EnemyCube : MonoBehaviour
 	{
-		[SerializeField] private float maxHealth = 50f;
-		
 		public event Action OnDeath = delegate { };
 		
-		private EnemyHealthManager _healthManager;
+		private HealthManager _healthManager;
 		private Renderer _renderer;
 
 		private void Awake()
 		{
 			_renderer = GetComponent<Renderer>();
-			_healthManager = new EnemyHealthManager(maxHealth);
+			_healthManager = GetComponent<HealthManager>();
 			_healthManager.DeathHasComeEvent += CubeIsDestroyed;
-		}
-
-		private void OnCollisionEnter(Collision other)
-		{
-			if (_healthManager.IsDead)
-			{
-				return;
-			}
-			
-			if (other.gameObject.TryGetComponent<Bullet45Acp>(out var bullet))
-			{
-				_healthManager.Health -= bullet.StandardDamage;
-			}
 		}
 		
 		private void OnDestroy()

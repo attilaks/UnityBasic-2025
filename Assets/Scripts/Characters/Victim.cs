@@ -16,7 +16,7 @@ namespace Characters
         private const string ResurrectButton = InputConstants.F;
         private const string ResurrectActionName = "Resurrect";
         
-        private readonly HealthManager _healthManager = new (MaxHealth);
+        private readonly HealthManagerV0 _healthManagerV0 = new (MaxHealth);
         
         private InputAction _resurrect;
 
@@ -32,7 +32,7 @@ namespace Characters
             _resurrect.performed += OnResurrectPerformed;
             _resurrect.Enable();
             
-            _healthManager.DeathHasComeEvent += Die;
+            _healthManagerV0.DeathHasComeEvent += Die;
         }
 
         private void Start()
@@ -46,7 +46,7 @@ namespace Characters
             _resurrect.performed -= OnResurrectPerformed;
             _resurrect.Disable();
             
-            _healthManager.DeathHasComeEvent -= Die;
+            _healthManagerV0.DeathHasComeEvent -= Die;
         }
         
         private void GreetThePlayer()
@@ -69,34 +69,34 @@ namespace Characters
         private void Resurrect()
         {
             gameObject.SetActive(true);
-            _healthManager.Health = MaxHealth;
+            _healthManagerV0.Health = MaxHealth;
             Debug.Log("I'm alive! Again! Thank you, God!");
             GreetThePlayer();
         }
 
         public void ApplyDamage(float damage)
         {
-            if (_healthManager.IsDead)
+            if (_healthManagerV0.IsDead)
             {
                 Debug.LogWarning($"Resurrect me by pressing '{ResurrectButton}'");
                 return;
             }
         
-            _healthManager.Health -= damage;
+            _healthManagerV0.Health -= damage;
         }
         
         public void ApplyAutoDamage(float damage)
         {
             
-            if (_healthManager.IsDead)
+            if (_healthManagerV0.IsDead)
             {
                 Debug.LogWarning($"Resurrect me by pressing '{ResurrectButton}'");
                 return;
             }
             
-            while (!_healthManager.IsDead)
+            while (!_healthManagerV0.IsDead)
             {
-                _healthManager.Health -= damage;
+                _healthManagerV0.Health -= damage;
             }
         }
 
