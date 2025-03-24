@@ -12,6 +12,7 @@
 		#region KeyboardKeys
 		
 		public const string Space = "space";
+		public const string LeftShift = "leftShift";
 		public const string F = "f";
 		public const string A = "a";
 		public const string W = "w";
