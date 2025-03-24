@@ -31,6 +31,9 @@ namespace ScriptableObjects.AssetMenus
 		[SerializeField] private AudioClip reloadSound;
 		[SerializeField] private AudioClip emptyClipSound;
 		
+		[Header("Sprites")]
+		[SerializeField] private Sprite ammoUiSprite;
+		
 		public Rigidbody BulletPrefab => bulletPrefab;
 		public Rigidbody CasingPrefab => casingPrefab;
 		public GameObject MuzzleFlashPrefab => muzzleFlashPrefab;
@@ -46,5 +49,7 @@ namespace ScriptableObjects.AssetMenus
 		public AudioClip ShootSound => shootSound;
 		public AudioClip ReloadSound => reloadSound;
 		public AudioClip EmptyClipSound => emptyClipSound;
+		
+		public Sprite AmmoUiSprite => ammoUiSprite;
 	}
 }
