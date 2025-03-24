@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Tools.Weapons.Firearms;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
