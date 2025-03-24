@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ScriptableObjects.AssetMenus
 {
+	[Serializable]
 	[CreateAssetMenu(menuName = "ScriptableObjects/AmmoData", fileName = "NewAmmoData")]
 	public class AmmoData :ScriptableObject
 	{
