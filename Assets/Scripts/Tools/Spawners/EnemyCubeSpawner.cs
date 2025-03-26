@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Characters;
+﻿using Characters;
 using UnityEngine;
 
 namespace Tools.Spawners
