@@ -26,6 +26,9 @@ namespace Tools.Spawners
 				0.5f,
 				Random.Range(-_groundSize.y / 2, _groundSize.y / 2)
 			);
+
+			if (_currentEnemyCube)
+				_currentEnemyCube.OnDeath -= SpawnEnemyCube;
 			
 			_currentEnemyCube = Instantiate(enemyCubePrefab, randomPosition, Quaternion.identity);
 			_currentEnemyCube.OnDeath += SpawnEnemyCube;

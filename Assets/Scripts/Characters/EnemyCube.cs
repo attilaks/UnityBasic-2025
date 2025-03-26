@@ -11,6 +11,7 @@ namespace Characters
 	public class EnemyCube : MonoBehaviour
 	{
 		public event Action OnDeath = delegate { };
+		public event Action<EnemyCube> OnDeathWithMe = delegate { };
 		
 		private HealthManager _healthManager;
 		private Renderer _renderer;
@@ -30,6 +31,7 @@ namespace Characters
 		private void CubeIsDestroyed()
 		{
 			OnDeath.Invoke();
+			OnDeathWithMe.Invoke(this);
 			StartCoroutine(FadeAway());
 		}
 
