@@ -11,8 +11,6 @@ namespace Tools.Spawners
 		[SerializeField] private EnemyCube enemyCubePrefab;
 		[SerializeField] private byte maxEnemyCount;
 		[SerializeField] private float spawnInterval;
-
-		// [SerializeField] private List<Transform> spawnPoints;
 		
 		private Vector2 _groundSize;
 		private EnemyCube _currentEnemyCube;
