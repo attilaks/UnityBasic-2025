@@ -23,10 +23,10 @@ namespace Tools.Spawners
 		
 		private void Start()
 		{
-			SpawnEnemyCube();
+			SpawnEnemyCube(0);
 		}
 
-		private void SpawnEnemyCube()
+		private void SpawnEnemyCube(int enemyRuntimeId)
 		{
 			var randomPosition= new Vector3(
 				Random.Range(-_groundSize.x / 2, _groundSize.x / 2),
