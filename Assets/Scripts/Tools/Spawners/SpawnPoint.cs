@@ -10,6 +10,7 @@ namespace Tools.Spawners
 			var children = gameObject.GetComponentsInChildren<Transform>();
 			for (var i = 0; i < children.Length; i++)
 			{
+				if (children[i] == transform) continue;
 				Destroy(children[i].gameObject);
 			}
 		}
