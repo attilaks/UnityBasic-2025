@@ -9,7 +9,7 @@ namespace Tools.Spawners
 	public class EnemyCubeSpawnerAtPreparedLocations : Spawner
 	{
 		[Header("Settings")]
-		[SerializeField] private byte maxEnemyCount = 10;
+		[SerializeField] private uint maxEnemyCount = 10;
 		[SerializeField] private float minSpawnInterval;
 		[SerializeField] private float maxSpawnInterval = 2f;
 		
@@ -20,6 +20,7 @@ namespace Tools.Spawners
 		{
 			_spawnPoints = gameObject.GetComponentsInChildren<SpawnPoint>();
 			
+			maxEnemyCount = maxEnemyCount < _spawnPoints.Length ? maxEnemyCount : (uint)_spawnPoints.Length;
 			if (minSpawnInterval > maxSpawnInterval)
 				maxSpawnInterval = minSpawnInterval;
 		}
@@ -43,7 +44,8 @@ namespace Tools.Spawners
 				}
 				var randomEmptySpawnPoint = _spawnPoints[newRandomSpawnPointIndex].transform;
 				
-				var enemyCube = Instantiate(enemyCubePrefab, randomEmptySpawnPoint);
+				var enemyCube = Instantiate(enemyCubePrefab, randomEmptySpawnPoint.position, Quaternion.identity);
+				enemyCube.transform.SetParent(randomEmptySpawnPoint);
 				enemyCube.OnDeath += OnEnemyDead;
 				_idEnemyDict[enemyCube.RuntimeId] = enemyCube;
 				

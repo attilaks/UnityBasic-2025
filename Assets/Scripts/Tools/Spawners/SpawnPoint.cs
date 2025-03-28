@@ -28,11 +28,6 @@ namespace Tools.Spawners
 			}
 		}
 
-		private void OnDestroy()
-		{
-			Debug.LogError("Spawn point is destroyed");
-		}
-
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.red; 
