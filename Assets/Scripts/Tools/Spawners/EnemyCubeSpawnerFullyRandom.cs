@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Characters;
+﻿using Characters;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Tools.Spawners
 {
 	[RequireComponent(typeof(Collider))]
-	public class EnemyCubeSpawner : MonoBehaviour
+	public class EnemyCubeSpawnerFullyRandom : Spawner
 	{
-		[SerializeField] private EnemyCube enemyCubePrefab;
-		
 		private Vector2 _groundSize;
 		private EnemyCube _currentEnemyCube;
 		
