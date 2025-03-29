@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using Characters;
 using Tools.CustomCollections;
 using UnityEngine;
@@ -23,16 +24,21 @@ namespace Tools.Spawners
 			maxEnemyCount = maxEnemyCount < _spawnPoints.Length ? maxEnemyCount : (uint)_spawnPoints.Length;
 			if (minSpawnInterval > maxSpawnInterval)
 				maxSpawnInterval = minSpawnInterval;
+			
+			_idEnemyDict.CountChanged += OnEnemyCountChanged;
 		}
 
 		private void Start()
 		{
-			_idEnemyDict.CountChanged += OnEnemyCountChanged;
 			StartCoroutine(SpawnEnemyCube());
 		}
 
 		private IEnumerator SpawnEnemyCube()
 		{
+			var spawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
+			if (_idEnemyDict.PreviousCount >= maxEnemyCount && _idEnemyDict.Count < maxEnemyCount)
+				yield return new WaitForSeconds(spawnInterval);
+			
 			while (_idEnemyDict.Count < maxEnemyCount)
 			{
 				if (_spawnPoints.Length == 0) break;
@@ -49,14 +55,14 @@ namespace Tools.Spawners
 				enemyCube.OnDeath += OnEnemyDead;
 				_idEnemyDict[enemyCube.RuntimeId] = enemyCube;
 				
-				var spawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
 				yield return new WaitForSeconds(spawnInterval);
 			}
 		}
 		
-		private void OnEnemyCountChanged(int newEnemyCount)
+		private void OnEnemyCountChanged()
 		{
-			// throw new NotImplementedException();
+			if (_idEnemyDict.PreviousCount >= maxEnemyCount && _idEnemyDict.Count < maxEnemyCount)
+				StartCoroutine(SpawnEnemyCube());
 		}
 
 		private void OnEnemyDead(int enemyRuntimeId)
@@ -64,6 +70,7 @@ namespace Tools.Spawners
 			if (!_idEnemyDict.TryGetValue(enemyRuntimeId, out var enemy)) return;
 			
 			enemy.OnDeath -= OnEnemyDead;
+			enemy.transform.parent = null;
 			_idEnemyDict.Remove(enemyRuntimeId);
 		}
 	}
