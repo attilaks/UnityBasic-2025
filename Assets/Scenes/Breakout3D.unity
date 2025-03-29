@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -629,6 +629,7 @@ GameObject:
   - component: {fileID: 233762844}
   - component: {fileID: 233762843}
   - component: {fileID: 233762845}
+  - component: {fileID: 233762846}
   m_Layer: 5
   m_Name: Cups
   m_TagString: Untagged
@@ -722,6 +723,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!225 &233762846
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233762841}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &235589249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,10 +1046,10 @@ RectTransform:
   m_Father: {fileID: 809002208}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -117}
+  m_SizeDelta: {x: 300, y: 234}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &413482101
 MonoBehaviour:
@@ -1107,6 +1120,7 @@ GameObject:
   - component: {fileID: 437068940}
   - component: {fileID: 437068941}
   - component: {fileID: 437068942}
+  - component: {fileID: 437068943}
   m_Layer: 5
   m_Name: CollectButton
   m_TagString: Untagged
@@ -1190,6 +1204,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437068939}
   m_CullTransparentMesh: 1
+--- !u!225 &437068943
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437068939}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &572120950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,6 +1484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 667229069}
   - component: {fileID: 667229070}
+  - component: {fileID: 667229071}
   m_Layer: 5
   m_Name: AdvButton
   m_TagString: Untagged
@@ -1533,6 +1560,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &667229071
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667229068}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &716705558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,6 +1915,7 @@ GameObject:
   - component: {fileID: 809002210}
   - component: {fileID: 809002209}
   - component: {fileID: 809002211}
+  - component: {fileID: 809002212}
   m_Layer: 5
   m_Name: Coins
   m_TagString: Untagged
@@ -1969,6 +2009,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!225 &809002212
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809002207}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &870180891
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,10 +2054,10 @@ RectTransform:
   m_Father: {fileID: 233762842}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -287}
+  m_SizeDelta: {x: 300, y: 106}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &870180893
 MonoBehaviour:
@@ -2060,10 +2112,10 @@ RectTransform:
   m_Father: {fileID: 809002208}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -287}
+  m_SizeDelta: {x: 300, y: 106}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &881488570
 MonoBehaviour:
@@ -2593,10 +2645,10 @@ RectTransform:
   m_Father: {fileID: 233762842}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -117}
+  m_SizeDelta: {x: 300, y: 234}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1008272719
 MonoBehaviour:
@@ -3815,13 +3867,14 @@ GameObject:
   - component: {fileID: 1835853472}
   - component: {fileID: 1835853471}
   - component: {fileID: 1835853473}
+  - component: {fileID: 1835853474}
   m_Layer: 5
   m_Name: WinScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1835853470
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3898,32 +3951,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bricksController: {fileID: 1098820097}
+  winUiCanvasGroup: {fileID: 1835853474}
+  titleCanvasGroup: {fileID: 2033962976}
+  cupsCanvasGroup: {fileID: 233762846}
+  coinsCanvasGroup: {fileID: 809002212}
+  collectButtonCanvasGroup: {fileID: 437068943}
+  advButtonCanvasGroup: {fileID: 667229071}
   backgroundImage: {fileID: 1835853471}
-  titleImage: {fileID: 2033962974}
-  collectButtonFrontImage: {fileID: 89252479}
-  collectButtonBottomImage: {fileID: 614102611}
-  collectButtonTopImage: {fileID: 611902893}
-  collectButtonShadowImage: {fileID: 272985846}
-  collectButtonGradientImage: {fileID: 1133527933}
-  advButtonFrontImage: {fileID: 139488911}
-  advButtonBottomImage: {fileID: 1680574957}
-  advButtonTopImage: {fileID: 937065828}
-  advButtonShadowImage: {fileID: 753548444}
-  advButtonGradientImage: {fileID: 269156438}
-  cupsContainerImage: {fileID: 1008272719}
-  coinsContainerImage: {fileID: 413482101}
   coinsText: {fileID: 937838449}
-  titleText: {fileID: 104792878}
-  collectButtonText: {fileID: 2068643381}
-  advButtonText1: {fileID: 1294192692}
-  advButtonText2: {fileID: 1183786836}
-  cupsContainerText: {fileID: 960618551}
-  coinsContainerText: {fileID: 937838449}
-  cupsContainer: {fileID: 233762842}
-  coinsContainer: {fileID: 809002208}
   collectButton: {fileID: 437068941}
   advertisementButton: {fileID: 667229070}
   animationDuration: 1
+--- !u!225 &1835853474
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835853469}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2033962972
 GameObject:
   m_ObjectHideFlags: 0
@@ -3935,6 +3985,7 @@ GameObject:
   - component: {fileID: 2033962973}
   - component: {fileID: 2033962975}
   - component: {fileID: 2033962974}
+  - component: {fileID: 2033962976}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -4001,6 +4052,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033962972}
   m_CullTransparentMesh: 1
+--- !u!225 &2033962976
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033962972}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2068643379
 GameObject:
   m_ObjectHideFlags: 0
