@@ -8,13 +8,11 @@ namespace Tools.Spawners
 		[Header("Prefab references")]
 		[SerializeField] protected EnemyCube enemyCubePrefab;
 		
-		// При активации отключаем все другие компоненты этого же типа
 		private void OnEnable()
 		{
 			DisableOtherInstances();
 		}
-
-		// В редакторе также можно добавить проверку через OnValidate
+		
 		private void OnValidate()
 		{
 			if (enabled)
