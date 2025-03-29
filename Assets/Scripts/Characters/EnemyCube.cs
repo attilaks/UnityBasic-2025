@@ -10,13 +10,15 @@ namespace Characters
 	[RequireComponent(typeof(HealthManager))]
 	public class EnemyCube : MonoBehaviour
 	{
-		public event Action OnDeath = delegate { };
-		
+		public event Action<int> OnDeath = delegate { };
+
+		public int RuntimeId { get; private set; }
 		private HealthManager _healthManager;
 		private Renderer _renderer;
 
 		private void Awake()
 		{
+			RuntimeId = GetInstanceID();
 			_renderer = GetComponent<Renderer>();
 			_healthManager = GetComponent<HealthManager>();
 			_healthManager.DeathHasComeEvent += CubeIsDestroyed;
@@ -29,7 +31,7 @@ namespace Characters
 		
 		private void CubeIsDestroyed()
 		{
-			OnDeath.Invoke();
+			OnDeath.Invoke(RuntimeId);
 			StartCoroutine(FadeAway());
 		}
 
