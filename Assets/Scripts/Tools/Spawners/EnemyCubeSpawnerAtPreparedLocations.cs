@@ -16,6 +16,8 @@ namespace Tools.Spawners
 		
 		private SpawnPoint[] _spawnPoints;
 		private readonly ObservableDictionary<int, EnemyCube> _idEnemyDict = new();
+		
+		private bool SpawnCoroutineShouldStartAgain => _idEnemyDict.PreviousCount >= maxEnemyCount && _idEnemyDict.Count < maxEnemyCount;
 
 		private void Awake()
 		{
@@ -36,7 +38,7 @@ namespace Tools.Spawners
 		private IEnumerator SpawnEnemyCube()
 		{
 			var spawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
-			if (_idEnemyDict.PreviousCount >= maxEnemyCount && _idEnemyDict.Count < maxEnemyCount)
+			if (SpawnCoroutineShouldStartAgain)
 				yield return new WaitForSeconds(spawnInterval);
 			
 			while (_idEnemyDict.Count < maxEnemyCount)
@@ -61,7 +63,7 @@ namespace Tools.Spawners
 		
 		private void OnEnemyCountChanged()
 		{
-			if (_idEnemyDict.PreviousCount >= maxEnemyCount && _idEnemyDict.Count < maxEnemyCount)
+			if (SpawnCoroutineShouldStartAgain)
 				StartCoroutine(SpawnEnemyCube());
 		}
 
