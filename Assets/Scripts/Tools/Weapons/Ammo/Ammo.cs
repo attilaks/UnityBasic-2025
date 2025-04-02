@@ -7,17 +7,24 @@ namespace Tools.Weapons.Ammo
 	public class Ammo : MonoBehaviour
 	{
 		[SerializeField] private AmmoData ammoData;
+		[SerializeField] private ParticleSystem sparksEffect;
 		
 		private void OnCollisionEnter(Collision other)
 		{
+			ContactPoint contact = other.GetContact(0);
+			
 			if (other.gameObject.TryGetComponent<HealthManager>(out var healthManager))
 			{
 				healthManager.TakeDamage(ammoData.StandardDamage);
+				if (sparksEffect)
+				{
+					var sparks = Instantiate(sparksEffect, contact.point, Quaternion.LookRotation(contact.normal));
+					sparks.Play();
+				}
 			}
             
 			if (ammoData.DecalPrefab != null)
 			{
-				ContactPoint contact = other.contacts[0];
 				Vector3 hitPosition = contact.point + contact.normal * 0.001f;
 				Quaternion hitRotation = Quaternion.LookRotation(contact.normal);
                 

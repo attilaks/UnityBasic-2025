@@ -296,6 +296,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoData: {fileID: 11400000, guid: dc725f67b4f35f14f88cf3dfb7d00281, type: 2}
+  sparksEffect: {fileID: 5340429317770459000, guid: 94fd2593477ab2845986038fbc3f63a3,
+    type: 3}
 --- !u!1 &5838767848198372577
 GameObject:
   m_ObjectHideFlags: 0

@@ -261,3 +261,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoData: {fileID: 11400000, guid: a8ed0f2ef41e218409156b9025c1251b, type: 2}
+  sparksEffect: {fileID: 5340429317770459000, guid: 94fd2593477ab2845986038fbc3f63a3,
+    type: 3}
