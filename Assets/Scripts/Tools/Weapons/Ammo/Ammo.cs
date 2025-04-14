@@ -23,7 +23,7 @@ namespace Tools.Weapons.Ammo
 				}
 			}
             
-			if (ammoData.DecalPrefab != null)
+			if (ammoData.DecalPrefab)
 			{
 				Vector3 hitPosition = contact.point + contact.normal * 0.001f;
 				Quaternion hitRotation = Quaternion.LookRotation(contact.normal);
