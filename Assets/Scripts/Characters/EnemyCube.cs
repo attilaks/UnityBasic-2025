@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Effects;
 using Tools.Managers;
 using UnityEngine;
 
@@ -15,12 +16,15 @@ namespace Characters
 		public int RuntimeId { get; private set; }
 		private HealthManager _healthManager;
 		private Renderer _renderer;
+		private EnemyDeathEffectController _deathEffectVolume;
 
 		private void Awake()
 		{
 			RuntimeId = GetInstanceID();
 			_renderer = GetComponent<Renderer>();
 			_healthManager = GetComponent<HealthManager>();
+			_deathEffectVolume = FindObjectOfType<EnemyDeathEffectController>();
+			
 			_healthManager.DeathHasComeEvent += CubeIsDestroyed;
 		}
 		
@@ -33,6 +37,8 @@ namespace Characters
 		{
 			OnDeath.Invoke(RuntimeId);
 			StartCoroutine(FadeAway());
+			if (_deathEffectVolume)
+				_deathEffectVolume.TriggerEffect();
 		}
 
 		private IEnumerator FadeAway()
