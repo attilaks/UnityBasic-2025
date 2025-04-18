@@ -1,29 +1,41 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Effects
 {
-	[RequireComponent(typeof(PostProcessVolume))]
+	[RequireComponent(typeof(Volume))]
 	public class EnemyDeathEffectController : MonoBehaviour
 	{
-		[SerializeField] private float fadeInDuration = 0.5f; 
-		[SerializeField] private float fadeOutDuration = 0.5f;
+		[SerializeField] private float fadeInDuration = 0.1f; 
+		[SerializeField] private float fadeOutDuration = 0.2f;
 		[SerializeField] private float effectDelay = 0.1f;
 		
-		private PostProcessVolume _volume;
-		private ColorGrading _colorGrading;
+		private Volume _volume;
+		private ColorAdjustments _colorAdjustments;
+		private Vignette _vignette;
+		
 		private float _originalSaturation;
+		private float _originalVignetteIntensity;
 		
 		private void Awake()
 		{
-			_volume = GetComponent<PostProcessVolume>();
-			if (!_volume.profile.TryGetSettings(out _colorGrading))
+			_volume = GetComponent<Volume>();
+			if (!_volume.profile.TryGet(out _colorAdjustments))
 			{
-				Debug.LogError("ColorGrading not found in PostProcessVolume!");
+				Debug.LogError("ColorGrading not found in Volume!");
 				return;
 			}
-			_originalSaturation = _colorGrading.saturation.value;
+
+			if (!_volume.profile.TryGet(out _vignette))
+			{
+				Debug.LogError("Vignette not found in Volume!");
+				return;
+			}
+			
+			_originalSaturation = _colorAdjustments.saturation.value;
+			_originalVignetteIntensity = _vignette.intensity.value;
 		}
 
 		public void TriggerEffect()
@@ -33,34 +45,31 @@ namespace Effects
 
 		private IEnumerator ApplyEffect()
 		{
-			// Плавный уход в ч/б (Saturation: 0 → -100)
 			var timer = 0f;
+			Time.timeScale = 0.5f;
 			while (timer < fadeInDuration)
 			{
 				timer += Time.deltaTime;
 				var t = timer / fadeInDuration;
-				_colorGrading.saturation.value = Mathf.Lerp(_originalSaturation, -100f, t);
-				Debug.Log($"Saturation: {_colorGrading.saturation.value}");
+				_colorAdjustments.saturation.value = Mathf.Lerp(_originalSaturation, -100f, t);
+				_vignette.intensity.value = Mathf.Lerp(_originalVignetteIntensity, 0.5f, t);
 				yield return null;
 			}
-
-			// Краткая задержка в ч/б
+			
 			yield return new WaitForSeconds(effectDelay);
-
-			// Плавный возврат цвета (Saturation: -100 → original)
+			
 			timer = 0f;
+			Time.timeScale = 1f;
 			while (timer < fadeOutDuration)
 			{
 				timer += Time.deltaTime;
 				var t = timer / fadeOutDuration;
-				_colorGrading.saturation.value = Mathf.Lerp(-100f, _originalSaturation, t);
-				Debug.Log($"Saturation: {_colorGrading.saturation.value}");
+				_colorAdjustments.saturation.value = Mathf.Lerp(-100f, _originalSaturation, t);
+				_vignette.intensity.value = Mathf.Lerp(0.5f, _originalVignetteIntensity, t);
 				yield return null;
 			}
-
-			// Фикс на случай ошибок округления
-			_colorGrading.saturation.value = _originalSaturation;
-			Debug.Log($"Saturation: {_colorGrading.saturation.value}");
+			
+			_colorAdjustments.saturation.value = _originalSaturation;
 		}
 	}
 }
