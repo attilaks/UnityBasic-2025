@@ -4362,6 +4362,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e32b388f4a5464f8fed443bf77aade5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveGameAction:
+    m_Name: Save Game
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4df5ab3b-22c4-4cfd-9c76-8f2c3be0ed7a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ef97eab3-90fa-4318-93d0-cd190f87ab93
+      m_Path: <Keyboard>/q
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Save Game
+      m_Flags: 0
+    m_Flags: 0
+  loadGameAction:
+    m_Name: Load Game
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8d3437f3-0c0d-41d2-8fc7-17607696151d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 028aa1e6-4233-46df-8276-a6db89c55239
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Load Game
+      m_Flags: 0
+    m_Flags: 0
   movementSpeed: 2
   rotationSpeed: 2
   footstepClips:

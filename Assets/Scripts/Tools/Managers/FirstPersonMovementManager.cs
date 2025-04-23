@@ -7,6 +7,10 @@ namespace Tools.Managers
 	[RequireComponent(typeof(AudioSource))]
 	public class FirstPersonMovementManager : MonoBehaviour
 	{
+		[Header("Save/load actions")]
+		[SerializeField] private InputAction saveGameAction;
+		[SerializeField] private InputAction loadGameAction;
+		
 		[Header("Movement settings")]
 		[SerializeField] private float movementSpeed = 2f;
 		[SerializeField] private float rotationSpeed = 2f;
@@ -25,11 +29,6 @@ namespace Tools.Managers
 		
 		private readonly InputAction _run = new("Run", InputActionType.Value, 
 			$"{InputConstants.KeyBoard}/{InputConstants.LeftShift}");
-
-		private readonly InputAction _rotateLeft = new("RotateLeft", InputActionType.Value, 
-			$"{InputConstants.KeyBoard}/{InputConstants.Q}");
-		private readonly InputAction _rotateRight = new("RotateRight", InputActionType.Value, 
-			$"{InputConstants.KeyBoard}/{InputConstants.E}");
 		
 		private AudioSource _audioSource;
 		private float _walkSoundSpeed;
@@ -68,15 +67,6 @@ namespace Tools.Managers
 			{
 				Move(Vector3.back);
 			}
-
-			if (_rotateLeft.IsPressed())
-			{
-				Rotate(-90f);
-			}
-			if (_rotateRight.IsPressed())
-			{
-				Rotate(90f);
-			}
 		}
 		
 		private void OnEnable()
@@ -87,9 +77,9 @@ namespace Tools.Managers
 			_moveBack.Enable();
 			
 			_run.Enable();
-            
-			_rotateLeft.Enable();
-			_rotateRight.Enable();
+			
+			loadGameAction.Enable();
+			saveGameAction.Enable();
 		}
 
 		private void OnDisable()
@@ -100,9 +90,9 @@ namespace Tools.Managers
 			_moveBack.Disable();
 			
 			_run.Disable();
-            
-			_rotateLeft.Disable();
-			_rotateRight.Disable();
+			
+			loadGameAction.Disable();
+			saveGameAction.Disable();
 		}
 
 		#endregion
