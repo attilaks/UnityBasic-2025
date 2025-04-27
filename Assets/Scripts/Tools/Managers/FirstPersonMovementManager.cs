@@ -1,4 +1,5 @@
-﻿using GlobalConstants;
+﻿using System;
+using GlobalConstants;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,7 +14,6 @@ namespace Tools.Managers
 		
 		[Header("Movement settings")]
 		[SerializeField] private float movementSpeed = 2f;
-		[SerializeField] private float rotationSpeed = 2f;
 		
 		[Header("Audio references")]
 		[SerializeField] private AudioClip[] footstepClips;
@@ -43,6 +43,15 @@ namespace Tools.Managers
 			_audioSource = GetComponent<AudioSource>();
 			_walkSoundSpeed = _audioSource.pitch;
 			_runSoundSpeed = _walkSoundSpeed * 2f;
+
+			saveGameAction.performed += OnSaveGameActionPerformed;
+			loadGameAction.performed += OnLoadGameActionPerformed;
+		}
+
+		private void OnDestroy()
+		{
+			saveGameAction.performed -= OnSaveGameActionPerformed;
+			loadGameAction.performed -= OnLoadGameActionPerformed;
 		}
 
 		private void Update()
@@ -103,12 +112,6 @@ namespace Tools.Managers
 			transform.Translate(direction * (speed * Time.deltaTime));
 			PlayFootSteps();
 		}
-		
-		private void Rotate(float angle)
-		{
-			var targetAngle = angle * rotationSpeed * Time.deltaTime;
-			transform.Rotate(0, targetAngle, 0);
-		}
 
 		private void PlayFootSteps()
 		{
@@ -119,6 +122,16 @@ namespace Tools.Managers
 			_audioSource.pitch = _isRunning ? _runSoundSpeed : _walkSoundSpeed;
 			
 			_audioSource.Play();
+		}
+		
+		private void OnLoadGameActionPerformed(InputAction.CallbackContext obj)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void OnSaveGameActionPerformed(InputAction.CallbackContext obj)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -4,6 +4,7 @@ namespace Tools
 {
 	public class FirstPersonCamera : MonoBehaviour
 	{
+		[Range(100, 1000)]
 		[SerializeField] private float mouseSensitivity = 200f;
 		[SerializeField] private Transform playerTransform;
 		
