@@ -3988,6 +3988,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352146705}
   m_CullTransparentMesh: 1
+--- !u!1 &1394569550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1394569552}
+  - component: {fileID: 1394569551}
+  m_Layer: 0
+  m_Name: GameInstaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1394569551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394569550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e765d5f3288f47f4b5bb3bfe2d3e11b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+--- !u!4 &1394569552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394569550}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1433523564
 GameObject:
   m_ObjectHideFlags: 0
@@ -4326,6 +4374,7 @@ GameObject:
   - component: {fileID: 1528132987}
   - component: {fileID: 1528132989}
   - component: {fileID: 1528132988}
+  - component: {fileID: 1528132990}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4362,42 +4411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e32b388f4a5464f8fed443bf77aade5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveGameAction:
-    m_Name: Save Game
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4df5ab3b-22c4-4cfd-9c76-8f2c3be0ed7a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: ef97eab3-90fa-4318-93d0-cd190f87ab93
-      m_Path: <Keyboard>/q
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Save Game
-      m_Flags: 0
-    m_Flags: 0
-  loadGameAction:
-    m_Name: Load Game
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 8d3437f3-0c0d-41d2-8fc7-17607696151d
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 028aa1e6-4233-46df-8276-a6db89c55239
-      m_Path: <Keyboard>/e
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Load Game
-      m_Flags: 0
-    m_Flags: 0
   movementSpeed: 2
-  rotationSpeed: 2
   footstepClips:
   - {fileID: 8300000, guid: fa9e67b28722ae3489819d3910b69c6e, type: 3}
   - {fileID: 8300000, guid: 191b1a195eba6b2448936ffada00134c, type: 3}
@@ -4497,6 +4511,52 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1528132990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528132986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d45eb3c57764238bc089ca7a7554345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveGameAction:
+    m_Name: Save Game
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cbc13e10-fe28-4c7a-9b73-4d5f6b669688
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 15d5e9ae-0392-4b50-8076-b5b05cf93a1c
+      m_Path: <Keyboard>/q
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Save Game
+      m_Flags: 0
+    m_Flags: 0
+  loadGameAction:
+    m_Name: Load Game
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ae77ff9a-0ded-4f58-b2b5-2b3247a90c1a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 37ff2bfc-5d65-4ba1-89e3-0fc3512a740b
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Load Game
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1 &1541634656
 GameObject:
   m_ObjectHideFlags: 0

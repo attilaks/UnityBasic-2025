@@ -39,12 +39,14 @@ namespace SaveSystem
 		private void OnLoadGameActionPerformed(InputAction.CallbackContext obj)
 		{
 			_saveService.Load();
+			Debug.Log("Load Game Action");
 		}
 
 		private void OnSaveGameActionPerformed(InputAction.CallbackContext obj)
 		{
 			var saveData = new SaveData(); //todo
 			_saveService.Save(saveData);
+			Debug.Log("Save Game Action");
 		}
 	}
 }
