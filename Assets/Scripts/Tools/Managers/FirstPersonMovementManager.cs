@@ -8,10 +8,6 @@ namespace Tools.Managers
 	[RequireComponent(typeof(AudioSource))]
 	public class FirstPersonMovementManager : MonoBehaviour
 	{
-		[Header("Save/load actions")]
-		[SerializeField] private InputAction saveGameAction;
-		[SerializeField] private InputAction loadGameAction;
-		
 		[Header("Movement settings")]
 		[SerializeField] private float movementSpeed = 2f;
 		
@@ -43,15 +39,6 @@ namespace Tools.Managers
 			_audioSource = GetComponent<AudioSource>();
 			_walkSoundSpeed = _audioSource.pitch;
 			_runSoundSpeed = _walkSoundSpeed * 2f;
-
-			saveGameAction.performed += OnSaveGameActionPerformed;
-			loadGameAction.performed += OnLoadGameActionPerformed;
-		}
-
-		private void OnDestroy()
-		{
-			saveGameAction.performed -= OnSaveGameActionPerformed;
-			loadGameAction.performed -= OnLoadGameActionPerformed;
 		}
 
 		private void Update()
@@ -86,9 +73,6 @@ namespace Tools.Managers
 			_moveBack.Enable();
 			
 			_run.Enable();
-			
-			loadGameAction.Enable();
-			saveGameAction.Enable();
 		}
 
 		private void OnDisable()
@@ -99,9 +83,6 @@ namespace Tools.Managers
 			_moveBack.Disable();
 			
 			_run.Disable();
-			
-			loadGameAction.Disable();
-			saveGameAction.Disable();
 		}
 
 		#endregion
@@ -122,16 +103,6 @@ namespace Tools.Managers
 			_audioSource.pitch = _isRunning ? _runSoundSpeed : _walkSoundSpeed;
 			
 			_audioSource.Play();
-		}
-		
-		private void OnLoadGameActionPerformed(InputAction.CallbackContext obj)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void OnSaveGameActionPerformed(InputAction.CallbackContext obj)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }
