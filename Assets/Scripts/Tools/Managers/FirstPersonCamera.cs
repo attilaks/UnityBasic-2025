@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using SaveSystem;
+using Tools.Managers.Interfaces;
+using UnityEngine;
 
-namespace Tools
+namespace Tools.Managers
 {
-	public class FirstPersonCamera : MonoBehaviour
+	public class FirstPersonCamera : MonoBehaviour, ICameraReader
 	{
 		[Range(100, 1000)]
 		[SerializeField] private float mouseSensitivity = 200f;
@@ -27,5 +29,7 @@ namespace Tools
 			playerTransform.localRotation = Quaternion.Euler(0f, _yRotation, 0f);
 			transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
 		}
+
+		public SerializableVector3 CameraRotation => transform.localRotation.eulerAngles;
 	}
 }

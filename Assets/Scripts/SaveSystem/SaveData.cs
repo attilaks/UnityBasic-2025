@@ -11,6 +11,6 @@ namespace SaveSystem
 		public SerializableVector3 cameraRotation;
 		public List<SerializableVector3> enemyPositions;
 		public byte currentAmmoCount;
-		
+		//todo
 	}
 }

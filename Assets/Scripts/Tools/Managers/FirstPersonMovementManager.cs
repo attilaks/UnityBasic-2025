@@ -1,12 +1,14 @@
 ﻿using System;
 using GlobalConstants;
+using SaveSystem;
+using Tools.Managers.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Tools.Managers
 {
 	[RequireComponent(typeof(AudioSource))]
-	public class FirstPersonMovementManager : MonoBehaviour
+	public class FirstPersonMovementManager : MonoBehaviour, IPlayerTransformReader
 	{
 		[Header("Movement settings")]
 		[SerializeField] private float movementSpeed = 2f;
@@ -104,5 +106,8 @@ namespace Tools.Managers
 			
 			_audioSource.Play();
 		}
+
+		public SerializableVector3 PlayerPosition => transform.position;
+		public SerializableVector3 PlayerRotation => transform.rotation.eulerAngles;
 	}
 }

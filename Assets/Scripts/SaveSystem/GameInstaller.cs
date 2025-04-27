@@ -1,4 +1,6 @@
-﻿using VContainer;
+﻿using Tools.Managers;
+using Tools.Managers.Interfaces;
+using VContainer;
 using VContainer.Unity;
 
 namespace SaveSystem
@@ -14,6 +16,8 @@ namespace SaveSystem
 		protected override void Configure(IContainerBuilder builder)
 		{
 			builder.Register<ISaveService, JsonSaveService>(Lifetime.Singleton);
+			builder.Register<IPlayerTransformReader, FirstPersonMovementManager>(Lifetime.Scoped);
+			builder.Register<ICameraReader, FirstPersonCamera>(Lifetime.Scoped);
 
 			builder.RegisterComponentInHierarchy<SaveLoadManager>();
 		}
