@@ -1,6 +1,8 @@
-﻿namespace SaveSystem
+﻿using VContainer.Unity;
+
+namespace SaveSystem
 {
-	public class GameInstaller
+	public class GameInstaller : LifetimeScope
 	{
 		
 	}
