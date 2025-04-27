@@ -2106,84 +2106,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727266320}
   m_CullTransparentMesh: 1
---- !u!1 &730949058
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 730949059}
-  - component: {fileID: 730949060}
-  m_Layer: 0
-  m_Name: SaveLoadManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &730949059
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730949058}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2003382787}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &730949060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730949058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d45eb3c57764238bc089ca7a7554345, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveGameAction:
-    m_Name: Save Game
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: cbc13e10-fe28-4c7a-9b73-4d5f6b669688
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 15d5e9ae-0392-4b50-8076-b5b05cf93a1c
-      m_Path: <Keyboard>/q
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Save Game
-      m_Flags: 0
-    m_Flags: 0
-  loadGameAction:
-    m_Name: Load Game
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ae77ff9a-0ded-4f58-b2b5-2b3247a90c1a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 37ff2bfc-5d65-4ba1-89e3-0fc3512a740b
-      m_Path: <Keyboard>/e
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Load Game
-      m_Flags: 0
-    m_Flags: 0
 --- !u!1 &771545374
 GameObject:
   m_ObjectHideFlags: 0
@@ -4099,6 +4021,8 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  saveLoadManagerPefab: {fileID: 7559518610892846267, guid: 9dd03348ca020c240b7d58e36bd879bc,
+    type: 3}
 --- !u!4 &1394569552
 Transform:
   m_ObjectHideFlags: 0
@@ -4107,12 +4031,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1394569550}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.6531954, y: 3.4246352, z: 4.074982}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2003382787}
-  m_RootOrder: -1
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1433523564
 GameObject:
@@ -5686,11 +5610,9 @@ Transform:
   m_LocalPosition: {x: 7.6531954, y: -3.4246352, z: -4.074982}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1394569552}
-  - {fileID: 730949059}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2062174007
 GameObject:

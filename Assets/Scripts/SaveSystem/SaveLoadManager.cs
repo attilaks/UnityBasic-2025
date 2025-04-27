@@ -20,7 +20,6 @@ namespace SaveSystem
 		
 		private void Awake()
 		{
-			DontDestroyOnLoad(this);
 			saveGameAction.performed += OnSaveGameActionPerformed;
 			loadGameAction.performed += OnLoadGameActionPerformed;
 
