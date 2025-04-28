@@ -14,7 +14,8 @@ namespace SaveSystem
 			builder.RegisterComponentInHierarchy<FirstPersonMovementManager>().As<IPlayerTransformReader>();
 			builder.RegisterComponentInHierarchy<FirstPersonCamera>().As<ICameraReader>();
 			
-			builder.RegisterComponentInHierarchy<SaveLoadManager>();
+			builder.RegisterComponentInHierarchy<SaveLoadManager>().DontDestroyOnLoad();
+			DontDestroyOnLoad(this);
 		}
 	}
 }
