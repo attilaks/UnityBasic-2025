@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using VContainer;
+using Debug = UnityEngine.Debug;
 
 namespace SaveSystem
 {
@@ -63,6 +64,7 @@ namespace SaveSystem
 				currentAmmoCount = 0
 			}; //todo
 			_saveService.Save(saveData);
+			Debug.Log("Saved game");
 		}
 		
 		private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -73,6 +75,7 @@ namespace SaveSystem
 			//todo
 			
 			_quickSaveIsLoaded = false;
+			Debug.Log("Loaded game");
 		}
 	}
 }
