@@ -109,5 +109,10 @@ namespace Tools.Managers
 
 		public SerializableVector3 PlayerPosition => transform.position;
 		public SerializableVector3 PlayerRotation => transform.rotation.eulerAngles;
+		public void Set(Vector3 position, Vector3 rotation)
+		{
+			transform.position = position;
+			transform.eulerAngles = rotation;
+		}
 	}
 }

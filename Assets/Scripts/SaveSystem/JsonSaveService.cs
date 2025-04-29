@@ -17,7 +17,6 @@ namespace SaveSystem
 		{
 			if (!SaveExists())
 			{
-				Debug.LogError("No save file found");
 				return null;
 			}
 			

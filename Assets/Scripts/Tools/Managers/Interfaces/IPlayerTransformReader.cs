@@ -1,4 +1,5 @@
 ﻿using SaveSystem;
+using UnityEngine;
 
 namespace Tools.Managers.Interfaces
 {
@@ -6,5 +7,7 @@ namespace Tools.Managers.Interfaces
 	{
 		SerializableVector3 PlayerPosition { get; }
 		SerializableVector3 PlayerRotation { get; }
+		
+		void Set(Vector3 position, Vector3 rotation);
 	}
 }

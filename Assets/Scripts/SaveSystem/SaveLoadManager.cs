@@ -1,4 +1,5 @@
-﻿using Tools.Managers.Interfaces;
+﻿using System.Collections;
+using Tools.Managers.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -17,10 +18,20 @@ namespace SaveSystem
 		[Inject] private IPlayerTransformReader _playerTransformReader;
 		[Inject] private ICameraReader _cameraReader;
 		
+		// private static SaveLoadManager _instance;
+		
 		private bool _quickSaveIsLoaded;
 		
 		private void Awake()
 		{
+			// if (_instance)
+			// {
+			// 	Destroy(gameObject);
+			// 	return;
+			// }
+			//
+			// _instance = this;
+			
 			saveGameAction.performed += OnSaveGameActionPerformed;
 			loadGameAction.performed += OnLoadGameActionPerformed;
 
@@ -51,6 +62,17 @@ namespace SaveSystem
 		{
 			_quickSaveIsLoaded = true;
 			SceneManager.LoadScene("Shooting");
+			// StartCoroutine(ApplySaveGameData());
+		}
+
+		private IEnumerator ApplySaveGameData()
+		{
+			yield return new WaitForEndOfFrame();
+			
+			var save = _saveService.Load();
+			if (save == null) yield break;
+			
+			_playerTransformReader.Set((Vector3)save.playerPosition, (Vector3)save.playerRotation);
 		}
 
 		private void OnSaveGameActionPerformed(InputAction.CallbackContext obj)
@@ -69,12 +91,13 @@ namespace SaveSystem
 		
 		private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 		{
-			if (!_quickSaveIsLoaded) return;
-			
-			var save = _saveService.Load();
-			//todo
-			
-			_quickSaveIsLoaded = false;
+			// if (!_quickSaveIsLoaded) return;
+			//
+			// var save = _saveService.Load();
+			// //todo
+			//
+			// _quickSaveIsLoaded = false;
+			StartCoroutine(ApplySaveGameData());
 			Debug.Log("Loaded game");
 		}
 	}
