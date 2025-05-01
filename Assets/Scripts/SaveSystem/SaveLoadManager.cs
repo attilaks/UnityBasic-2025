@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using SaveSystem.Interfaces;
 using Tools.Managers.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -44,19 +45,8 @@ namespace SaveSystem
 		
 		private void OnLoadGameActionPerformed(InputAction.CallbackContext obj)
 		{
-			SceneManager.LoadScene("Shooting");
-			StartCoroutine(ApplySaveGameData());
-			Debug.Log("Loaded game");
-		}
-
-		private IEnumerator ApplySaveGameData()
-		{
-			yield return new WaitForEndOfFrame();
-			
-			var save = _saveService.Load();
-			if (save == null) yield break;
-			
-			_playerTransformReader.Set((Vector3)save.playerPosition, (Vector3)save.playerRotation);
+			_saveService.Load();
+			StartCoroutine(LoadScene());
 		}
 		
 		private void OnSaveGameActionPerformed(InputAction.CallbackContext obj)
@@ -66,11 +56,16 @@ namespace SaveSystem
 				playerPosition = _playerTransformReader.PlayerPosition,
 				playerRotation = _playerTransformReader.PlayerRotation,
 				cameraRotation = _cameraReader.CameraRotation,
-				enemyPositions = null,
+				EnemyPositions = null,
 				currentAmmoCount = 0
 			}; //todo
 			_saveService.Save(saveData);
 			Debug.Log("Saved game");
+		}
+		
+		private IEnumerator LoadScene()
+		{
+			yield return SceneManager.LoadSceneAsync("LoadingScene");
 		}
 	}
 }

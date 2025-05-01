@@ -1,6 +1,8 @@
 ﻿using SaveSystem;
+using SaveSystem.Interfaces;
 using Tools.Managers.Interfaces;
 using UnityEngine;
+using VContainer;
 
 namespace Tools.Managers
 {
@@ -10,12 +12,23 @@ namespace Tools.Managers
 		[SerializeField] private float mouseSensitivity = 200f;
 		[SerializeField] private Transform playerTransform;
 		
+		[Inject] private ISaveDataApplier _saveDataApplier;
+		
 		private float _xRotation;
 		private float _yRotation;
 
-		private void Start()
+		private void Awake()
 		{
 			Cursor.lockState = CursorLockMode.Locked;
+		}
+
+		private void Start()
+		{
+			var loadedSave = _saveDataApplier.GetSaveDataTobeApplied();
+			if (loadedSave == null) return;
+
+			transform.localRotation = Quaternion.Euler((Vector3)loadedSave.Value.cameraRotation);
+			Debug.Log("Camera rotation is applied");
 		}
 
 		private void Update()

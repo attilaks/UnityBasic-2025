@@ -1,4 +1,5 @@
-﻿using VContainer;
+﻿using SaveSystem.Interfaces;
+using VContainer;
 using VContainer.Unity;
 
 namespace SaveSystem
@@ -8,6 +9,7 @@ namespace SaveSystem
 		protected override void Configure(IContainerBuilder builder)
 		{
 			builder.Register<ISaveService, JsonSaveService>(Lifetime.Singleton);
+			builder.Register<ISaveDataApplier, JsonSaveService>(Lifetime.Singleton);
 		}
 	}
 }

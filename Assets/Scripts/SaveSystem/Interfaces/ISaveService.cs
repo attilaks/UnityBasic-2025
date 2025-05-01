@@ -1,8 +1,8 @@
-﻿namespace SaveSystem
+﻿namespace SaveSystem.Interfaces
 {
 	public interface ISaveService
 	{
 		void Save(SaveData saveData);
-		SaveData Load();
+		void Load();
 	}
 }

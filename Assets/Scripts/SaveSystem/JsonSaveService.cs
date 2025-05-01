@@ -1,11 +1,15 @@
 ﻿using System.IO;
+using SaveSystem.Interfaces;
 using UnityEngine;
 
 namespace SaveSystem
 {
-	public sealed class JsonSaveService : ISaveService
+	// ReSharper disable once ClassNeverInstantiated.Global
+	public sealed class JsonSaveService : ISaveService, ISaveDataApplier
 	{
 		private readonly string _savePath = Path.Combine(Application.persistentDataPath, "quickSave.json");
+
+		private static SaveData? _saveDataToBeApplied;
 
 		public void Save(SaveData saveData)
 		{
@@ -13,17 +17,19 @@ namespace SaveSystem
 			File.WriteAllText(_savePath, json);
 		}
 
-		public SaveData Load()
+		public void Load()
 		{
 			if (!SaveExists())
 			{
-				return null;
+				return;
 			}
 			
 			var json = File.ReadAllText(_savePath);
 			var saveData = JsonUtility.FromJson<SaveData>(json);
-			return saveData;
+			_saveDataToBeApplied = saveData;
 		}
+		
+		public SaveData? GetSaveDataTobeApplied() => _saveDataToBeApplied;
 
 		private bool SaveExists() => File.Exists(_savePath);
 	}

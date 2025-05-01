@@ -1,9 +1,11 @@
 ﻿using System;
 using GlobalConstants;
 using SaveSystem;
+using SaveSystem.Interfaces;
 using Tools.Managers.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 
 namespace Tools.Managers
 {
@@ -15,6 +17,8 @@ namespace Tools.Managers
 		
 		[Header("Audio references")]
 		[SerializeField] private AudioClip[] footstepClips;
+		
+		[Inject] private ISaveDataApplier _saveDataApplier;
 		
 		private readonly InputAction _moveForward = new("MoveForward", InputActionType.Value, 
 			$"{InputConstants.KeyBoard}/{InputConstants.W}");
@@ -41,6 +45,16 @@ namespace Tools.Managers
 			_audioSource = GetComponent<AudioSource>();
 			_walkSoundSpeed = _audioSource.pitch;
 			_runSoundSpeed = _walkSoundSpeed * 2f;
+		}
+
+		private void Start()
+		{
+			var loadedSave = _saveDataApplier.GetSaveDataTobeApplied();
+			if (loadedSave == null) return;
+			
+			transform.position = (Vector3)loadedSave.Value.playerPosition;
+			transform.localRotation = Quaternion.Euler((Vector3)loadedSave.Value.playerRotation);
+			Debug.Log("Player transform is loaded.");
 		}
 
 		private void Update()
@@ -108,11 +122,6 @@ namespace Tools.Managers
 		}
 
 		public SerializableVector3 PlayerPosition => transform.position;
-		public SerializableVector3 PlayerRotation => transform.rotation.eulerAngles;
-		public void Set(Vector3 position, Vector3 rotation)
-		{
-			transform.position = position;
-			transform.eulerAngles = rotation;
-		}
+		public SerializableVector3 PlayerRotation => transform.localRotation.eulerAngles;
 	}
 }

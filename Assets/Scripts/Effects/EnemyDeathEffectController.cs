@@ -46,11 +46,11 @@ namespace Effects
 		private IEnumerator ApplyEffect()
 		{
 			var timer = 0f;
-			Time.timeScale = 0.5f;
 			while (timer < fadeInDuration)
 			{
 				timer += Time.deltaTime;
 				var t = timer / fadeInDuration;
+				Time.timeScale = Mathf.Lerp(1, 0.5f, t);
 				_colorAdjustments.saturation.value = Mathf.Lerp(_originalSaturation, -100f, t);
 				_vignette.intensity.value = Mathf.Lerp(_originalVignetteIntensity, 0.5f, t);
 				yield return null;
@@ -59,11 +59,11 @@ namespace Effects
 			yield return new WaitForSeconds(effectDelay);
 			
 			timer = 0f;
-			Time.timeScale = 1f;
 			while (timer < fadeOutDuration)
 			{
 				timer += Time.deltaTime;
 				var t = timer / fadeOutDuration;
+				Time.timeScale = Mathf.Lerp(0.5f, 1, t);
 				_colorAdjustments.saturation.value = Mathf.Lerp(-100f, _originalSaturation, t);
 				_vignette.intensity.value = Mathf.Lerp(0.5f, _originalVignetteIntensity, t);
 				yield return null;
