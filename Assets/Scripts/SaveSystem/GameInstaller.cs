@@ -1,7 +1,5 @@
 ﻿using Tools.Managers;
 using Tools.Managers.Interfaces;
-using Unity.VisualScripting;
-using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
@@ -27,6 +25,7 @@ namespace SaveSystem
 		private void RegisterPersistentDependencies(IContainerBuilder builder)
 		{
 			builder.Register<ISaveService, JsonSaveService>(Lifetime.Singleton);
+			
 			builder.RegisterComponentInHierarchy<SaveLoadManager>().DontDestroyOnLoad();
 		}
 
@@ -39,10 +38,10 @@ namespace SaveSystem
 
 		protected override void Configure(IContainerBuilder builder)
 		{
-			RegisterSceneDependencies(builder);
+			// RegisterSceneDependencies(builder);
 			RegisterPersistentDependencies(builder);
 			
-			DontDestroyOnLoad(this);
+			// DontDestroyOnLoad(this);
 		}
 	}
 }
