@@ -18,32 +18,26 @@ namespace SaveSystem
 		[Inject] private IPlayerTransformReader _playerTransformReader;
 		[Inject] private ICameraReader _cameraReader;
 		
-		// private static SaveLoadManager _instance;
-		
-		private bool _quickSaveIsLoaded;
+		private static SaveLoadManager _instance;
 		
 		private void Awake()
 		{
-			// if (_instance)
-			// {
-			// 	Destroy(gameObject);
-			// 	return;
-			// }
-			//
-			// _instance = this;
+			if (_instance)
+			{
+				Destroy(gameObject);
+				return;
+			}
+			
+			_instance = this;
 			
 			saveGameAction.performed += OnSaveGameActionPerformed;
 			loadGameAction.performed += OnLoadGameActionPerformed;
-
-			SceneManager.sceneLoaded += OnSceneLoaded;
 		}
 
 		private void OnDestroy()
 		{
 			saveGameAction.performed -= OnSaveGameActionPerformed;
 			loadGameAction.performed -= OnLoadGameActionPerformed;
-			
-			SceneManager.sceneLoaded -= OnSceneLoaded;
 		}
 
 		private void OnEnable()
@@ -60,9 +54,9 @@ namespace SaveSystem
 		
 		private void OnLoadGameActionPerformed(InputAction.CallbackContext obj)
 		{
-			_quickSaveIsLoaded = true;
 			SceneManager.LoadScene("Shooting");
-			// StartCoroutine(ApplySaveGameData());
+			StartCoroutine(ApplySaveGameData());
+			Debug.Log("Loaded game");
 		}
 
 		private IEnumerator ApplySaveGameData()
@@ -87,18 +81,6 @@ namespace SaveSystem
 			}; //todo
 			_saveService.Save(saveData);
 			Debug.Log("Saved game");
-		}
-		
-		private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-		{
-			// if (!_quickSaveIsLoaded) return;
-			//
-			// var save = _saveService.Load();
-			// //todo
-			//
-			// _quickSaveIsLoaded = false;
-			StartCoroutine(ApplySaveGameData());
-			Debug.Log("Loaded game");
 		}
 	}
 }
