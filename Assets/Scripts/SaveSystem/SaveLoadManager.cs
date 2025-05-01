@@ -18,18 +18,8 @@ namespace SaveSystem
 		[Inject] private IPlayerTransformReader _playerTransformReader;
 		[Inject] private ICameraReader _cameraReader;
 		
-		private static SaveLoadManager _instance;
-		
 		private void Awake()
 		{
-			if (_instance)
-			{
-				Destroy(gameObject);
-				return;
-			}
-			
-			_instance = this;
-			
 			saveGameAction.performed += OnSaveGameActionPerformed;
 			loadGameAction.performed += OnLoadGameActionPerformed;
 		}
@@ -68,7 +58,7 @@ namespace SaveSystem
 			
 			_playerTransformReader.Set((Vector3)save.playerPosition, (Vector3)save.playerRotation);
 		}
-
+		
 		private void OnSaveGameActionPerformed(InputAction.CallbackContext obj)
 		{
 			var saveData = new SaveData

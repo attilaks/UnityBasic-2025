@@ -5,28 +5,13 @@ using VContainer.Unity;
 
 namespace SaveSystem
 {
-	public class GameInstaller : LifetimeScope
+	public class ProjectLifetimeScope : LifetimeScope
 	{
-		private static GameInstaller _instance;
-		
-		protected override void Awake()
-		{
-			if (_instance)
-			{
-				Destroy(gameObject);
-				return;
-			}
-			
-			_instance = this;
-		
-			base.Awake();
-		}
-
 		private void RegisterPersistentDependencies(IContainerBuilder builder)
 		{
 			builder.Register<ISaveService, JsonSaveService>(Lifetime.Singleton);
 			
-			builder.RegisterComponentInHierarchy<SaveLoadManager>().DontDestroyOnLoad();
+			// builder.RegisterComponentInHierarchy<SaveLoadManager>().DontDestroyOnLoad();
 		}
 
 		private void RegisterSceneDependencies(IContainerBuilder builder)
@@ -38,10 +23,7 @@ namespace SaveSystem
 
 		protected override void Configure(IContainerBuilder builder)
 		{
-			// RegisterSceneDependencies(builder);
 			RegisterPersistentDependencies(builder);
-			
-			// DontDestroyOnLoad(this);
 		}
 	}
 }
