@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using SaveSystem.Interfaces;
 using Tools.Managers.Interfaces;
+using Tools.Weapons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,7 @@ namespace SaveSystem
 		[Inject] private ISaveService _saveService;
 		[Inject] private IPlayerTransformReader _playerTransformReader;
 		[Inject] private ICameraReader _cameraReader;
+		[Inject] private IWeaponReader _weaponReader;
 		
 		private void Awake()
 		{
@@ -56,9 +58,10 @@ namespace SaveSystem
 				playerPosition = _playerTransformReader.PlayerPosition,
 				playerRotation = _playerTransformReader.PlayerRotation,
 				cameraRotation = _cameraReader.CameraRotation,
-				EnemyPositions = null,
-				currentAmmoCount = 0
+				currentFireArmId = _weaponReader.CurrentFireArmId,
+				// FireArmAmmoCountDict = _weaponReader.GetFireArmAmmoDict()
 			}; //todo
+			saveData.SetAmmoDictionary(_weaponReader.GetFireArmAmmoDict());
 			_saveService.Save(saveData);
 			Debug.Log("Saved game");
 		}

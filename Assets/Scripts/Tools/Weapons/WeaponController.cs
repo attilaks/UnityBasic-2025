@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using SaveSystem.Interfaces;
 using Tools.Weapons.Firearms;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 
 namespace Tools.Weapons
 {
-	public class WeaponController : MonoBehaviour
+	public class WeaponController : MonoBehaviour, IWeaponReader
 	{
 		[SerializeField] private List<FireArm> fireArms;
 		[SerializeField] private InputAction scrollAction;
@@ -16,6 +19,8 @@ namespace Tools.Weapons
 		
 		public event Action<ushort, ushort, Sprite> WeaponIsSwitched = delegate { };
 		public event Action<ushort> CurrentWeaponAmmoCountChanged = delegate { };
+		
+		[Inject] private ISaveDataApplier _saveDataApplier;
 
 		private FireArm CurrentFireArm
 		{
@@ -37,19 +42,29 @@ namespace Tools.Weapons
 		private void Awake()
 		{
 			scrollAction.Enable();
-			
-			if (fireArms is not {Count: > 0}) return;
-			CurrentFireArm = fireArms[0];
-
-			for (int i = 1; i < fireArms.Count; i++)
-			{
-				fireArms[i].gameObject.SetActive(false);
-			}
 		}
 
-		private void OnDestroy()
+		private void Start()
 		{
-			scrollAction.Disable();
+			if (fireArms is not {Count: > 0}) return;
+
+			var currentFireArmId = fireArms.First().FireArmId;
+			
+			var loadedSave = _saveDataApplier.GetSaveDataTobeApplied();
+			if (loadedSave != null) 
+				currentFireArmId = loadedSave.Value.currentFireArmId;
+			
+			CurrentFireArm = fireArms.First(x => x.FireArmId == currentFireArmId);
+			fireArms.ForEach(x =>
+			{
+				if (loadedSave != null &&
+				    loadedSave.Value.GetAmmoDictionary().TryGetValue(x.FireArmId, out var ammoCount))
+				{
+					x.Initialize(ammoCount);
+				}
+				if (x.FireArmId == currentFireArmId) return;
+				x.gameObject.SetActive(false);
+			});
 		}
 
 		private void Update()
@@ -68,6 +83,11 @@ namespace Tools.Weapons
 					break;
 			}
 		}
+		
+		private void OnDestroy()
+		{
+			scrollAction.Disable();
+		}
 
 		private void SwitchWeapon(int newIndex)
 		{
@@ -80,6 +100,18 @@ namespace Tools.Weapons
 		private void OnCurrentWeaponAmmoCountChanged(byte ammoCount)
 		{
 			CurrentWeaponAmmoCountChanged.Invoke(ammoCount);
+		}
+		
+		public byte CurrentFireArmId => _currentFireArm.FireArmId;
+		public Dictionary<byte, byte> GetFireArmAmmoDict()
+		{
+			var dict = new Dictionary<byte, byte>(fireArms.Count);
+			for (var i = 0; i < fireArms.Count; i++)
+			{
+				dict[fireArms[i].FireArmId] = fireArms[i].CurrentAmmoCount;
+			}
+			
+			return dict;
 		}
 	}
 }
