@@ -28,7 +28,7 @@ namespace Tools.Managers
 			if (loadedSave == null) return;
 
 			transform.localRotation = Quaternion.Euler((Vector3)loadedSave.Value.cameraRotation);
-			_xRotation = transform.localRotation.x;
+			_xRotation = loadedSave.Value.cameraRotation.x;
 			_yRotation = loadedSave.Value.playerRotation.y;
 			Debug.Log("Camera rotation is applied");
 		}
