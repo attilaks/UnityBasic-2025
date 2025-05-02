@@ -79,7 +79,7 @@ namespace Tools.Weapons.Firearms
 
 		protected void Awake()
 		{
-			_currentAmmoCount = weaponData.ClipCapacity;
+			CurrentAmmoCount = weaponData.ClipCapacity;
 			_audioSource = GetComponent<AudioSource>();
 			_firstPersonCamera = Camera.main;
 

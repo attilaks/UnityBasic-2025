@@ -27,8 +27,9 @@ namespace Tools.Managers
 			var loadedSave = _saveDataApplier.GetSaveDataTobeApplied();
 			if (loadedSave == null) return;
 
-			transform.localRotation = Quaternion.Euler((Vector3)loadedSave.Value.cameraRotation);
-			_xRotation = loadedSave.Value.cameraRotation.x;
+			var loadedCameraRotation = loadedSave.Value.cameraRotation;
+			transform.localRotation = Quaternion.Euler((Vector3)loadedCameraRotation);
+			_xRotation = loadedCameraRotation.x > 180 ? loadedCameraRotation.x - 360 : loadedCameraRotation.x;
 			_yRotation = loadedSave.Value.playerRotation.y;
 			Debug.Log("Camera rotation is applied");
 		}
