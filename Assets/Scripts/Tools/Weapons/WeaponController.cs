@@ -54,17 +54,16 @@ namespace Tools.Weapons
 			if (loadedSave != null) 
 				currentFireArmId = loadedSave.Value.currentFireArmId;
 			
-			CurrentFireArm = fireArms.First(x => x.FireArmId == currentFireArmId);
-			fireArms.ForEach(x =>
+			fireArms.ForEach(fireArm =>
 			{
-				if (loadedSave != null &&
-				    loadedSave.Value.GetAmmoDictionary().TryGetValue(x.FireArmId, out var ammoCount))
-				{
-					x.Initialize(ammoCount);
-				}
-				if (x.FireArmId == currentFireArmId) return;
-				x.gameObject.SetActive(false);
+				var ammoInClip = loadedSave != null 
+				                 && loadedSave.Value.GetAmmoDictionary().TryGetValue(fireArm.FireArmId, out var ammoCount) 
+					? ammoCount : fireArm.CurrentAmmoCount;
+				fireArm.Initialize(ammoInClip);
+				if (fireArm.FireArmId == currentFireArmId) return;
+				fireArm.gameObject.SetActive(false);
 			});
+			CurrentFireArm = fireArms.First(x => x.FireArmId == currentFireArmId);
 		}
 
 		private void Update()
