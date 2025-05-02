@@ -28,6 +28,8 @@ namespace Tools.Managers
 			if (loadedSave == null) return;
 
 			transform.localRotation = Quaternion.Euler((Vector3)loadedSave.Value.cameraRotation);
+			_xRotation = transform.localRotation.x;
+			_yRotation = loadedSave.Value.playerRotation.y;
 			Debug.Log("Camera rotation is applied");
 		}
 
@@ -35,6 +37,8 @@ namespace Tools.Managers
 		{
 			var mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
 			var mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+			
+			if (mouseX == 0f && mouseY == 0f) return;
 			
 			_xRotation = Mathf.Clamp(_xRotation - mouseY, -90f, 90f);
 			_yRotation += mouseX;
