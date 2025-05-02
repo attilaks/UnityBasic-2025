@@ -20,6 +20,7 @@ namespace Tools.Weapons.Ammo
 				{
 					var sparks = Instantiate(sparksEffect, contact.point, Quaternion.LookRotation(contact.normal));
 					sparks.Play();
+					Destroy(sparks.gameObject, sparks.main.duration);
 				}
 			}
             
