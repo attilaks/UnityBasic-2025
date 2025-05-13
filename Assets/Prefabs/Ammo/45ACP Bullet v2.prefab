@@ -111,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266833005650248464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.0820289, y: 1.686105, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -296,6 +296,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoData: {fileID: 11400000, guid: dc725f67b4f35f14f88cf3dfb7d00281, type: 2}
+  sparksEffect: {fileID: 5340429317770459000, guid: 94fd2593477ab2845986038fbc3f63a3,
+    type: 3}
 --- !u!1 &5838767848198372577
 GameObject:
   m_ObjectHideFlags: 0
