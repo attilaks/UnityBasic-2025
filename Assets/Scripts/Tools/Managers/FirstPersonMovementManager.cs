@@ -1,18 +1,23 @@
 ﻿using GlobalConstants;
+using SaveSystem;
+using SaveSystem.Interfaces;
+using Tools.Managers.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 
 namespace Tools.Managers
 {
 	[RequireComponent(typeof(AudioSource))]
-	public class FirstPersonMovementManager : MonoBehaviour
+	public class FirstPersonMovementManager : MonoBehaviour, IPlayerTransformReader
 	{
 		[Header("Movement settings")]
 		[SerializeField] private float movementSpeed = 2f;
-		[SerializeField] private float rotationSpeed = 2f;
 		
 		[Header("Audio references")]
 		[SerializeField] private AudioClip[] footstepClips;
+		
+		[Inject] private ISaveDataApplier _saveDataApplier;
 		
 		private readonly InputAction _moveForward = new("MoveForward", InputActionType.Value, 
 			$"{InputConstants.KeyBoard}/{InputConstants.W}");
@@ -25,11 +30,6 @@ namespace Tools.Managers
 		
 		private readonly InputAction _run = new("Run", InputActionType.Value, 
 			$"{InputConstants.KeyBoard}/{InputConstants.LeftShift}");
-
-		private readonly InputAction _rotateLeft = new("RotateLeft", InputActionType.Value, 
-			$"{InputConstants.KeyBoard}/{InputConstants.Q}");
-		private readonly InputAction _rotateRight = new("RotateRight", InputActionType.Value, 
-			$"{InputConstants.KeyBoard}/{InputConstants.E}");
 		
 		private AudioSource _audioSource;
 		private float _walkSoundSpeed;
@@ -44,6 +44,16 @@ namespace Tools.Managers
 			_audioSource = GetComponent<AudioSource>();
 			_walkSoundSpeed = _audioSource.pitch;
 			_runSoundSpeed = _walkSoundSpeed * 2f;
+		}
+
+		private void Start()
+		{
+			var loadedSave = _saveDataApplier.GetSaveDataTobeApplied();
+			if (loadedSave == null) return;
+			
+			transform.position = (Vector3)loadedSave.Value.playerPosition;
+			transform.localRotation = Quaternion.Euler((Vector3)loadedSave.Value.playerRotation);
+			Debug.Log("Player transform is loaded.");
 		}
 
 		private void Update()
@@ -68,15 +78,6 @@ namespace Tools.Managers
 			{
 				Move(Vector3.back);
 			}
-
-			if (_rotateLeft.IsPressed())
-			{
-				Rotate(-90f);
-			}
-			if (_rotateRight.IsPressed())
-			{
-				Rotate(90f);
-			}
 		}
 		
 		private void OnEnable()
@@ -87,9 +88,6 @@ namespace Tools.Managers
 			_moveBack.Enable();
 			
 			_run.Enable();
-            
-			_rotateLeft.Enable();
-			_rotateRight.Enable();
 		}
 
 		private void OnDisable()
@@ -100,9 +98,6 @@ namespace Tools.Managers
 			_moveBack.Disable();
 			
 			_run.Disable();
-            
-			_rotateLeft.Disable();
-			_rotateRight.Disable();
 		}
 
 		#endregion
@@ -112,12 +107,6 @@ namespace Tools.Managers
 			var speed = _isRunning ? movementSpeed * 2 : movementSpeed;
 			transform.Translate(direction * (speed * Time.deltaTime));
 			PlayFootSteps();
-		}
-		
-		private void Rotate(float angle)
-		{
-			var targetAngle = angle * rotationSpeed * Time.deltaTime;
-			transform.Rotate(0, targetAngle, 0);
 		}
 
 		private void PlayFootSteps()
@@ -130,5 +119,8 @@ namespace Tools.Managers
 			
 			_audioSource.Play();
 		}
+
+		public SerializableVector3 PlayerPosition => transform.position;
+		public SerializableVector3 PlayerRotation => transform.localRotation.eulerAngles;
 	}
 }

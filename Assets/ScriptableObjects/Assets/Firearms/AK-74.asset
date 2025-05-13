@@ -25,6 +25,7 @@ MonoBehaviour:
   bulletSpread: 3
   clipCapacity: 30
   isAutomatic: 1
+  id: 2
   shootSound: {fileID: 8300000, guid: 58846dccad896b041801583b596e4f85, type: 3}
   reloadSound: {fileID: 8300000, guid: 26e6a99185740884e9096a2e0cea5d7c, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 8216f3ab2dff8d94295e4c4245d75f2a, type: 3}

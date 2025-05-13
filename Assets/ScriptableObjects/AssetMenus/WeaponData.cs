@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 // ReSharper disable ConvertToConstant.Global
 
@@ -25,6 +26,8 @@ namespace ScriptableObjects.AssetMenus
 		[SerializeField] private float bulletSpread = 5f;
 		[SerializeField] private byte clipCapacity = 7;
 		[SerializeField] private bool isAutomatic;
+		[Tooltip("Every weapon should have unique id")]
+		[SerializeField] private byte id;
 		
 		[Header("Audio")]
 		[SerializeField] private AudioClip shootSound;
@@ -45,6 +48,7 @@ namespace ScriptableObjects.AssetMenus
 		public float BulletSpread => bulletSpread;
 		public byte ClipCapacity => clipCapacity;
 		public bool IsAutomatic => isAutomatic;
+		public byte Id => id;
 
 		public AudioClip ShootSound => shootSound;
 		public AudioClip ReloadSound => reloadSound;

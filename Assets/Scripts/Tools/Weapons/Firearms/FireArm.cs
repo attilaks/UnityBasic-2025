@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using GlobalConstants;
+using SaveSystem.Interfaces;
 using ScriptableObjects.AssetMenus;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 using Random = UnityEngine.Random;
 
 namespace Tools.Weapons.Firearms
@@ -27,6 +29,7 @@ namespace Tools.Weapons.Firearms
 		private const float DestroyTimer = 2f;
 		private byte _currentAmmoCount;
 		private float _nextFireTime;
+		private bool _isInitialized;
 		
 		public event Action<byte> AmmoCountChanged = delegate { };
 
@@ -58,12 +61,21 @@ namespace Tools.Weapons.Firearms
 
 		public ushort AmmoLeft => weaponData.ClipCapacity;
 		public Sprite AmmoUiSprite => weaponData.AmmoUiSprite;
+		public byte FireArmId => weaponData.Id;
 		
 		private readonly InputAction _shootAction = new("Shoot", InputActionType.Button, 
 			$"{InputConstants.Mouse}/{InputConstants.LeftButton}");
 
 		private readonly InputAction _reloadAction = new("Reload", InputActionType.Button, 
 			$"{InputConstants.KeyBoard}/{InputConstants.R}");
+
+		public void Initialize(byte ammoCount)
+		{
+			if (_isInitialized) return;
+			
+			CurrentAmmoCount = ammoCount;
+			_isInitialized = true;
+		}
 
 		protected void Awake()
 		{
