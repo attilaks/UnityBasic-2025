@@ -9,6 +9,8 @@ namespace Tools.Spawners
 	{
 		[SerializeField] private byte enemyReservePoolSize = 5;
 		
+		private const byte MinEnemyPoolSize = 2;
+		
 		private Vector2 _groundSize;
 		private byte _currentEnemyPoolIndex;
 		private EnemyCube[] _enemyReservePool;
@@ -17,13 +19,20 @@ namespace Tools.Spawners
 		{
 			var groundCollider = GetComponent<Collider>();
 			_groundSize = new Vector2(groundCollider.bounds.size.x, groundCollider.bounds.size.z);
-			
-			_enemyReservePool = new EnemyCube[enemyReservePoolSize];
-			for (var i = 0; i < _enemyReservePool.Length; i++)
+			if (enemyReservePoolSize < MinEnemyPoolSize)
 			{
-				_enemyReservePool[i] = Instantiate(enemyCubePrefab);
-				_enemyReservePool[i].gameObject.SetActive(false);
-				_enemyReservePool[i].OnDeath += SpawnEnemyCube;
+				enemyReservePoolSize = MinEnemyPoolSize;
+			}
+			_enemyReservePool = new EnemyCube[enemyReservePoolSize];
+
+			if (enabled)
+			{
+				for (var i = 0; i < _enemyReservePool.Length; i++)
+				{
+					_enemyReservePool[i] = Instantiate(enemyCubePrefab);
+					_enemyReservePool[i].gameObject.SetActive(false);
+					_enemyReservePool[i].OnDeath += SpawnEnemyCube;
+				}
 			}
 		}
 		

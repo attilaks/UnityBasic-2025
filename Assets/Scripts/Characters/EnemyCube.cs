@@ -9,6 +9,7 @@ namespace Characters
 	[RequireComponent(typeof(BoxCollider))]
 	[RequireComponent(typeof(Renderer))]
 	[RequireComponent(typeof(HealthManager))]
+	[RequireComponent(typeof(Rigidbody))]
 	public class EnemyCube : MonoBehaviour
 	{
 		public event Action<int> OnDeath = delegate { };
@@ -17,6 +18,8 @@ namespace Characters
 		private HealthManager _healthManager;
 		private Renderer _renderer;
 		private EnemyDeathEffectController _deathEffectVolume;
+		private Rigidbody _rigidbody;
+		
 		private Color _originalColor;
 		private Coroutine _deathCoroutine;
 
@@ -25,6 +28,7 @@ namespace Characters
 			RuntimeId = GetInstanceID();
 			_renderer = GetComponent<Renderer>();
 			_healthManager = GetComponent<HealthManager>();
+			_rigidbody = GetComponent<Rigidbody>();
 			_deathEffectVolume = FindObjectOfType<EnemyDeathEffectController>();
 			_originalColor = _renderer.material.color;
 			
@@ -38,6 +42,10 @@ namespace Characters
 
 		public void Restore(Vector3 position, Transform parent)
 		{
+			if (_deathCoroutine != null) StopCoroutine(_deathCoroutine);
+			
+			_rigidbody.velocity = Vector3.zero;
+			_rigidbody.angularVelocity = Vector3.zero;
 			gameObject.SetActive(true);
 			
 			_renderer.material.color = _originalColor;
@@ -55,8 +63,8 @@ namespace Characters
 		
 		private void CubeIsDestroyed()
 		{
-			OnDeath.Invoke(RuntimeId);
 			_deathCoroutine = StartCoroutine(FadeAway());
+			OnDeath.Invoke(RuntimeId);
 			if (_deathEffectVolume)
 				_deathEffectVolume.TriggerEffect();
 		}
