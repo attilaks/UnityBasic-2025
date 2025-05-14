@@ -7,18 +7,37 @@ namespace Tools.Spawners
 	[RequireComponent(typeof(Collider))]
 	public class EnemyCubeSpawnerFullyRandom : Spawner
 	{
+		[SerializeField] private byte enemyReservePoolSize = 5;
+		
 		private Vector2 _groundSize;
-		private EnemyCube _currentEnemyCube;
+		private byte _currentEnemyPoolIndex;
+		private EnemyCube[] _enemyReservePool;
 		
 		private void Awake()
 		{
 			var groundCollider = GetComponent<Collider>();
 			_groundSize = new Vector2(groundCollider.bounds.size.x, groundCollider.bounds.size.z);
+			
+			_enemyReservePool = new EnemyCube[enemyReservePoolSize];
+			for (var i = 0; i < _enemyReservePool.Length; i++)
+			{
+				_enemyReservePool[i] = Instantiate(enemyCubePrefab);
+				_enemyReservePool[i].gameObject.SetActive(false);
+				_enemyReservePool[i].OnDeath += SpawnEnemyCube;
+			}
 		}
 		
 		private void Start()
 		{
 			SpawnEnemyCube(0);
+		}
+
+		private void OnDestroy()
+		{
+			for (var i = 0; i < _enemyReservePool.Length; i++)
+			{
+				_enemyReservePool[i].OnDeath -= SpawnEnemyCube;
+			}
 		}
 
 		private void SpawnEnemyCube(int enemyRuntimeId)
@@ -28,12 +47,15 @@ namespace Tools.Spawners
 				0.5f,
 				Random.Range(-_groundSize.y / 2, _groundSize.y / 2)
 			);
+
+			if (_currentEnemyPoolIndex >= _enemyReservePool.Length)
+			{
+				_currentEnemyPoolIndex = 0;
+			}
 			
-			if (_currentEnemyCube)
-				_currentEnemyCube.OnDeath -= SpawnEnemyCube;
-			
-			_currentEnemyCube = Instantiate(enemyCubePrefab, randomPosition, Quaternion.identity);
-			_currentEnemyCube.OnDeath += SpawnEnemyCube;
+			var currentEnemy = _enemyReservePool[_currentEnemyPoolIndex];
+			currentEnemy.Restore(randomPosition, null);
+			++_currentEnemyPoolIndex;
 		}
 	}
 }

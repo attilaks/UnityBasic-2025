@@ -17,6 +17,8 @@ namespace Characters
 		private HealthManager _healthManager;
 		private Renderer _renderer;
 		private EnemyDeathEffectController _deathEffectVolume;
+		private Color _originalColor;
+		private Coroutine _deathCoroutine;
 
 		private void Awake()
 		{
@@ -24,6 +26,7 @@ namespace Characters
 			_renderer = GetComponent<Renderer>();
 			_healthManager = GetComponent<HealthManager>();
 			_deathEffectVolume = FindObjectOfType<EnemyDeathEffectController>();
+			_originalColor = _renderer.material.color;
 			
 			_healthManager.DeathHasComeEvent += CubeIsDestroyed;
 		}
@@ -32,11 +35,28 @@ namespace Characters
 		{
 			_healthManager.DeathHasComeEvent -= CubeIsDestroyed;
 		}
+
+		public void Restore(Vector3 position, Transform parent)
+		{
+			gameObject.SetActive(true);
+			
+			_renderer.material.color = _originalColor;
+			transform.position = position;
+			transform.rotation = Quaternion.identity;
+			transform.SetParent(parent);
+			
+			_healthManager.RestoreHealthToMax();
+			
+			for (var i = transform.childCount - 1; i >= 0; i--)
+			{
+				Destroy(transform.GetChild(i).gameObject);
+			}
+		}
 		
 		private void CubeIsDestroyed()
 		{
 			OnDeath.Invoke(RuntimeId);
-			StartCoroutine(FadeAway());
+			_deathCoroutine = StartCoroutine(FadeAway());
 			if (_deathEffectVolume)
 				_deathEffectVolume.TriggerEffect();
 		}
@@ -50,7 +70,7 @@ namespace Characters
 				_renderer.material.color = color;
 				if (color.a <= 0)
 				{
-					Destroy(gameObject);
+					gameObject.SetActive(false);
 				}
 				yield return new WaitForSeconds(0.1f);
 			}
