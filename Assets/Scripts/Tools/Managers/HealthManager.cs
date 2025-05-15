@@ -8,8 +8,7 @@ namespace Tools.Managers
 		[SerializeField] private float maxHealth = 50f;
 		
 		public event Action DeathHasComeEvent = delegate { };
-		private bool IsDead { get; set; }
-		
+		private bool _isDead;
 		private float _health;
 
 		private void Awake()
@@ -22,7 +21,7 @@ namespace Tools.Managers
 			get => _health;
 			set
 			{
-				if (IsDead)
+				if (_isDead)
 				{
 					return;
 				}
@@ -30,7 +29,7 @@ namespace Tools.Managers
 				if (value <= 0f)
 				{
 					_health = 0f;
-					IsDead = true;
+					_isDead = true;
 					DeathHasComeEvent.Invoke();
 				}
 				else
@@ -43,6 +42,12 @@ namespace Tools.Managers
 		public void TakeDamage(float damage)
 		{
 			Health -= damage;
+		}
+
+		public void RestoreHealthToMax()
+		{
+			_isDead = false;
+			Health = maxHealth;
 		}
 	}
 }

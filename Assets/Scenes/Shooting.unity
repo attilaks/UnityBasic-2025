@@ -5132,6 +5132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCubePrefab: {fileID: -832563408807288336, guid: fe7ad8029036ccd44968500a902958f4,
     type: 3}
+  enemyReservePoolSize: 5
 --- !u!114 &1624801546
 MonoBehaviour:
   m_ObjectHideFlags: 0

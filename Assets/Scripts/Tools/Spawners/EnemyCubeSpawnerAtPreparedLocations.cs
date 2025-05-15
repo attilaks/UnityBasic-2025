@@ -14,9 +14,10 @@ namespace Tools.Spawners
 		[SerializeField] private float maxSpawnInterval = 2f;
 		
 		private SpawnPoint[] _spawnPoints;
-		private readonly ObservableDictionary<int, EnemyCube> _idEnemyDict = new();
+		private readonly ObservableDictionary<int, EnemyCube> _currentEnemyDict = new();
 		
-		private bool SpawnCoroutineShouldStartAgain => _idEnemyDict.PreviousCount >= maxEnemyCount && _idEnemyDict.Count < maxEnemyCount;
+		private bool SpawnCoroutineShouldStartAgain => _currentEnemyDict.PreviousCount >= maxEnemyCount 
+		                                               && _currentEnemyDict.Count < maxEnemyCount;
 
 		private void Awake()
 		{
@@ -26,7 +27,12 @@ namespace Tools.Spawners
 			if (minSpawnInterval > maxSpawnInterval)
 				maxSpawnInterval = minSpawnInterval;
 			
-			_idEnemyDict.CountChanged += OnEnemyCountChanged;
+			_currentEnemyDict.CountChanged += OnEnemyCountChanged;
+		}
+
+		private void OnDestroy()
+		{
+			_currentEnemyDict.CountChanged -= OnEnemyCountChanged;
 		}
 
 		private void Start()
@@ -40,7 +46,7 @@ namespace Tools.Spawners
 			if (SpawnCoroutineShouldStartAgain)
 				yield return new WaitForSeconds(spawnInterval);
 			
-			while (_idEnemyDict.Count < maxEnemyCount)
+			while (_currentEnemyDict.Count < maxEnemyCount)
 			{
 				if (_spawnPoints.Length == 0) break;
 				
@@ -49,12 +55,11 @@ namespace Tools.Spawners
 				{
 					newRandomSpawnPointIndex = Random.Range(0, _spawnPoints.Length);
 				}
-				var randomEmptySpawnPoint = _spawnPoints[newRandomSpawnPointIndex].transform;
-				
-				var enemyCube = Instantiate(enemyCubePrefab, randomEmptySpawnPoint.position, Quaternion.identity);
-				enemyCube.transform.SetParent(randomEmptySpawnPoint);
+				var randomEmptySpawnPoint = _spawnPoints[newRandomSpawnPointIndex];
+
+				var enemyCube = randomEmptySpawnPoint.SpawnEnemy(enemyCubePrefab);
 				enemyCube.OnDeath += OnEnemyDead;
-				_idEnemyDict[enemyCube.RuntimeId] = enemyCube;
+				_currentEnemyDict[enemyCube.RuntimeId] = enemyCube;
 				
 				yield return new WaitForSeconds(spawnInterval);
 			}
@@ -68,11 +73,10 @@ namespace Tools.Spawners
 
 		private void OnEnemyDead(int enemyRuntimeId)
 		{
-			if (!_idEnemyDict.TryGetValue(enemyRuntimeId, out var enemy)) return;
+			if (!_currentEnemyDict.TryGetValue(enemyRuntimeId, out var enemy)) return;
 			
 			enemy.OnDeath -= OnEnemyDead;
-			enemy.transform.parent = null;
-			_idEnemyDict.Remove(enemyRuntimeId);
+			_currentEnemyDict.Remove(enemyRuntimeId);
 		}
 	}
 }
